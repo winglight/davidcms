@@ -1,0 +1,179 @@
+# Categories
+
+categories:
+
+    - !!models.CategoryModel
+        id:         1
+        name:       Books & Reference
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         2
+        name:       Business
+        type:       "APP"
+
+    - !!models.CategoryModel
+        id:         3
+        name:       Comics
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         4
+        name:       Communication
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         5
+        name:       Education
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         6
+        name:       Entertainment
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         7
+        name:       Finance
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         8
+        name:       Health & Fitness
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         9
+        name:       Lifestyle
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         10
+        name:       Live Wallpaper
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         11
+        name:       Media & Video
+        type:       "APP"
+
+    - !!models.CategoryModel
+        id:         12
+        name:       Medical
+        type:       "APP"
+        
+    - !!models.CategoryModel
+        id:         13
+        name:       Music & Audio
+        type:       "APP"    
+               
+    - !!models.CategoryModel
+        id:         14
+        name:       News & Magazines
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         15
+        name:       Personalization
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         16
+        name:       Photography
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         17
+        name:       Productivity
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         18
+        name:       Shopping
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         19
+        name:       Social
+        type:       "APP"
+        
+    - !!models.CategoryModel
+        id:         20
+        name:       Sports
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         21
+        name:       Tools
+        type:       "APP"
+
+    - !!models.CategoryModel
+        id:         22
+        name:       Transportation
+        type:       "APP"
+        
+    - !!models.CategoryModel
+        id:         23
+        name:       Travel & Local
+        type:       "APP"    
+               
+    - !!models.CategoryModel
+        id:         24
+        name:       Weather
+        type:       "APP"
+               
+    - !!models.CategoryModel
+        id:         25
+        name:       Widgets
+        type:       "APP"
+        
+    - !!models.CategoryModel
+        id:         26
+        name:       Arcade & Action
+        type:       "GAME"
+               
+    - !!models.CategoryModel
+        id:         27
+        name:       Brain & Puzzle
+        type:       "GAME"
+               
+    - !!models.CategoryModel
+        id:         28
+        name:       Cards & Casino
+        type:       "GAME"
+               
+    - !!models.CategoryModel
+        id:         29
+        name:       Casual
+        type:       "GAME"
+        
+    - !!models.CategoryModel
+        id:         30
+        name:       Live Wallpaper
+        type:       "GAME"
+               
+    - !!models.CategoryModel
+        id:         31
+        name:       Racing
+        type:       "GAME"
+
+    - !!models.CategoryModel
+        id:         32
+        name:       Sports Games
+        type:       "GAME"
+        
+    - !!models.CategoryModel
+        id:         33
+        name:       Widgets
+        type:       "GAME"    
+               
+    - !!models.CategoryModel
+        id:         34
+        name:       Weather
+        type:       "GAME"
+        
+    - !!models.CategoryModel
+        id:         35
+        name:       Adult
+        type:       "ADULT"        
+        
