@@ -1,7 +1,7 @@
 @(user: UserModel, title: String)(content: Html)
 
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" ng-app>
 	<head>
 		<meta charset="utf-8" />
 		<title>@title - David Group Mobile CMS</title>
@@ -107,16 +107,16 @@
 
 					<ul class="nav nav-list">
 						<li class="active">
-							<a href='index.html'>
+							<a href='/'>
 								<i class="icon-dashboard"></i>
-								<span class="menu-text"> Dashboard </span>
+								<span class="menu-text"> Introduction </span>
 							</a>
 						</li>
 
 						<li>
-							<a href='widgets.html'>
+							<a href='/cms'>
 								<i class="icon-list-alt"></i>
-								<span class="menu-text"> Widgets </span>
+								<span class="menu-text"> CMS </span>
 							</a>
 						</li>
 
@@ -138,6 +138,8 @@
 		</div><!-- /.main-container -->
 
 		<!-- basic scripts -->
+
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"/>
 
 		<script type="text/javascript">
 			if("ontouchend" in document) document.write("<script src="@routes.Assets.at("js/jquery.mobile.custom.min.js")">"+"<"+"/script>");

@@ -1,5 +1,6 @@
 package models;
 
+import models.status.ContentLanguage;
 import models.status.ContentType;
 import play.data.format.Formats;
 import play.db.ebean.Model;
@@ -16,7 +17,6 @@ import java.util.List;
  * @since 1.0
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue(value = "content")
 public class ContentModel extends Model implements Serializable{
 
@@ -37,6 +37,8 @@ public class ContentModel extends Model implements Serializable{
     public String bigPic;
 
     public ContentType contentType;
+
+    public ContentLanguage language;
 
 	@Formats.DateTime(pattern="yyyy-MM-dd")
 	public Date createdAt;

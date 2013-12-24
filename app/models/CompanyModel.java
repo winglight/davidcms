@@ -18,7 +18,6 @@ import java.util.List;
  * @since 1.0
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue(value = "company")
 public class CompanyModel extends Model implements Serializable{
 
@@ -46,6 +45,17 @@ public class CompanyModel extends Model implements Serializable{
      */
     public static List<CompanyModel> findAll() {
         return find.all();
+    }
+
+    public static CompanyModel save(String name, String description) {
+        CompanyModel cm = find.findUnique();
+        if(cm != null){
+            cm.name = name;
+            cm.description = description;
+
+            cm.update();
+        }
+        return cm;
     }
 
 	@Override

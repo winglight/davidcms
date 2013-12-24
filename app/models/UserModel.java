@@ -29,7 +29,6 @@ import models.status.UserStatus;
  * @since 1.0
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorValue(value = "user")
 public class UserModel extends Model implements Serializable{ 
 
