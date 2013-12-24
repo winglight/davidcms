@@ -1,12 +1,8 @@
 package controllers;
 
-import models.AppModel;
-import models.CategoryModel;
 import models.CompanyModel;
-import models.UserModel;
+import models.ContentModel;
 import models.dto.MessageModel;
-import models.dto.PageInfo;
-import models.dto.SimpleAppModel;
 import org.apache.commons.io.IOUtils;
 import play.Play;
 import play.data.Form;
@@ -14,11 +10,8 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
-import util.Constants;
-import views.html.login;
 
 import java.io.*;
-import java.util.Date;
 import java.util.List;
 
 import static play.data.Form.form;
@@ -62,15 +55,10 @@ public class CMS extends Controller {
 	}
     
     public static Result getContentsByType(Long category) {
-    	List<SimpleAppModel> list = AppModel.findAppsByCategory(category, page.intValue(), (lastUpdateDate > 0?new Date(lastUpdateDate):null));
-    	PageInfo pageInfo = AppModel.getHotAppsPageInfo(page.intValue());
-    	if(list.size() < Constants.AMOUNT_PER_PAGE){
-    		pageInfo.setEnd(list.size());
-    	}
-    	
-		MessageModel<List<SimpleAppModel>> mm = new MessageModel<List<SimpleAppModel>>();
+    	List<ContentModel> list = ContentModel.getContentsByType(category);
+
+		MessageModel<List<ContentModel>> mm = new MessageModel<List<ContentModel>>();
 		mm.setFlag(true);
-		mm.setPage(pageInfo);
 		mm.setData(list);
 		return ok(Json.toJson(mm));
 	}

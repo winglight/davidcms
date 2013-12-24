@@ -58,13 +58,13 @@ public class ContentModel extends Model implements Serializable{
         return find.all();
     }
 
-    public static List<ContentModel> findContentByType(ContentType contentType) {
-        return find.where().eq("contentType", contentType).findList();
-    }
-
 	@Override
 	public String toString() {
 		return "Company [name:" + name
 				+ "]";
 	}
+
+    public static List<ContentModel> getContentsByType(Long contentType) {
+        return find.where().eq("contentType", contentType).findList();
+    }
 }
