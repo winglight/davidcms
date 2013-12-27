@@ -67,4 +67,20 @@ public class ContentModel extends Model implements Serializable{
     public static List<ContentModel> getContentsByType(Long contentType) {
         return find.where().eq("contentType", contentType).findList();
     }
+
+    public static void delete(Long cid) {
+        find.ref(cid).delete();
+    }
+
+    public static void updateContentImage(Long content, String imgName, boolean isBig) {
+        ContentModel cm = find.byId(content);
+        if(cm != null){
+        if(isBig){
+            cm.bigPic = imgName;
+        }else {
+            cm.smallPic = imgName;
+        }
+            cm.update();
+        }
+    }
 }

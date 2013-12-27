@@ -26,10 +26,6 @@ public class Application extends Controller {
 
     }
 
-    public static Result index() {
-        return ok(intro.render(null));
-    }
-
     public static Result login() {
         return ok(login.render(form(Login.class)));
     }
@@ -52,12 +48,12 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session(Constants.SESSION_USER_NAME, loginForm.get().username);
-            return redirect(routes.Application.index());
+            return redirect(routes.CMS.index());
         }
     }
 
     public static Result register() {
-            return redirect(routes.Application.index());
+            return redirect(routes.CMS.index());
 
     }
 }

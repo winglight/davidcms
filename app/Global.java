@@ -1,20 +1,15 @@
 import akka.actor.ActorRef;
-import akka.actor.Props;
-import akka.actor.UntypedActor;
 import com.avaje.ebean.Ebean;
-import fetch.FetchWorker;
 import models.CompanyModel;
+import models.UserModel;
 import play.Application;
 import play.GlobalSettings;
 import play.api.mvc.EssentialFilter;
 import play.filters.gzip.GzipFilter;
-import play.libs.Akka;
 import play.libs.Yaml;
-import scala.concurrent.duration.Duration;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class Global extends GlobalSettings {
 
@@ -34,13 +29,15 @@ public class Global extends GlobalSettings {
 	static class InitialData {
 
 		public static void insert(Application app) {
-			if (Ebean.find(CompanyModel.class).findRowCount() == 0) {
+			if (Ebean.find(UserModel.class).findRowCount() == 0) {
 
 				Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml
 						.load("initial-data.yml");
 
 				// Insert users first
 				Ebean.save(all.get("company"));
+
+                Ebean.save(all.get("users"));
 
 				// Insert projects
 //				Ebean.save(all.get("sources"));

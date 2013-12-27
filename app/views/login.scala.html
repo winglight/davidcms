@@ -21,8 +21,6 @@
 
             <!-- fonts -->
 
-        <link rel="stylesheet" href='http://fonts.googleapis.com/css@@family=Open+Sans_3A400,300' />
-
             <!-- ace styles -->
 
         <link rel="stylesheet" href='@routes.Assets.at("css/ace.min.css")' />
@@ -41,9 +39,8 @@
 
             <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
-            <!--[if lt IE 9]>
-		<script src='@routes.Assets.at("js/html5shiv.js")'/>
-        <script src='@routes.Assets.at("js/respond.min.js")'/>
+		<script src='@routes.Assets.at("js/html5shiv.js")'></script>
+        <script src='@routes.Assets.at("js/respond.min.js")'></script>
 	</head>
 
 	<body class="login-layout">
@@ -78,7 +75,7 @@
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" name="username" id="username" value="@form("username").value" placeholder="User Name" /> />
+															<input type="text" class="form-control" name="username" id="username" value="@form("username").value" placeholder="User Name" />
 															<i class="icon-user"></i>
 														</span>
 													</label>
@@ -98,7 +95,7 @@
 															<span class="lbl"> Remember Me</span>
 														</label>
 
-														<button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+														<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
 															<i class="icon-key"></i>
 															Sign In
 														</button>
@@ -122,9 +119,8 @@
 
 		<!-- basic scripts -->
 
-        <script type="text/javascript">
-        if("ontouchend" in document) document.write("<script src="@routes.Assets.at("js/jquery.mobile.custom.min.js")">"+"<"+"/script>");
-        </script>
+        <script src="@routes.Assets.at("js/jquery-2.0.3.min.js")"></script>
+
         <script src='@routes.Assets.at("js/bootstrap.min.js")'></script>
         <script src='@routes.Assets.at("js/typeahead-bs2.min.js")'></script>
 

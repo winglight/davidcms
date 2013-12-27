@@ -10,15 +10,22 @@ package models.status;
  */
 public enum UserStatus {
 
-	Active("ACTIVE"), Inactive("DISABLE");
+	ACTIVE(0, "ACTIVE"), INACTIVE(1, "DISABLE");
 
-	private UserStatus(String displayName) {
-		this.displayName = displayName;
-	}
+    private int value = 0;
+
+	private UserStatus(int value, String displayName) {
+        this.value = value;
+        this.displayName = displayName;
+    }
 
 	String displayName;
 
 	public String getDisplayName() {
 		return this.displayName;
 	}
+
+    public int value() {
+        return this.value;
+    }
 }

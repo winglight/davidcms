@@ -26,13 +26,6 @@ public class Secured extends Security.Authenticator {
         return Constants.SESSION_DEVICE_MOBILE.equals(Context.current().session().get(Constants.SESSION_DESC));
     }
     
-    public static boolean isOwnerOf(Long app) {
-        return AppModel.isOwner(
-                app,
-                Context.current().request().username()
-            );
-    }
-    
     public static UserModel getCurrentUser() {
         String name = Context.current().session().get(Constants.SESSION_USER_NAME);
         return UserModel.findByloginName(name);

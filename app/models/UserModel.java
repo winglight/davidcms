@@ -85,7 +85,7 @@ public class UserModel extends Model implements Serializable{
     public static UserModel authenticate(String loginName, String password) {
         return find.where()
             .eq(Constants.SESSION_USER_NAME, loginName)
-            .eq("status", UserStatus.Active)
+            .eq("status", UserStatus.ACTIVE)
             .eq("password", password)
             .findUnique();
     }

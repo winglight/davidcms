@@ -1,3 +1,14 @@
+# Users
+
+users:
+
+    - !!models.UserModel
+        id:         1
+        name:        admin
+        password:   admin
+        status:      "ACTIVE"
+        userRole:    "USER"
+
 # Categories
 
 company:

@@ -3,6 +3,9 @@ package controllers;
 import models.CompanyModel;
 import models.ContentModel;
 import models.dto.MessageModel;
+import models.status.ContentLanguage;
+import models.status.ContentType;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import play.Play;
 import play.data.Form;
@@ -10,6 +13,10 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.Security;
+import util.Constants;
+import views.html.cms;
+import views.html.intro;
 
 import java.io.*;
 import java.util.List;
@@ -32,15 +39,37 @@ public class CMS extends Controller {
 
     }
 
-    public static Result getCompany() {
-        CompanyModel cm = CompanyModel.find.findUnique();
-    	
-		MessageModel<CompanyModel> mm = new MessageModel<CompanyModel>();
-		mm.setFlag(true);
-		mm.setData(cm);
-		return ok(Json.toJson(mm));
-	}
-    
+    public static class Content {
+
+        public Long id;
+
+        public String name;
+
+        public String description;
+
+        public String url;
+
+        public String phoneNumber;
+
+        public ContentType contentType;
+
+        public String validate() {
+            if (name == null) {
+                return "Invalid name";
+            }
+            return null;
+        }
+
+    }
+
+    public static Result index() {
+        return ok(intro.render(null));
+    }
+
+    public static Result cms() {
+        return ok(cms.render(null));
+    }
+
     public static Result saveCompany() {
         Form<Company> loginForm = form(Company.class).bindFromRequest();
         if (loginForm.hasErrors()) {
@@ -50,50 +79,68 @@ public class CMS extends Controller {
             String desc = loginForm.get().description;
             CompanyModel cm = CompanyModel.save(name, desc);
 
-            return ok(Json.toJson(cm));
+            MessageModel<CompanyModel> mm = new MessageModel<CompanyModel>();
+            mm.setFlag(true);
+            mm.setData(cm);
+            return ok(Json.toJson(mm));
         }
 	}
     
-    public static Result getContentsByType(Long category) {
-    	List<ContentModel> list = ContentModel.getContentsByType(category);
+    public static Result saveContent() {
+        Form<Content> loginForm = form(Content.class).bindFromRequest();
+        if (loginForm.hasErrors()) {
+            return ok(loginForm.errorsAsJson());
+        } else {
+            final Long id = loginForm.get().id;
+            ContentModel cm = null;
+            if(id == null){
+                cm = new ContentModel();
+            }else{
+                cm = ContentModel.find.byId(id);
+            }
+            cm.name = loginForm.get().name;
+            cm.description = loginForm.get().description;
+            cm.url = loginForm.get().url;
+            cm.phoneNumber = loginForm.get().phoneNumber;
+            cm.contentType = loginForm.get().contentType;
 
-		MessageModel<List<ContentModel>> mm = new MessageModel<List<ContentModel>>();
-		mm.setFlag(true);
-		mm.setData(list);
-		return ok(Json.toJson(mm));
+            if(id == null){
+                cm.save();
+            }else{
+                cm.update();
+            }
+
+            MessageModel<ContentModel> mm = new MessageModel<ContentModel>();
+            mm.setFlag(true);
+            mm.setData(cm);
+            return ok(Json.toJson(mm));
+        }
 	}
-    
-	public static Result showImage(String filename) {
-
-		String path = Play.application().path().getPath() + "/upload/"
-				+ filename;
-
-		try {
-			response().setContentType("image");
-			ByteArrayInputStream baos = new ByteArrayInputStream(
-					IOUtils.toByteArray(new FileInputStream(new File(path))));
-			return ok(baos);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return notFound(filename + " is Not Found!");
+    public static Result deleteContent(Long cid) {
+    	ContentModel.delete(cid);
+		return ok(Constants.RETURN_SUCCESS);
 	}
 
-    public static Result uploadAPK(Long cid) {
+    public static Result uploadImage(Long cid, boolean isBig) {
         Http.MultipartFormData body = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart apkfile = body.getFile("files[]");
-        if (apkfile != null) {
+        Http.MultipartFormData.FilePart imgFile = body.getFile("files[]");
+        if (imgFile != null) {
             String path = Play.application().path().getPath() + "/upload/";
+            String destFileName = String.valueOf(System.currentTimeMillis());
 
-            String contentType = apkfile.getContentType();
+            String contentType = imgFile.getContentType();
 
-            if (contentType == null || !contentType.startsWith("application/")) {
+            if (contentType == null || !contentType.startsWith("image/")) {
                 return ok(Json.toJson("error:not apk file"));
             }
 
-            File file = apkfile.getFile();
+            File file = imgFile.getFile();
+            try {
+                FileUtils.copyFile(file, new File(path + destFileName));
+                ContentModel.updateContentImage(cid, destFileName, isBig);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             // return redirect(routes.Courses.showImage(fileName));
 
         }

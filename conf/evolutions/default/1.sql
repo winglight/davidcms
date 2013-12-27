@@ -36,7 +36,7 @@ create table user_model (
   status                    varchar(8),
   user_role                 varchar(9),
   created_at                datetime,
-  constraint ck_user_model_status check (status in ('Active','Inactive')),
+  constraint ck_user_model_status check (status in ('ACTIVE','INACTIVE')),
   constraint ck_user_model_user_role check (user_role in ('ADMIN','DEVELOPER','USER')),
   constraint pk_user_model primary key (id))
 ;

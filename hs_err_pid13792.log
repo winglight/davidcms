@@ -1,0 +1,117 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 38736 bytes for Chunk::new
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:317), pid=13792, tid=13068
+#
+# JRE version: 6.0_43-b01
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (20.14-b01 mixed mode windows-amd64 compressed oops)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000006891000):  JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=13068, stack(0x0000000006d30000,0x0000000006e30000)]
+
+Stack: [0x0000000006d30000,0x0000000006e30000]
+
+Current CompileTask:
+C2:    118   3      java.lang.String.lastIndexOf(II)I (156 bytes)
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x0000000006893800 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=12844, stack(0x0000000006e30000,0x0000000006f30000)]
+=>0x0000000006891000 JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=13068, stack(0x0000000006d30000,0x0000000006e30000)]
+  0x000000000688b800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=8828, stack(0x0000000006c30000,0x0000000006d30000)]
+  0x0000000006889000 JavaThread "Attach Listener" daemon [_thread_blocked, id=4092, stack(0x0000000006b30000,0x0000000006c30000)]
+  0x0000000006840000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=12208, stack(0x0000000006a30000,0x0000000006b30000)]
+  0x00000000003ec800 JavaThread "Finalizer" daemon [_thread_blocked, id=11848, stack(0x0000000006730000,0x0000000006830000)]
+  0x00000000003e5800 JavaThread "Reference Handler" daemon [_thread_blocked, id=11568, stack(0x0000000006630000,0x0000000006730000)]
+  0x00000000003fb800 JavaThread "main" [_thread_in_vm, id=12436, stack(0x00000000025b0000,0x00000000026b0000)]
+
+Other Threads:
+  0x00000000003dd800 VMThread [stack: 0x0000000006530000,0x0000000006630000] [id=7388]
+  0x00000000068ad000 WatcherThread [stack: 0x0000000006f30000,0x0000000007030000] [id=11768]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ PSYoungGen      total 152896K, used 2621K [0x00000000eaab0000, 0x00000000f5550000, 0x0000000100000000)
+  eden space 131072K, 2% used [0x00000000eaab0000,0x00000000ead3f5d0,0x00000000f2ab0000)
+  from space 21824K, 0% used [0x00000000f4000000,0x00000000f4000000,0x00000000f5550000)
+  to   space 21824K, 0% used [0x00000000f2ab0000,0x00000000f2ab0000,0x00000000f4000000)
+ PSOldGen        total 349568K, used 0K [0x00000000c0000000, 0x00000000d5560000, 0x00000000eaab0000)
+  object space 349568K, 0% used [0x00000000c0000000,0x00000000c0000000,0x00000000d5560000)
+ PSPermGen       total 21248K, used 3501K [0x00000000b0000000, 0x00000000b14c0000, 0x00000000c0000000)
+  object space 21248K, 16% used [0x00000000b0000000,0x00000000b036bd40,0x00000000b14c0000)
+
+Code Cache  [0x00000000026b0000, 0x0000000002920000, 0x00000000056b0000)
+ total_blobs=180 nmethods=3 adapters=131 free_code_cache=49938880 largest_free_block=6976
+
+Dynamic libraries:
+0x0000000000400000 - 0x000000000042f000 	C:\Windows\system32\java.exe
+0x00000000777b0000 - 0x000000007795c000 	C:\Windows\SYSTEM32\ntdll.dll
+0x0000000077690000 - 0x00000000777af000 	C:\Windows\system32\kernel32.dll
+0x000007fefda70000 - 0x000007fefdadc000 	C:\Windows\system32\KERNELBASE.dll
+0x000007feff5b0000 - 0x000007feff68b000 	C:\Windows\system32\ADVAPI32.dll
+0x000007feff170000 - 0x000007feff20f000 	C:\Windows\system32\msvcrt.dll
+0x000007feff210000 - 0x000007feff22f000 	C:\Windows\SYSTEM32\sechost.dll
+0x000007fefdae0000 - 0x000007fefdc0e000 	C:\Windows\system32\RPCRT4.dll
+0x0000000180000000 - 0x00000001800d4000 	C:\Program Files (x86)\MacType\MacType64.dll
+0x000007feff3b0000 - 0x000007feff47a000 	C:\Windows\system32\USP10.dll
+0x0000000077590000 - 0x000000007768a000 	C:\Windows\system32\USER32.dll
+0x000007feffa50000 - 0x000007feffab7000 	C:\Windows\system32\GDI32.dll
+0x000007fefe9a0000 - 0x000007fefe9ae000 	C:\Windows\system32\LPK.dll
+0x000007fefd6f0000 - 0x000007fefd710000 	C:\Program Files (x86)\MacType\EasyHK64.dll
+0x0000000077980000 - 0x0000000077987000 	C:\Windows\system32\PSAPI.DLL
+0x000007feffa20000 - 0x000007feffa4e000 	C:\Windows\system32\IMM32.DLL
+0x000007feff910000 - 0x000007feffa19000 	C:\Windows\system32\MSCTF.dll
+0x000007fefd4d0000 - 0x000007fefd64d000 	C:\Windows\system32\dwrite.dll
+0x000000006d810000 - 0x000000006dfcc000 	C:\Program Files\Java\jre6\bin\server\jvm.dll
+0x000007fefb600000 - 0x000007fefb63b000 	C:\Windows\system32\WINMM.dll
+0x000000006d780000 - 0x000000006d78e000 	C:\Program Files\Java\jre6\bin\verify.dll
+0x000000006d3b0000 - 0x000000006d3d7000 	C:\Program Files\Java\jre6\bin\java.dll
+0x000000006d7d0000 - 0x000000006d7e2000 	C:\Program Files\Java\jre6\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Xms512M -Xmx1024M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -Dfile.encoding=UTF-8 -Dinput.encoding=Cp1252 -Dplay.version=2.2.1 -Dsbt.ivy.home=D:\work\play-2.2.1\framework\..\repository -Dplay.home=D:\work\play-2.2.1\framework\. -Dsbt.boot.properties=file:///D:/work/play-2.2.1/framework/sbt/sbt.boot.properties 
+java_command: D:\work\play-2.2.1\framework\sbt\sbt-launch.jar run
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=d:\work\jdk1.6
+PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;d:\work\jdk1.6\bin;D:\work\nodejs\;C:\Program Files (x86)\MacType;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\MySQL\MySQL Utilities 1.3.4\;C:\Users\chenyu2\AppData\Roaming\npm
+USERNAME=chenyu2
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7600 
+
+CPU:total 4 (4 cores per cpu, 1 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt
+
+Memory: 4k page, physical 8204296k(1298108k free), swap 8202388k(4952k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (20.14-b01) for windows-amd64 JRE (1.6.0_43-b01), built on Mar  1 2013 01:52:33 by "java_re" with MS VC++ 8.0 (VS2005)
+
+time: Fri Dec 27 09:14:30 2013
+elapsed time: 0 seconds
+

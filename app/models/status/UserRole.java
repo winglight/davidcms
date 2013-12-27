@@ -14,15 +14,32 @@ public enum UserRole {
 	/**
 	 * Corporation administrator.
 	 */
-	ADMIN,
+	ADMIN(0, "ADMIN"),
 
 	/**
 	 * Department manager.
 	 */
-	DEVELOPER,
+	DEVELOPER(1, "DEVELOPER"),
 
 	/**
 	 * Ordinary staff.
 	 */
-	USER;
+	USER(2, "USER");
+
+    private int value = 0;
+
+    private UserRole(int value, String displayName) {
+        this.value = value;
+        this.displayName = displayName;
+    }
+
+    String displayName;
+
+    public String getDisplayName() {
+        return this.displayName;
+    }
+
+    public int value() {
+        return this.value;
+    }
 }
