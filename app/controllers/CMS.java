@@ -20,6 +20,7 @@ import views.html.intro;
 
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 import static play.data.Form.form;
 
@@ -121,9 +122,18 @@ public class CMS extends Controller {
 		return ok(Constants.RETURN_SUCCESS);
 	}
 
-    public static Result uploadImage(Long cid, boolean isBig) {
+    public static Result uploadImage() {
         Http.MultipartFormData body = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart imgFile = body.getFile("files[]");
+
+        Map map = body.asFormUrlEncoded();
+        if(!map.containsKey("cid") || !map.containsKey("isBig")){
+            return ok("error:bad parameters!");
+        }
+        Long cid;
+        cid = Long.valueOf(((String[])map.get("cid"))[0]);
+        Boolean isBig = Boolean.valueOf(((String[])map.get("isBig"))[0]);
+
+        Http.MultipartFormData.FilePart imgFile = body.getFile("file");
         if (imgFile != null) {
             String path = Play.application().path().getPath() + "/upload/";
             String destFileName = String.valueOf(System.currentTimeMillis());
@@ -141,7 +151,7 @@ public class CMS extends Controller {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // return redirect(routes.Courses.showImage(fileName));
+            return ok(destFileName);
 
         }
         return ok(Json.toJson("error:Missing file"));

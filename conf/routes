@@ -16,6 +16,8 @@ GET           /content/:cid           controllers.OpenService.getContentByID(cid
 PUT           /content                controllers.CMS.saveContent()
 POST          /content                controllers.CMS.saveContent()
 DELETE        /content/:cid           controllers.CMS.deleteContent(cid : Long)
+POST          /upload                 controllers.CMS.uploadImage()
+GET     /showImage/:name     controllers.OpenService.showImage(name: String)
 
 # Authentication
 GET           /login                  controllers.Application.login()

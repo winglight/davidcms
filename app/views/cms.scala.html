@@ -21,8 +21,20 @@ height: 800px
 
 						<div class="row">
 							<div class="col-xs-12" ng-controller="CmsController">
+                                <p>
                                 <select ng-model="cmstype" id="cmstype" name="cmstype" ng-options="type.id as type.name for type in cmstypes">
                                 </select>
+
+                                    <button ng-click="addContent()" class="btn btn-primary">
+                                        <i class="icon-beaker align-top bigger-125"></i>
+                                        Add Content
+                                    </button>
+
+                                    <button ng-click="deleteContent()" class="btn btn-danger">
+                                        <i class="icon-trash  align-top bigger-125 icon-on-left"></i>
+                                        Delete
+                                    </button>
+                                </p>
 
                                 <div class="gridStyle" ng-grid="gridOptions"></div>
 							</div><!-- /.col -->

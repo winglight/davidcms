@@ -59,9 +59,9 @@ public class OpenService extends Controller {
 					IOUtils.toByteArray(new FileInputStream(new File(path))));
 			return ok(bais);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return notFound(filename + " is Not Found!");
 	}

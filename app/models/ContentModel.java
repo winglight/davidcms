@@ -72,7 +72,7 @@ public class ContentModel extends Model implements Serializable{
         find.ref(cid).delete();
     }
 
-    public static void updateContentImage(Long content, String imgName, boolean isBig) {
+    public static void updateContentImage(Long content, String imgName, Boolean isBig) {
         ContentModel cm = find.byId(content);
         if(cm != null){
         if(isBig){
