@@ -24,6 +24,7 @@ import java.util.Map;
 
 import static play.data.Form.form;
 
+@Security.Authenticated(Secured.class)
 public class CMS extends Controller {
 
     public static class Company {
