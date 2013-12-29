@@ -113,9 +113,10 @@ function CmsController($scope, $http, $upload) {
         }
         $http({method: http_method, url: '/content', data:content}).success(function(data, status, headers, config) {
                 if(data.flag){
-                    alert("Successfully save content.");
+                    row.entity = data.data;
+                    $scope.alert("Successfully save content.");
                 }else{
-                    alert("Failed to save content.");
+                    $scope.alert("Failed to save content.");
                 }
             });
     };
@@ -127,18 +128,23 @@ function CmsController($scope, $http, $upload) {
     $scope.deleteContent = function(){
         var items = $scope.gridOptions.selectedItems;
         if(items.length == 0){
-            alert("Please select one content before click delete button.");
+            $scope.alert("Please select one content before click delete button.");
         }else{
             var content = items[0];
             if(content.id){
-                $http.delete('/content/' + content.id).success(function(data, status, headers, config) {
-                    var index = $scope.cmslist.indexOf(content);
-                    $scope.gridOptions.selectItem(index, false);
-                    $scope.cmslist.splice(index, 1);
-                        alert("Successfully to delete content: " + content.name);
+                bootbox.confirm("Are you sure to delete content?", function(result) {
+                    if(result) {
+                        $http.delete('/content/' + content.id).success(function(data, status, headers, config) {
+                            var index = $scope.cmslist.indexOf(content);
+                            $scope.gridOptions.selectItem(index, false);
+                            $scope.cmslist.splice(index, 1);
+                            $scope.alert("Successfully to delete content: " + content.name);
+                        });
+                    }
                 });
+
             }else{
-                alert("New content has not been saved yet.");
+                $scope.alert("New content has not been saved yet.");
             }
         }
     };
@@ -149,7 +155,7 @@ function CmsController($scope, $http, $upload) {
                     $scope.cmslist = data.data;
 
                 }else{
-                    alert("Couldn't get any content.");
+                    $scope.alert("Couldn't get any content.");
                 }
             });
     }, false);
@@ -158,10 +164,18 @@ function CmsController($scope, $http, $upload) {
         $http.put('/company', $scope.company ).success(function(data, status, headers, config) {
             if(data.flag){
                 $scope.company = data.data;
-                alert("Save successfully.");
+                $scope.alert("Save successfully.");
             }else{
-                alert("Couldn't save company. Error:" + data);
+                $scope.alert("Couldn't save company. Error:" + data);
             }
         });
     };
+
+    $scope.alert = function(msg){
+        jQuery.gritter.add({
+            title: 'Message Box',
+            text: msg,
+            class_name: 'gritter-info gritter-center gritter-light'
+        });
+    }
 }
