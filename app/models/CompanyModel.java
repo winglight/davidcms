@@ -29,6 +29,8 @@ public class CompanyModel extends Model implements Serializable{
 
     public String description;
 
+    public String marquee;
+
 	@Formats.DateTime(pattern="yyyy-MM-dd")
 	public Date createdAt;
 
@@ -47,11 +49,12 @@ public class CompanyModel extends Model implements Serializable{
         return find.all();
     }
 
-    public static CompanyModel save(String name, String description) {
+    public static CompanyModel save(String name, String description, String marquee) {
         CompanyModel cm = find.findUnique();
         if(cm != null){
             cm.name = name;
             cm.description = description;
+            cm.marquee = marquee;
 
             cm.update();
         }

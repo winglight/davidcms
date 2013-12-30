@@ -31,6 +31,7 @@ public class CMS extends Controller {
 
         public String name;
         public String description;
+        public String marquee;
 
         public String validate() {
             if (name == null || description == null) {
@@ -79,7 +80,8 @@ public class CMS extends Controller {
         } else {
             String name = loginForm.get().name;
             String desc = loginForm.get().description;
-            CompanyModel cm = CompanyModel.save(name, desc);
+            String marquee = loginForm.get().marquee;
+            CompanyModel cm = CompanyModel.save(name, desc, marquee);
 
             MessageModel<CompanyModel> mm = new MessageModel<CompanyModel>();
             mm.setFlag(true);

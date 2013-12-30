@@ -1,7 +1,7 @@
 /**
  * Created by chenyu2 on 13-12-24.
  */
-var app = angular.module('myApp',['ngGrid', 'angularFileUpload']);
+var app = angular.module('myApp',['ngGrid', 'angularFileUpload', 'fundoo.services']);
 
 app.directive('fancybox', function() {
     return {
@@ -39,7 +39,7 @@ function IntroController($scope, $http) {
     };
 }
 
-function CmsController($scope, $http, $upload) {
+function CmsController($scope, $http, $upload, createDialog) {
     $scope.cmslist = [];
     $scope.cmstypes = [
         {id:0, name:'Hall'},
@@ -53,11 +53,11 @@ function CmsController($scope, $http, $upload) {
     $scope.gridOptions = { data: 'cmslist',
         rowHeight: 150,
         showSelectionCheckbox:true,
-        enableCellSelection: true,
+        enableCellSelection: false,
         enableRowSelection: true,
         selectedItems: [],
         multiSelect:false,
-        enableCellEdit: true,
+        enableCellEdit: false,
         plugins:[new ngGridFlexibleHeightPlugin()],
         columnDefs: [
             {field: 'name', displayName: 'Name', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
@@ -122,8 +122,43 @@ function CmsController($scope, $http, $upload) {
     };
 
     $scope.addContent = function(){
-        $scope.cmslist.push({});
+        createDialog("/assets/js/controllers/editortemplate.html");
     };
+
+    $scope.editContent = function(){
+        var items = $scope.gridOptions.selectedItems;
+        if(items.length == 0){
+            $scope.alert("Please select one content before click edit button.");
+        }else{
+            var content = items[0];
+            createDialog("/assets/js/controllers/editortemplate.html", content);
+        }
+    };
+
+    $scope.showEditor = function(content){
+        bootbox.dialog({
+            message: "<span class='bigger-110'>I am a custom dialog with smaller buttons</span>",
+            buttons:
+            {
+                "Save" :
+                {
+                    "label" : "<i class='icon-ok'></i> Save",
+                    "className" : "btn-sm btn-success",
+                    "callback": function() {
+                        //Example.show("great success");
+                    }
+                },
+                "Cancel" :
+                {
+                    "label" : "Danger!",
+                    "className" : "btn-sm",
+                    "callback": function() {
+                        //Example.show("uh oh, look out!");
+                    }
+                }
+            }
+        });
+    }
 
     $scope.deleteContent = function(){
         var items = $scope.gridOptions.selectedItems;

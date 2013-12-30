@@ -7,6 +7,7 @@ create table company_model (
   id                        bigint not null,
   name                      varchar(255),
   description               varchar(255),
+  marquee                   varchar(255),
   created_at                timestamp,
   constraint pk_company_model primary key (id))
 ;
