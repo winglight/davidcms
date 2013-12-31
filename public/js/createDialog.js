@@ -11,7 +11,7 @@ angular.module('fundoo.services', []).factory('createDialog', ["$document", "$co
       controller: null, //just like route controller declaration
       backdropClass: "modal-backdrop",
       footerTemplate: null,
-      modalClass: "modal",
+      modalClass: "modal-dialog",
       css: {
         top: '100px',
         left: '30%',
@@ -55,18 +55,19 @@ angular.module('fundoo.services', []).factory('createDialog', ["$document", "$co
       })();
       //We don't have the scope we're gonna use yet, so just get a compile function for modal
       var modalEl = angular.element(
-        '<div class="' + options.modalClass + ' fade"' + idAttr + '>' +
-          '  <div class="modal-header">' +
+          '<div class="bootbox modal fade in" tabindex="-1" role="dialog" style="display: block;" aria-hidden="false">'+
+        '<div class="' + options.modalClass + ' "' + idAttr + '>' +
+          '  <div class="modal-content"><div class="modal-body">' +
           '    <button type="button" class="close" ng-click="$modalCancel()">&times;</button>' +
           '    <h2>{{$title}}</h2>' +
           '  </div>' +
           modalBody +
           footerTemplate +
-          '</div>');
+          '</div></div></div></div>');
 
-      for(key in options.css) {
-        modalEl.css(key, options.css[key]);
-      }
+//      for(key in options.css) {
+//        modalEl.css(key, options.css[key]);
+//      }
 
       var backdropEl = angular.element('<div ng-click="$modalCancel()">');
       backdropEl.addClass(options.backdropClass);

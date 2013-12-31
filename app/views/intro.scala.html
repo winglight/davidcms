@@ -1,6 +1,6 @@
 @(user: UserModel)
 
-@main(user, "Intro") {
+@main(user, "Intro", "IntroController") {
 
 					<div class="page-content">
 						<div class="page-header">
@@ -14,7 +14,7 @@
 						</div><!-- /.page-header -->
 
 						<div class="row">
-							<div class="col-xs-12" ng-controller="IntroController">
+							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 
 								<form class="form-horizontal" role="form"  ng-submit="save()">

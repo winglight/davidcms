@@ -13,7 +13,7 @@ app.directive('fancybox', function() {
 });
 
 var cellEditableTemplate = "<input ng-class=\"'colt' + col.index\" ng-input=\"COL_FIELD\" ng-model=\"COL_FIELD\" ng-blur=\"updateEntity(col, row)\"/>";
-var uploadTemplate = '<div> <input type="file" name="files[]" ng-file-select="uploadImage($files, col, row)"/>   <a class="fancybox" data-fancybox-group="gallery" fancybox ng-if="isShowImg(COL_FIELD)" ng-href="/showImage/{{COL_FIELD}}"><img ng-src="/showImage/{{COL_FIELD}}" ng-style="width:100px;height:100px" ></a></div>';
+var uploadTemplate = '<div> <input type="file" name="files[]" ng-file-select="uploadImage($files, col, row)"/>   <a class="fancybox" data-fancybox-group="gallery" fancybox ng-if="isShowImg(COL_FIELD)" ng-href="/showImage/{{COL_FIELD}}"><img ng-src="/showImage/{{COL_FIELD}}" style="width:100px;height:100px" ></a></div>';
 var ctypes = ["HALL", "SERVICE", "ACTIVITY", "SUBADDRESS"];
 
 function IntroController($scope, $http) {
@@ -39,7 +39,7 @@ function IntroController($scope, $http) {
     };
 }
 
-function CmsController($scope, $http, $upload, createDialog) {
+app.controller('CmsController', ['$scope', '$http', '$upload', 'createDialog', function($scope, $http, $upload, createDialogService){
     $scope.cmslist = [];
     $scope.cmstypes = [
         {id:0, name:'Hall'},
@@ -105,15 +105,28 @@ function CmsController($scope, $http, $upload, createDialog) {
 
     // Update Entity on the server side
     $scope.updateEntity = function(column, row) {
-        var content = row.entity;
+        $scope.currentContent = row.entity;
+        $scope.saveContent();
+    };
+
+    // Update Entity on the server side
+    $scope.saveContent = function() {
+        var content = $scope.currentContent;
+        var pos = -1;
         var http_method = "PUT";
         if(!content.id){
             http_method = "POST";
             content.contentType = ctypes[$scope.cmstype];
+        }else{
+            pos = $scope.cmslist.indexOf(content);
         }
         $http({method: http_method, url: '/content', data:content}).success(function(data, status, headers, config) {
                 if(data.flag){
-                    row.entity = data.data;
+                    if(!content.id){
+                        $scope.cmslist.push(data.data);
+                    }else{
+                        $scope.cmslist[pos] = data.data;
+                    }
                     $scope.alert("Successfully save content.");
                 }else{
                     $scope.alert("Failed to save content.");
@@ -121,8 +134,21 @@ function CmsController($scope, $http, $upload, createDialog) {
             });
     };
 
+    $scope.setContent = function(content){
+        $scope.currentContent = content;
+    };
+
     $scope.addContent = function(){
-        createDialog("/assets/js/controllers/editortemplate.html");
+        $scope.currentContent = {};
+        createDialogService("/assets/js/controllers/editortemplate.html",{
+            id: 'editor',
+            title: 'Editor Modal Dialog',
+            success:{
+                label: 'Save',
+                fn: $scope.saveContent
+            },
+            scope: $scope
+        });
     };
 
     $scope.editContent = function(){
@@ -130,8 +156,17 @@ function CmsController($scope, $http, $upload, createDialog) {
         if(items.length == 0){
             $scope.alert("Please select one content before click edit button.");
         }else{
-            var content = items[0];
-            createDialog("/assets/js/controllers/editortemplate.html", content);
+            $scope.currentContent = items[0];
+
+            createDialogService("/assets/js/controllers/editortemplate.html",{
+                id: 'editor',
+                title: 'Editor Modal Dialog',
+                success:{
+                    label: 'Save',
+                    fn: $scope.saveContent
+                },
+                scope: $scope
+            });
         }
     };
 
@@ -213,4 +248,4 @@ function CmsController($scope, $http, $upload, createDialog) {
             class_name: 'gritter-info gritter-center gritter-light'
         });
     }
-}
+}]);

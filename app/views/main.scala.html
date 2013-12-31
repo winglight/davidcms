@@ -1,4 +1,4 @@
-@(user: UserModel, title: String)(content: Html)
+@(user: UserModel, title: String, controller: String)(content: Html)
 
 <!DOCTYPE html>
 <html lang="zh" ng-app="myApp">
@@ -48,7 +48,7 @@
 		<![endif]-->
 	</head>
 
-	<body>
+	<body ng-controller="@controller">
 		<div class="navbar navbar-default" id="navbar">
 			<script type="text/javascript">
 				try{ace.settings.check('navbar' , 'fixed')}catch(e){}

@@ -1,6 +1,6 @@
 @(user: UserModel)
 
-@main(user, "CMS") {
+@main(user, "CMS", "CmsController") {
 <style>
 .gridStyle {
 border: 1px solid rgb(212,212,212);
@@ -20,7 +20,7 @@ height: 800px
 						</div><!-- /.page-header -->
 
 						<div class="row">
-							<div class="col-xs-12" ng-controller="CmsController">
+							<div class="col-xs-12">
                                 <p>
                                 <select ng-model="cmstype" id="cmstype" name="cmstype" ng-options="type.id as type.name for type in cmstypes">
                                 </select>

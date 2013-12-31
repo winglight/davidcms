@@ -1,23 +1,23 @@
 <div class="row">
-    <div class="col-xs-12" ng-controller="IntroController">
+    <div class="col-xs-12" >
         <!-- PAGE CONTENT BEGINS -->
 
-        <form class="form-horizontal" role="form"  ng-submit="save()">
+        <form class="form-horizontal" role="form"  ng-submit="saveContent()">
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Name: </label>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Content Title: </label>
 
                 <div class="col-sm-9">
-                    <input type="text" id="form-field-1" placeholder="Company Name" ng-model="company.name" class="col-xs-10 col-sm-5" />
+                    <input type="text" id="form-field-1" placeholder="Content Title" ng-model="currentContent.name" class="col-xs-10 col-sm-5" />
                 </div>
             </div>
 
             <div class="space-4"></div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Description: </label>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Description: </label>
 
                 <div class="col-sm-9">
-                    <textarea class="form-control" id="form-field-8" placeholder="Short description"  ng-model="company.description"></textarea>
+                    <textarea class="form-control" id="form-field-8" placeholder="Short description"  ng-model="currentContent.description"></textarea>
 											<span class="help-inline col-xs-12 col-sm-7">
 												<span class="middle">* Not over 200 words</span>
 											</span>
@@ -27,23 +27,20 @@
             <div class="space-4"></div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-3"> Marquee Info: </label>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> URL: </label>
 
                 <div class="col-sm-9">
-                    <textarea class="form-control" id="form-field-9" placeholder="Messages for user"  ng-model="company.marquee"></textarea>
-											<span class="help-inline col-xs-12 col-sm-7">
-												<span class="middle">* Not over 100 words</span>
-											</span>
+                    <input type="text" id="form-field-2" placeholder="Web URL" ng-model="currentContent.url" class="col-xs-10 col-sm-5" />
                 </div>
             </div>
 
-            <div class="clearfix form-actions">
-                <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" type="button" ng-click="save()" >
-                        <i class="icon-ok bigger-110"></i>
-                        Submit
-                    </button>
+            <div class="space-4"></div>
 
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Phone Number: </label>
+
+                <div class="col-sm-9">
+                    <input type="text" id="form-field-3" placeholder="Phone Number" ng-model="currentContent.phoneNumber" class="col-xs-10 col-sm-5" />
                 </div>
             </div>
 
