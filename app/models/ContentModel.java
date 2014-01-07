@@ -40,6 +40,8 @@ public class ContentModel extends Model implements Serializable{
 
     public ContentLanguage language;
 
+    public boolean deleteFlag;
+
 	@Formats.DateTime(pattern="yyyy-MM-dd")
 	public Date createdAt;
 
@@ -65,7 +67,7 @@ public class ContentModel extends Model implements Serializable{
 	}
 
     public static List<ContentModel> getContentsByType(Long contentType) {
-        return find.where().eq("contentType", contentType).findList();
+        return find.where().eq("contentType", contentType).eq("deleteFlag", false).findList();
     }
 
     public static void delete(Long cid) {
