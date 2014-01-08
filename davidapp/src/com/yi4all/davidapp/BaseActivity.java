@@ -11,40 +11,21 @@ import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import com.appaholics.updatechecker.UpdateChecker;
+import com.yi4all.davidapp.service.ServiceImpl;
 
 public class BaseActivity extends FragmentActivity{
 
-	private static final String IMAGE_CACHE_DIR = "images";
-	
 	//Service instance for RPC or DB
 	private ServiceImpl service;
 	
-	private Bitmap no_image;
-
-	private Bitmap default_image;
-	
-	private int imgWidth;
-	private int imgHeight;
-
 	private final Object mClickLock = new Object();
-	
-	protected StartAppAd startAppAd = new StartAppAd(this);
-	
-	protected AirSDK airsdk; //Declare AirSDK here
 	
 	private UpdateChecker checker;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        StartAppAd.init(this, "112302125", "212016065");
-        StartAppSearch.init(this, "112302125", "212016065");
-        
-        if(airsdk==null)
-        	airsdk=new AirSDK(getApplicationContext(), null, true);
-        
-        airsdk.startPushNotification(false);
         
         checker = new UpdateChecker(this, false);
         
@@ -115,12 +96,12 @@ public class BaseActivity extends FragmentActivity{
 	}
 	}
 	
-	public void checkUpdateNDownload(AppModel app){
-		checker.checkForUpdateByVersionCode(service.getURL() + "/apps/checkupdate/" + app.getId());
-		if(checker.isUpdateAvailable()){
-			downloadApk(app.getDownurl());
-		}
-	}
+//	public void checkUpdateNDownload(){
+//		checker.checkForUpdateByVersionCode(service.getURL() + "/apps/checkupdate/" + app.getId());
+//		if(checker.isUpdateAvailable()){
+//			downloadApk(app.getDownurl());
+//		}
+//	}
 	
 	public void downloadApk(String url){
 		checker.downloadAndInstall(url);
@@ -137,9 +118,6 @@ public class BaseActivity extends FragmentActivity{
     protected void onPause() {
         super.onPause();
         
-        startAppAd.onPause();
-        
-        airsdk.startIconAd();
     }
 
     @Override
@@ -155,21 +133,5 @@ public class BaseActivity extends FragmentActivity{
     	}
     	return service;
     }
-
-	public Bitmap getNo_image() {
-		return no_image;
-	}
-
-	public Bitmap getDefault_image() {
-		return default_image;
-	}
-
-	public int getImgWidth() {
-		return imgWidth;
-	}
-
-	public int getImgHeight() {
-		return imgHeight;
-	}
 
 }

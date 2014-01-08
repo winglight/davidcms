@@ -7,6 +7,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.yi4all.davidapp.db.CMSDBOpenHelper;
+import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
 
@@ -68,7 +69,7 @@ public class DBServiceImpl implements IDBService {
 	}
 
 	@Override
-	public void updateApps(List<ContentModel> list) {
+	public void updateContents(List<ContentModel> list) {
 		try {
 			Dao<ContentModel, Long> udao = cmsHelper.getContentDAO();
 
@@ -99,4 +100,45 @@ public class DBServiceImpl implements IDBService {
 		}
 
 	}
+
+    @Override
+    public CompanyModel getDefaultCompany() {
+        try {
+            Dao<CompanyModel, Long> dba = cmsHelper.getCompanyDAO();
+
+            List<CompanyModel> list = dba.queryForAll();
+            if(list != null && list.size() > 0){
+                return list.get(0);
+            }
+
+        } catch (SQLException e) {
+
+            Log.e(LOG_TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public void updateCompany(CompanyModel cm) {
+        try {
+            Dao<CompanyModel, Long> dba = cmsHelper.getCompanyDAO();
+
+            List<CompanyModel> list = dba.queryForAll();
+            if(list != null && list.size() > 0){
+                CompanyModel cm2 = list.get(0);
+                cm2.setName(cm.getName());
+                cm2.setDescription(cm.getDescription());
+                cm2.setMarquee(cm.getMarquee());
+                cm2.setCreatedAt(cm.getCreatedAt());
+
+                dba.update(cm2);
+            }else {
+                dba.create(cm);
+            }
+
+        } catch (SQLException e) {
+
+            Log.e(LOG_TAG, e.getMessage());
+        }
+    }
 }

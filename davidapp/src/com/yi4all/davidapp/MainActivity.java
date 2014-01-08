@@ -9,7 +9,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.widget.TextView;
 import com.viewpagerindicator.TabPageIndicator;
+import com.yi4all.davidapp.db.CompanyModel;
+import com.yi4all.davidapp.util.Utils;
 
 public class MainActivity extends BaseActivity {
 
@@ -19,14 +22,16 @@ public class MainActivity extends BaseActivity {
 
 	private boolean isTwiceQuit;
 
+    private TextView carouselTxt;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		StartAppSearch.showSearchBox(this);
-
 		pageTitle = getResources().getStringArray(R.array.main_tab_label);
+
+        carouselTxt = (TextView) findViewById(R.id.carouselTxt);
 
 		FragmentPagerAdapter adapter = new MarketTabAdapter(
 				getSupportFragmentManager());
@@ -37,7 +42,7 @@ public class MainActivity extends BaseActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				currentTab = AppsTab.values()[position];
+//				currentTab = AppsTab.values()[position];
 			}
 
 			@Override
@@ -59,7 +64,16 @@ public class MainActivity extends BaseActivity {
 		pager.setCurrentItem(2);
 	}
 
-	@Override
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        CompanyModel company = getService().getDefaultCompany();
+
+        carouselTxt.setText(company.getMarquee());
+    }
+
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
@@ -72,17 +86,7 @@ public class MainActivity extends BaseActivity {
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			if (isTwiceQuit) {
-				startAppAd.onBackPressed();
-				
-				if (airsdk!=null) {
-			        //Use only one from below.
-			        airsdk.startAppWall();
-			        airsdk.startOverlayAd();
-			        airsdk.startVideoAd();
-			        airsdk.startLandingPageAd();
-			        airsdk.showRichMediaInterstitialAd();
-			    }
-				
+
 				this.finish();
 			} else {
 				Utils.toastMsg(this, R.string.sure_quit_app);
@@ -110,7 +114,36 @@ public class MainActivity extends BaseActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			return  MyPullToRefreshListFragment.getMyPullToRefreshListFragment(AppsTab.values()[position]);
+            Fragment f = new Fragment();
+            switch (position){
+                case 0:
+                    //資料查詢
+                    break;
+                case 1:
+                    //推廣諮訊
+                    break;
+                case 2:
+                    //聽會介紹
+                    break;
+                case 3:
+                    //大衛集團
+
+                    break;
+                case 4:
+                    //線上預訂
+                    break;
+                case 5:
+                    //服務項目
+                    break;
+                case 6:
+                    //聯繫我們
+                    break;
+                case 7:
+                    //意見箱
+                    break;
+
+            }
+			return  f;
 		}
 
 		@Override

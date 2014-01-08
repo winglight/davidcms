@@ -1,5 +1,6 @@
 package com.yi4all.davidapp.service;
 
+import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
 
@@ -12,6 +13,10 @@ public interface IDBService {
 	//apps
 	public List<ContentModel> getContentsByType(ContentType type);
 	
-	public void updateApps(List<ContentModel> list);
+	public void updateContents(List<ContentModel> list);
+
+    public CompanyModel getDefaultCompany();
+
+    public void updateCompany(CompanyModel cm);
 
 }
