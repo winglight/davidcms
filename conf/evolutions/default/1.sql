@@ -22,6 +22,7 @@ create table content_model (
   big_pic                   varchar(255),
   content_type              integer,
   language                  integer,
+  delete_flag               boolean,
   created_at                timestamp,
   constraint ck_content_model_content_type check (content_type in (0,1,2,3)),
   constraint ck_content_model_language check (language in (0,1)),

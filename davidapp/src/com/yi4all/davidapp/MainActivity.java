@@ -9,9 +9,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.TextView;
 import com.viewpagerindicator.TabPageIndicator;
 import com.yi4all.davidapp.db.CompanyModel;
+import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.fragment.IntroFragment;
+import com.yi4all.davidapp.fragment.ServiceListFragment;
 import com.yi4all.davidapp.util.Utils;
 
 public class MainActivity extends BaseActivity {
@@ -23,19 +29,26 @@ public class MainActivity extends BaseActivity {
 	private boolean isTwiceQuit;
 
     private TextView carouselTxt;
+    
+    private int currentTabPos;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);  
+		
 		setContentView(R.layout.activity_main);
 		
 		pageTitle = getResources().getStringArray(R.array.main_tab_label);
 
-        carouselTxt = (TextView) findViewById(R.id.carouselTxt);
+//        carouselTxt = (TextView) findViewById(R.id.carouselTxt);
 
-		FragmentPagerAdapter adapter = new MarketTabAdapter(
+		FragmentPagerAdapter adapter = new CMSTabAdapter(
 				getSupportFragmentManager());
 
+		final TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
+		
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(adapter);
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
@@ -43,6 +56,15 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onPageSelected(int position) {
 //				currentTab = AppsTab.values()[position];
+				//set older tab text appearance
+				TextView oldTab = (TextView) indicator.getChildAt(currentTabPos); 
+				oldTab.setTextColor(R.color.tab_text_color);
+				oldTab.setTextSize(R.dimen.tab_text_dimen);
+				//set new tab text appearance
+				currentTabPos = position;
+				TextView newTab = (TextView) indicator.getChildAt(currentTabPos); 
+				newTab.setTextColor(R.color.tab_selected_text_color);
+				newTab.setTextSize(R.dimen.tab_selected_text_dimen);
 			}
 
 			@Override
@@ -58,10 +80,11 @@ public class MainActivity extends BaseActivity {
 			}
 		});
 
-		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
 		indicator.setViewPager(pager);
 		
-		pager.setCurrentItem(2);
+		pager.setCurrentItem(3);
+		
+		currentTabPos = 3;
 	}
 
     @Override
@@ -70,7 +93,9 @@ public class MainActivity extends BaseActivity {
 
         CompanyModel company = getService().getDefaultCompany();
 
+        if(company != null){
         carouselTxt.setText(company.getMarquee());
+        }
     }
 
     @Override
@@ -107,14 +132,14 @@ public class MainActivity extends BaseActivity {
 		}
 	}
 
-	class MarketTabAdapter extends FragmentPagerAdapter {
-		public MarketTabAdapter(FragmentManager fm) {
+	class CMSTabAdapter extends FragmentPagerAdapter {
+		public CMSTabAdapter(FragmentManager fm) {
 			super(fm);
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-            Fragment f = new Fragment();
+            Fragment f = new IntroFragment();
             switch (position){
                 case 0:
                     //資料查詢
@@ -127,13 +152,14 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 3:
                     //大衛集團
-
+                    f = new IntroFragment();
                     break;
                 case 4:
                     //線上預訂
                     break;
                 case 5:
                     //服務項目
+                    f = new ServiceListFragment();
                     break;
                 case 6:
                     //聯繫我們

@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
-import com.devspark.appmsg.AppMsg;
+import android.widget.Toast;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -20,19 +20,11 @@ public class Utils {
 	public final static String LOGTAG = "Utils";
 	private static String imgDir = null;
 
-	public static void toastMsg(final Activity context, final int resId,
-			final Object... args) {
-		context.runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				final String msg = context.getString(resId, args);
-				AppMsg.makeText(context, msg, AppMsg.STYLE_INFO).show();
-
-			}
-		});
-
-	}
+    public static void toastMsg(final Activity context, final int resId,
+                                final Object... args) {
+        final String msg = context.getString(resId, args);
+        toastMsg(context, msg,args);
+    }
 	
 	public static void toastMsg(final Activity context, final String msg,
 			final Object... args) {
@@ -40,9 +32,7 @@ public class Utils {
 
 			@Override
 			public void run() {
-				AppMsg message = AppMsg.makeText(context, msg, AppMsg.STYLE_INFO);
-				message.setLayoutGravity(Gravity.BOTTOM);
-				message.show();
+                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
 
 			}
 		});

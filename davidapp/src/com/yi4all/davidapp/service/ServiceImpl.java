@@ -31,10 +31,11 @@ public class ServiceImpl {
 	private IRemoteService remoteService;
 	private Activity context;
 
-    private CompanyModel company;
+	private CompanyModel company;
 
-	private Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new JsonDateDeserializer()).create();
-	
+	private Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
+			new JsonDateDeserializer()).create();
+
 	private static ServiceImpl instance;
 
 	public static ServiceImpl getInstance(Activity context) {
@@ -68,125 +69,112 @@ public class ServiceImpl {
 		return dbService;
 	}
 
-    public CompanyModel getDefaultCompany(){
-        if(company == null){
-        CompanyModel cm = getDbService().getDefaultCompany();
-        if (cm == null){
-            cm = remoteService.getDefaultCompany();
-            if(cm != null){
-                getDbService().updateCompany(cm);
-            }
-        }else {
-            //TODO:async update company info
-            refreshDefaultCompany();
-        }
-    }
-        return company;
-    }
+	public CompanyModel getDefaultCompany() {
+		if (company == null) {
+			CompanyModel cm = getDbService().getDefaultCompany();
+			if (cm == null) {
+				cm = remoteService.getDefaultCompany();
+				if (cm != null) {
+					getDbService().updateCompany(cm);
+				}
+			}
+			// TODO:async update company info
+			refreshDefaultCompany();
+		}
+		return company;
+	}
 
-    public void refreshDefaultCompany() {
-        String url = remoteService.getBaseUrl() + "/company";
+	public void refreshDefaultCompany() {
+		String url = remoteService.getBaseUrl() + "/company";
 
-        JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Message messsage = handler.obtainMessage();
-                        messsage.what = currentTab.value();
-                        messsage.arg2 = page;
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
 
-                        MessageModel<List<AppModel>> msg = gson.fromJson(response.toString(),
-                                new TypeToken<MessageModel<List<AppModel>>>() {}.getType());
+						MessageModel<CompanyModel> msg = gson.fromJson(
+								response.toString(),
+								new TypeToken<MessageModel<CompanyModel>>() {
+								}.getType());
 
-                        if (!msg.isFlag()) {
+						if (!msg.isFlag()) {
 
-                            messsage.arg1 = 1;//fail flag
-                            messsage.obj = msg.getMessage();
-                        } else {
-                            List<AppModel> apps = msg.getData();
-                            messsage.arg1 = 0;//success flag
-                            messsage.obj = apps;
+						} else {
+							CompanyModel cm = msg.getData();
+							getDbService().updateCompany(cm);
+						}
 
-                            //save apps into local db
-                            getDbService().updateApps(apps);
-                        }
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
 
-                        handler.sendMessage(messsage);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
+					}
+				});
 
-                Message messsage = handler.obtainMessage();
-                messsage.what = currentTab.value();
-                messsage.arg2 = page;
-                messsage.arg1 = 1;//fail flag
-                messsage.obj = VolleyErrorHelper.getMessage(error, context);
-
-                handler.sendMessage(messsage);
-            }
-        });
-
-        ApplicationController.getInstance().addToRequestQueue(req);
-    }
+		ApplicationController.getInstance().addToRequestQueue(req);
+	}
 
 	public List<ContentModel> getContentsByType(ContentType type) {
 		return getDbService().getContentsByType(type);
 	}
-	
 
-	public void getContentsByTypeRemote(final Handler handler, final ContentType type, Date lastUpdateDate) {
-			String url = remoteService.getBaseUrl();
-                url += "/contents/" + type.value();
+	public void getContentsByTypeRemote(final Handler handler,
+			final ContentType type, Date lastUpdateDate) {
+		String url = remoteService.getBaseUrl();
+		url += "/contents/" + type.value();
 
-			if(lastUpdateDate != null){
-				url += "?lastUpdateDate=" + lastUpdateDate.getTime();
-			}
-			
-			JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
-				       new Response.Listener<JSONObject>() {
-				           @Override
-				           public void onResponse(JSONObject response) {
-				        	   Message messsage = handler.obtainMessage();
-				       		messsage.what = type.value();
+		if (lastUpdateDate != null) {
+			url += "?lastUpdateDate=" + lastUpdateDate.getTime();
+		}
 
-				       		  MessageModel<List<ContentModel>> msg = gson.fromJson(response.toString(),
-				                         new TypeToken<MessageModel<List<ContentModel>>>() {}.getType());
-				       		  
-				       		  if (!msg.isFlag()) {
-				       			  
-				       				messsage.arg1 = 1;//fail flag
-				       				messsage.obj = msg.getMessage();
-				       			} else {
-				       				List<ContentModel> apps = msg.getData();
-				       				messsage.arg1 = 0;//success flag
-				       				messsage.obj = apps;
-				       				
-				       				//save apps into local db
-				       				getDbService().updateContents(apps);
-				       			}
-				       		
-				       		handler.sendMessage(messsage);
-				           }
-				       }, new Response.ErrorListener() {
-				           @Override
-				           public void onErrorResponse(VolleyError error) {
-				               VolleyLog.e("Error: ", error.getMessage());
-				               
-				               Message messsage = handler.obtainMessage();
-					       		messsage.what = type.value();
-					       		messsage.arg1 = 1;//fail flag
-			       				messsage.obj = VolleyErrorHelper.getMessage(error, context);
-			       				
-			       				handler.sendMessage(messsage);
-				           }
-				       });
-			
-			ApplicationController.getInstance().addToRequestQueue(req);
-		
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message messsage = handler.obtainMessage();
+						messsage.what = type.value();
+
+						MessageModel<List<ContentModel>> msg = gson.fromJson(
+								response.toString(),
+								new TypeToken<MessageModel<List<ContentModel>>>() {
+								}.getType());
+
+						if (!msg.isFlag()) {
+
+							messsage.arg1 = 1;// fail flag
+							messsage.obj = msg.getMessage();
+						} else {
+							List<ContentModel> apps = msg.getData();
+							messsage.arg1 = 0;// success flag
+							messsage.obj = apps;
+
+							// save apps into local db
+							getDbService().updateContents(apps);
+						}
+
+						handler.sendMessage(messsage);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.what = type.value();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
 	}
-	
+
 	public void close() {
 		if (dbService != null) {
 			dbService.close();

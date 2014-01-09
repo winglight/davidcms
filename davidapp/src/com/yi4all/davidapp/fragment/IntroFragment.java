@@ -50,9 +50,6 @@ public class IntroFragment extends Fragment {
 
         nameTxt = (TextView) v.findViewById(R.id.groupName);
         descTxt = (TextView) v.findViewById(R.id.groupDesc);
-        CompanyModel company = ((BaseActivity)getActivity()).getService().getDefaultCompany();
-        nameTxt.setText(company.getName());
-        descTxt.setText(company.getDescription());
 
         return v;
     }
@@ -60,7 +57,12 @@ public class IntroFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+
+        CompanyModel company = ((BaseActivity)getActivity()).getService().getDefaultCompany();
+        if(company != null){
+        nameTxt.setText(company.getName());
+        descTxt.setText(company.getDescription());
+        }
 	}
 	
 }

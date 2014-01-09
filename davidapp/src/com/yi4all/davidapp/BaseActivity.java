@@ -31,8 +31,6 @@ public class BaseActivity extends FragmentActivity{
         
         service = ServiceImpl.getInstance(this);
         
-        getSupportFragmentManager().addOnBackStackChangedListener(getListener());
-        
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         
         Log.d("BaseActivity", "dpi:"+metrics.density*160);
@@ -41,60 +39,6 @@ public class BaseActivity extends FragmentActivity{
         
     }
 	
-	private OnBackStackChangedListener getListener()
-    {
-        OnBackStackChangedListener result = new OnBackStackChangedListener()
-        {
-            public void onBackStackChanged() 
-            {                   
-                FragmentManager manager = getSupportFragmentManager();
-
-                if (manager != null)
-                {
-                    Fragment currFrag = manager.
-                    findFragmentById(android.R.id.content);
-                    
-                }                   
-            }
-        };
-
-        return result;
-    }
-	
-	public void addFragment(Fragment f, String tag,int id){
-		synchronized (mClickLock) {
-            final FragmentTransaction ft = getSupportFragmentManager().
-            		beginTransaction();
-//            ft.setCustomAnimations(R.anim.push_right_in,R.anim.push_left_out);
-            ft.replace(id, f, tag).addToBackStack(tag);
-            ft.commit();
-            mClickLock.notifyAll();
-		}            
-	}
-	
-	public void clearFragment(){
-		synchronized (mClickLock) {
-		final FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-//		ft.setCustomAnimations(R.anim.push_left_in, R.anim.push_right_out);
-		for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {    
-		    fm.popBackStack();
-		}
-		ft.commit();
-		mClickLock.notifyAll();
-	}
-	}
-	
-	public void backFragment(Fragment f){
-		synchronized (mClickLock) {
-		final FragmentTransaction ft = getSupportFragmentManager().
-        		beginTransaction();
-//		ft.setCustomAnimations(R.anim.push_left_in, R.anim.push_right_out);
-		ft.remove(f);
-		ft.commit();
-		mClickLock.notifyAll();
-	}
-	}
 	
 //	public void checkUpdateNDownload(){
 //		checker.checkForUpdateByVersionCode(service.getURL() + "/apps/checkupdate/" + app.getId());

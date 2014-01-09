@@ -69,7 +69,7 @@ public class RemoteServiceImpl implements IRemoteService {
         String url = base_url
                 + "/company";
         RequestFuture<JSONObject> future = RequestFuture.newFuture();
-        JsonObjectRequest request = new JsonObjectRequest(url, new JSONObject(), future, future);
+        JsonObjectRequest request = new JsonObjectRequest(url, null, future, future);
         ApplicationController.getInstance().addToRequestQueue(request);
 
         try {
@@ -77,15 +77,15 @@ public class RemoteServiceImpl implements IRemoteService {
             MessageModel<CompanyModel> msg = new Gson().fromJson(response.toString(),
                     new TypeToken<MessageModel<CompanyModel>>() {
                     }.getType());
-            if (!msg.isFlag()) {
-                return null;
-            } else {
+            if (msg.isFlag()){
                 return msg.getData();
             }
         } catch (InterruptedException e) {
             // exception handling
+            e.printStackTrace();
         } catch (ExecutionException e) {
             // exception handling
+            e.printStackTrace();
         }
         return null;
     }

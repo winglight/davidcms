@@ -8,7 +8,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 import com.android.volley.toolbox.Volley;
-import com.yi4all.appmarketapp.util.BitmapCache;
+import com.yi4all.davidapp.util.BitmapCache;
 
 public class ApplicationController extends Application {
 
@@ -29,7 +29,7 @@ public class ApplicationController extends Application {
     
  // http client instance
 //    private DefaultHttpClient mHttpClient;
-    
+
     private  ImageLoader mImageLoader;
     private  ImageCache mImageCache;
 
@@ -95,7 +95,6 @@ public class ApplicationController extends Application {
      * Adds the specified request to the global queue using the Default TAG.
      * 
      * @param req
-     * @param tag
      */
     public <T> void addToRequestQueue(Request<T> req) {
         // set the default tag if tag is empty

@@ -35,16 +35,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 	
 	private AppAdapter mAdapter;
 
-    private ContentType type;
-	
 	private ArrayList<ContentModel> contents = new ArrayList<ContentModel>();
-	
-	public static ServiceListFragment getMyPullToRefreshListFragment(final ContentType type) {
-        ServiceListFragment f = new ServiceListFragment();
-		f.type = type;
-		
-		return f;
-	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -57,11 +48,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 					@Override
 					public void onRefresh(
 							PullToRefreshBase<ListView> refreshView) {
-						if (getPullToRefreshListView().getCurrentMode() == Mode.PULL_FROM_END) {
-							loadListByPage(type);
-						}else{
-							loadListByPage(type);
-						}
+							loadListByPage(ContentType.SERVICE);
 
 					}
 				});
@@ -93,7 +80,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 		
 		setListShown(true);
 		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage(type);
+				loadListByPage(ContentType.SERVICE);
 				
 	}
 	
@@ -105,7 +92,10 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 	 */
 	private void loadListByPage(final ContentType type) {
 
-			Date lastUpdateDate = contents.get(0).getCreatedAt();
+			Date lastUpdateDate = null;
+			if(contents.size() > 0){
+				lastUpdateDate = contents.get(0).getCreatedAt();
+			}
 
 				List<ContentModel> moreApps = ((BaseActivity)getActivity()).getService().getContentsByType(type);
 				if (moreApps != null && moreApps.size() > 0) {
@@ -197,7 +187,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 			final ContentModel am = contents.get(position);
 
 			// set triangle for the add
-			holder.icon.setImageUrl(am.getSmallPic(), ApplicationController
+			holder.icon.setImageUrl(((BaseActivity)getActivity()).getService().getURL() + am.getSmallPic(), ApplicationController
                     .getInstance().getmImageLoader());
 			holder.name.setText(am.getName());
 			holder.description.setText(String.valueOf(am.getDescription()));
