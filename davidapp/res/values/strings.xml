@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">大卫集团</string>
+    <string name="app_name">大衛集團</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="generic_server_down">Server is down temporary! Please try again later.</string>
+    <string name="no_internet">No internet connection now!</string>
+    <string name="generic_error">Network error!</string>
+    <string name="refresh_no_data">No new data updated!</string>
+    <string name="load_no_more_data">No more data to load!</string>
+    <string name="login_error">Failed to login for network error!</string>
+    <string name="sure_quit_app">Press BACK button again to quit app</string>
+    <string name="no_carousel">No carousel message</string>
 
+    <string-array name="main_tab_label">
+        <item >資料查詢</item>
+        <item >推廣諮訊</item>
+        <item >聽會介紹</item>
+        <item >大衛集團</item>
+        <item >線上預訂</item>
+        <item >服務項目</item>
+        <item >聯繫我們</item>
+        <item >意見箱</item>
+    </string-array>
 </resources>
