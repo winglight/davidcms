@@ -24,7 +24,7 @@ create table content_model (
   language                  integer,
   delete_flag               boolean,
   created_at                timestamp,
-  constraint ck_content_model_content_type check (content_type in (0,1,2,3)),
+  constraint ck_content_model_content_type check (content_type in (0,1,2,3,4)),
   constraint ck_content_model_language check (language in (0,1)),
   constraint pk_content_model primary key (id))
 ;

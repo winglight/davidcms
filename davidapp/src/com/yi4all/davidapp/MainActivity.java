@@ -12,13 +12,19 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 import com.viewpagerindicator.TabPageIndicator;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.fragment.HallListFragment;
 import com.yi4all.davidapp.fragment.IntroFragment;
+import com.yi4all.davidapp.fragment.MarketingListFragment;
+import com.yi4all.davidapp.fragment.OrderFragment;
 import com.yi4all.davidapp.fragment.ServiceListFragment;
 import com.yi4all.davidapp.util.Utils;
+import com.yi4all.davidapp.view.InfiniteGallery;
 
 public class MainActivity extends BaseActivity {
 
@@ -29,6 +35,8 @@ public class MainActivity extends BaseActivity {
 	private boolean isTwiceQuit;
 
     private TextView carouselTxt;
+    
+    private TextView oldTab;
     
     private int currentTabPos;
 
@@ -42,29 +50,22 @@ public class MainActivity extends BaseActivity {
 		
 		pageTitle = getResources().getStringArray(R.array.main_tab_label);
 
-//        carouselTxt = (TextView) findViewById(R.id.carouselTxt);
+        carouselTxt = (TextView) findViewById(R.id.carouselTxt);
 
 		FragmentPagerAdapter adapter = new CMSTabAdapter(
 				getSupportFragmentManager());
 
-		final TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
+		final InfiniteGallery indicator = (InfiniteGallery) findViewById(R.id.indicator);
 		
-		ViewPager pager = (ViewPager) findViewById(R.id.pager);
+		final ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(adapter);
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
 			public void onPageSelected(int position) {
 //				currentTab = AppsTab.values()[position];
-				//set older tab text appearance
-				TextView oldTab = (TextView) indicator.getChildAt(currentTabPos); 
-				oldTab.setTextColor(R.color.tab_text_color);
-				oldTab.setTextSize(R.dimen.tab_text_dimen);
-				//set new tab text appearance
-				currentTabPos = position;
-				TextView newTab = (TextView) indicator.getChildAt(currentTabPos); 
-				newTab.setTextColor(R.color.tab_selected_text_color);
-				newTab.setTextSize(R.dimen.tab_selected_text_dimen);
+				int pos = currentTabPos - (currentTabPos%Integer.MAX_VALUE) + position;
+				indicator.setSelection(pos);
 			}
 
 			@Override
@@ -80,11 +81,55 @@ public class MainActivity extends BaseActivity {
 			}
 		});
 
-		indicator.setViewPager(pager);
+		
+		indicator.setTabs(pageTitle);
+		indicator.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> adapter, View view,
+					int position, long arg3) {
+				//set older tab text appearance
+				if(oldTab != null){
+				oldTab.setTextColor(getResources().getColor(R.color.tab_text_color));
+				oldTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_text_dimen));
+				oldTab.invalidate();
+				}
+				//set new tab text appearance
+				currentTabPos = position;
+				TextView newTab = (TextView) view; 
+				newTab.setTextColor(getResources().getColor(R.color.tab_selected_text_color));
+				newTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_selected_text_dimen));
+				newTab.invalidate();
+				
+				indicator.invalidate();
+				
+				oldTab = newTab;
+				
+				pager.setCurrentItem(position%pageTitle.length);
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		indicator.setSelection(getMiddlePos());
 		
 		pager.setCurrentItem(3);
 		
-		currentTabPos = 3;
+	}
+	
+	private int getMiddlePos(){
+		int res = Integer.MAX_VALUE/2;
+		int add = res%pageTitle.length;
+		res = res + (3 - add);
+		
+		currentTabPos = res;
+		
+		return res;
 	}
 
     @Override
@@ -146,9 +191,11 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 1:
                     //推廣諮訊
+                	f= new MarketingListFragment();
                     break;
                 case 2:
                     //聽會介紹
+                	f = new HallListFragment();
                     break;
                 case 3:
                     //大衛集團
@@ -156,6 +203,7 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 4:
                     //線上預訂
+                	f = new OrderFragment();
                     break;
                 case 5:
                     //服務項目

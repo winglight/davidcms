@@ -10,10 +10,11 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/background_main">
-        <com.viewpagerindicator.TabPageIndicator
+        <com.yi4all.davidapp.view.InfiniteGallery
                 android:id="@+id/indicator"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:gravity="bottom"
                 android:background="@drawable/background_tabs"
                 
                 />
@@ -21,8 +22,10 @@
                 android:id="@+id/carouselTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:padding="0dp"
                 android:text="@string/no_carousel"
+                android:textColor="@android:color/white"
                 android:singleLine="true"
                 android:ellipsize="marquee"
                 android:focusable="true"

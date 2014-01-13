@@ -32,9 +32,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ServiceListFragment extends PullToRefreshListFragment{
+public class HallListFragment extends PullToRefreshListFragment{
 	
-	private final static String LOGTAG = "ServiceListFragment";
+	private final static String LOGTAG = "HallListFragment";
 	
 	private AppAdapter mAdapter;
 
@@ -60,7 +60,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 							    // Update the LastUpdatedLabel
 							    refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 							    
-							loadListByPage(ContentType.SERVICE);
+							loadListByPage(ContentType.HALL);
 
 					}
 				});
@@ -92,7 +92,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 		
 		setListShown(true);
 		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage(ContentType.SERVICE);
+				loadListByPage(ContentType.HALL);
 				
 	}
 	
@@ -192,7 +192,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 				return null;
 
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.service_list_item, null);
+				convertView = mInflater.inflate(R.layout.hall_list_item, null);
 			}
 
 			ViewHolder holder = (ViewHolder) convertView.getTag();

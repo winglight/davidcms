@@ -2,6 +2,12 @@
 <resources>
 
     <string name="app_name">大衛集團</string>
+    <string name="last_update_time">上次更新時間: </string>
+    <string name="order_memo_hint">請輸入您的預訂要求... </string>
+    <string name="order_name_hint">請輸入您的姓名 </string>
+    <string name="order_phone_hint">請輸入您的電話 </string>
+    <string name="order_submit">提交 </string>
+    <string name="order_history">訂單列表</string>
     <string name="action_settings">Settings</string>
     <string name="generic_server_down">Server is down temporary! Please try again later.</string>
     <string name="no_internet">No internet connection now!</string>

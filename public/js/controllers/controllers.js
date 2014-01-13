@@ -14,7 +14,7 @@ app.directive('fancybox', function() {
 
 var cellEditableTemplate = "<input ng-class=\"'colt' + col.index\" ng-input=\"COL_FIELD\" ng-model=\"COL_FIELD\" ng-blur=\"updateEntity(col, row)\"/>";
 var uploadTemplate = '<div> <input type="file" name="files[]" ng-file-select="uploadImage($files, col, row)"/>   <a class="fancybox" data-fancybox-group="gallery" fancybox ng-if="isShowImg(COL_FIELD)" ng-href="/showImage/{{COL_FIELD}}"><img ng-src="/showImage/{{COL_FIELD}}" style="width:100px;height:100px" ></a></div>';
-var ctypes = ["HALL", "SERVICE", "ACTIVITY", "SUBADDRESS"];
+var ctypes = ["HALL", "SERVICE", "ACTIVITY", "SUBADDRESS", "ORDERITEM"];
 
 function IntroController($scope, $http) {
     $scope.company = {};
@@ -45,7 +45,8 @@ app.controller('CmsController', ['$scope', '$http', '$upload', 'createDialog', f
         {id:0, name:'Hall'},
         {id:1, name:'Service'},
         {id:2, name:'Activity'},
-        {id:3, name:'SubAddress'}
+        {id:3, name:'SubAddress'},
+        {id:4, name:'OrderItem'}
     ];
 
     $scope.cmstype = $scope.cmstypes[0].id;

@@ -13,7 +13,8 @@ public enum ContentType {
 	HALL(0, "HALL"),
     SERVICE(1, "SERVICE"),
     ACTIVITY(2, "ACTIVITY"),
-    SUBADDRESS(3, "SUBADDRESS");
+    SUBADDRESS(3, "SUBADDRESS"),
+    ORDERITEM(4, "ORDERITEM");
 
 	private ContentType(int value, String displayName) {
         this.value = value;

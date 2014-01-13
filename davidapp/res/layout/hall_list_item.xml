@@ -4,50 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:gravity="center"
+    android:orientation="vertical"
     android:padding="2dp" >
 
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
+    <LinearLayout
+        android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/service_row_iconImg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" 
             android:adjustViewBounds="true"
             android:scaleType="centerCrop" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:background="#19000000"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/service_row_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/service_row_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </FrameLayout>
-
-    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -56,7 +30,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:background="#1A0065CC"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -80,7 +54,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:background="#1A0065CC"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -96,5 +70,34 @@
                 android:focusable="false" />
         </LinearLayout>
     </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:background="#1A110704"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/service_row_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#89D7FF" />
+
+            <TextView
+                android:id="@+id/service_row_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:scrollHorizontally="false"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#89D7FF" />
+        </LinearLayout>
+        
+    
 
 </LinearLayout>

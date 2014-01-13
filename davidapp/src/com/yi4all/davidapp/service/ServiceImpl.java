@@ -32,6 +32,8 @@ public class ServiceImpl {
 	private Activity context;
 
 	private CompanyModel company;
+	
+	private String[] orderitems;
 
 	private Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
 			new JsonDateDeserializer()).create();
@@ -71,17 +73,36 @@ public class ServiceImpl {
 
 	public CompanyModel getDefaultCompany() {
 		if (company == null) {
-			CompanyModel cm = getDbService().getDefaultCompany();
-			if (cm == null) {
-				cm = remoteService.getDefaultCompany();
-				if (cm != null) {
-					getDbService().updateCompany(cm);
-				}
+			company = getDbService().getDefaultCompany();
+			if (company == null) {
+//				company = remoteService.getDefaultCompany();
+//				if (company != null) {
+//					getDbService().updateCompany(company);
+//				}
 			}
 			// TODO:async update company info
 			refreshDefaultCompany();
 		}
 		return company;
+	}
+	
+	public String[] getOrderItems() {
+		if (orderitems == null) {
+						refreshOrderItems();
+						
+						//TODO:change type to orderitems
+			List<ContentModel> list = getDbService().getContentsByType(ContentType.ORDERITEM);
+			if (list != null) {
+				String[] res = new String[list.size()];
+				int i = 0;
+				for(ContentModel cm : list){
+					res[i] = cm.getName();
+					i++;
+				}
+				return res;
+			}
+		}
+		return orderitems;
 	}
 
 	public void refreshDefaultCompany() {
@@ -104,6 +125,39 @@ public class ServiceImpl {
 							getDbService().updateCompany(cm);
 						}
 
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+	}
+	
+	public void refreshOrderItems() {
+		String url = remoteService.getBaseUrl() + "/contents/" + ContentType.ORDERITEM.value();
+
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+
+						MessageModel<List<ContentModel>> msg = gson.fromJson(
+								response.toString(),
+								new TypeToken<MessageModel<List<ContentModel>>>() {
+								}.getType());
+
+						if (!msg.isFlag()) {
+
+						} else {
+							List<ContentModel> apps = msg.getData();
+
+							// save apps into local db
+							getDbService().updateContents(apps);
+						}
 					}
 				}, new Response.ErrorListener() {
 					@Override

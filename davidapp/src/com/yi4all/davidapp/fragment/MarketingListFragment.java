@@ -32,9 +32,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ServiceListFragment extends PullToRefreshListFragment{
+public class MarketingListFragment extends PullToRefreshListFragment{
 	
-	private final static String LOGTAG = "ServiceListFragment";
+	private final static String LOGTAG = "MarketingListFragment";
 	
 	private AppAdapter mAdapter;
 
@@ -60,7 +60,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 							    // Update the LastUpdatedLabel
 							    refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 							    
-							loadListByPage(ContentType.SERVICE);
+							loadListByPage(ContentType.ACTIVITY);
 
 					}
 				});
@@ -92,7 +92,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 		
 		setListShown(true);
 		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage(ContentType.SERVICE);
+				loadListByPage(ContentType.ACTIVITY);
 				
 	}
 	
@@ -192,7 +192,7 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 				return null;
 
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.service_list_item, null);
+				convertView = mInflater.inflate(R.layout.marketing_list_item, null);
 			}
 
 			ViewHolder holder = (ViewHolder) convertView.getTag();
@@ -209,24 +209,6 @@ public class ServiceListFragment extends PullToRefreshListFragment{
                     .getInstance().getmImageLoader());
 			holder.name.setText(am.getName());
 			holder.description.setText(String.valueOf(am.getDescription()));
-			holder.phone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //TODO:call am.getPhoneNumber()
-                	Intent callIntent = new Intent(Intent.ACTION_CALL);
-                	callIntent.setData(Uri.parse("tel:" + am.getPhoneNumber()));
-                	startActivity(callIntent);
-                }
-            });
-            holder.sms.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //TODO:text am.getPhoneNumber()
-                	Intent callIntent = new Intent(Intent.ACTION_CALL);
-                	callIntent.setData(Uri.parse("sms:" + am.getPhoneNumber()));
-                	startActivity(callIntent);
-                }
-            });
 
 			return (convertView);
 		}
@@ -237,15 +219,11 @@ public class ServiceListFragment extends PullToRefreshListFragment{
 		NetworkImageView icon = null;
 		TextView name = null;
 		TextView description = null;
-		TextView phone = null;
-        TextView sms = null;
 
 		ViewHolder(View base) {
 			this.icon = (NetworkImageView) base.findViewById(R.id.service_row_iconImg);
 			this.name = (TextView) base.findViewById(R.id.service_row_name);
 			this.description = (TextView) base.findViewById(R.id.service_row_description);
-			this.phone = (TextView) base.findViewById(R.id.service_row_phone);
-			this.sms = (TextView) base.findViewById(R.id.service_row_sms);
 		}
 	}
 }
