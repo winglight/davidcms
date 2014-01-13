@@ -1,14 +1,9 @@
 package com.yi4all.davidapp;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.KeyEvent;
+import android.app.Activity;
 import android.view.Menu;
+<<<<<<< HEAD
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -39,14 +34,16 @@ public class MainActivity extends BaseActivity {
     private TextView oldTab;
     
     private int currentTabPos;
+=======
+
+public class MainActivity extends Activity {
+>>>>>>> c269dcd8befd262de27ae4e90e36e19e65d78585
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);  
-		
 		setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 		
 		pageTitle = getResources().getStringArray(R.array.main_tab_label);
 
@@ -130,25 +127,18 @@ public class MainActivity extends BaseActivity {
 		currentTabPos = res;
 		
 		return res;
+=======
+
+>>>>>>> c269dcd8befd262de27ae4e90e36e19e65d78585
 	}
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        CompanyModel company = getService().getDefaultCompany();
-
-        if(company != null){
-        carouselTxt.setText(company.getMarquee());
-        }
-    }
-
-    @Override
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public boolean onKeyDown(int keyCoder, KeyEvent event) {
@@ -230,5 +220,7 @@ public class MainActivity extends BaseActivity {
 			return pageTitle.length;
 		}
 	}
+=======
+>>>>>>> c269dcd8befd262de27ae4e90e36e19e65d78585
 
 }
