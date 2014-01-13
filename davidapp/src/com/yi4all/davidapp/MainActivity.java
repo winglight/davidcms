@@ -1,16 +1,23 @@
 package com.yi4all.davidapp;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.Menu;
-<<<<<<< HEAD
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
-import com.viewpagerindicator.TabPageIndicator;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentType;
 import com.yi4all.davidapp.fragment.HallListFragment;
@@ -34,17 +41,15 @@ public class MainActivity extends BaseActivity {
     private TextView oldTab;
     
     private int currentTabPos;
-=======
-
-public class MainActivity extends Activity {
->>>>>>> c269dcd8befd262de27ae4e90e36e19e65d78585
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-<<<<<<< HEAD
 		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		setContentView(R.layout.activity_main);
+
 		pageTitle = getResources().getStringArray(R.array.main_tab_label);
 
         carouselTxt = (TextView) findViewById(R.id.carouselTxt);
@@ -56,6 +61,13 @@ public class MainActivity extends Activity {
 		
 		final ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(adapter);
+		pager.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				return true;
+			}
+		});
 		pager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
@@ -72,8 +84,7 @@ public class MainActivity extends Activity {
 			}
 
 			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
+			public void onPageScrollStateChanged(int state) {
 
 			}
 		});
@@ -127,19 +138,8 @@ public class MainActivity extends Activity {
 		currentTabPos = res;
 		
 		return res;
-=======
-
->>>>>>> c269dcd8befd262de27ae4e90e36e19e65d78585
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-<<<<<<< HEAD
-	
 	@Override
 	public boolean onKeyDown(int keyCoder, KeyEvent event) {
 		int keyCode = event.getKeyCode();
@@ -220,7 +220,5 @@ public class MainActivity extends Activity {
 			return pageTitle.length;
 		}
 	}
-=======
->>>>>>> c269dcd8befd262de27ae4e90e36e19e65d78585
 
 }

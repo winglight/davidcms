@@ -28,14 +28,16 @@ public class Utils {
 	
 	public static void toastMsg(final Activity context, final String msg,
 			final Object... args) {
-		context.runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-
-			}
-		});
+		if(context != null){
+			context.runOnUiThread(new Runnable() {
+	
+				@Override
+				public void run() {
+	                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+	
+				}
+			});
+		}
 
 	}
 
