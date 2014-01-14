@@ -22,6 +22,7 @@ public class RemoteServiceImpl implements IRemoteService {
 	private static IRemoteService service;
 
 	private String base_url;
+	private String member_url;
 	private String tokenId = "";
 	private long tokenExpirationTime;
 	private String sid = "";
@@ -36,6 +37,7 @@ public class RemoteServiceImpl implements IRemoteService {
 //			 service = new RemoteServiceImpl("http://192.168.1.9:9000/service");
 //			 service = new RemoteServiceImpl("http://10.31.58.74:9000");
 			 service = new RemoteServiceImpl("http://market.yi4all.com");
+			 service.setMemberUrl("http://202.175.112.76:7192/chapps");
 		}
 		return service;
 	}
@@ -89,5 +91,16 @@ public class RemoteServiceImpl implements IRemoteService {
         }
         return null;
     }
+
+	@Override
+	public void setMemberUrl(String url) {
+		this.member_url = url;
+		
+	}
+
+	@Override
+	public String getMemberUrl() {
+		return this.member_url;
+	}
 
 }

@@ -6,6 +6,9 @@ public interface IRemoteService {
 	
 	public void setBaseUrl(String url);
 	public String getBaseUrl();
+	
+	public void setMemberUrl(String url);
+	public String getMemberUrl();
 
 	/**********User Module****************/
 	

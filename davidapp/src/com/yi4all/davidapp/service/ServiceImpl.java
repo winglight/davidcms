@@ -21,6 +21,7 @@ import com.yi4all.davidapp.util.JsonDateDeserializer;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class ServiceImpl {
@@ -217,6 +218,52 @@ public class ServiceImpl {
 
 						Message messsage = handler.obtainMessage();
 						messsage.what = type.value();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void memberLogin(final Handler handler,
+			final String name, final String password, final Integer type) {
+		String url = remoteService.getMemberUrl();
+		url += "/Member/LoginValidate";
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("UserID", name);
+		params.put("Passwd", password);
+		params.put("UserType", type);
+
+		JsonObjectRequest req = new JsonObjectRequest(Method.POST, url, new JSONObject(params),
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message messsage = handler.obtainMessage();
+
+						String res = response.toString();
+
+						if ("false".equals(res)) {
+
+							messsage.arg1 = 1;// fail flag
+						} else {
+							messsage.arg1 = 0;// success flag
+
+						}
+
+						handler.sendMessage(messsage);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
 						messsage.arg1 = 1;// fail flag
 						messsage.obj = VolleyErrorHelper.getMessage(error,
 								context);
