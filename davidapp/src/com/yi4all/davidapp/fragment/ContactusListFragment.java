@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
@@ -32,9 +33,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MarketingListFragment extends PullToRefreshListFragment{
+public class ContactusListFragment extends PullToRefreshListFragment{
 	
-	private final static String LOGTAG = "MarketingListFragment";
+	private final static String LOGTAG = "ContactusListFragment";
 	
 	private AppAdapter mAdapter;
 
@@ -60,7 +61,7 @@ public class MarketingListFragment extends PullToRefreshListFragment{
 							    // Update the LastUpdatedLabel
 							    refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 							    
-							loadListByPage(ContentType.ACTIVITY);
+							loadListByPage(ContentType.SUBADDRESS);
 
 					}
 				});
@@ -74,17 +75,15 @@ public class MarketingListFragment extends PullToRefreshListFragment{
 		// mPullRefreshListView.setAdapter(mAdapter)
 		actualListView.setAdapter(mAdapter);
 
-		actualListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				//TODO:goto detail fragment
-				MarketingDetailFragment f = MarketingDetailFragment.getInstance(contents.get(position-1));
-				
-				((BaseActivity)getActivity()).addFragment(f, MarketingDetailFragment.LOGTAG, false);
-			}
-		});
+//		actualListView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				// TODO download and install apk
+//				((BaseActivity)getActivity()).downloadApk(contents.get(position).getDownurl());
+//			}
+//		});
 
 	}
 	
@@ -94,7 +93,7 @@ public class MarketingListFragment extends PullToRefreshListFragment{
 		
 		setListShown(true);
 		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage(ContentType.ACTIVITY);
+				loadListByPage(ContentType.SUBADDRESS);
 				
 	}
 	
@@ -194,7 +193,7 @@ public class MarketingListFragment extends PullToRefreshListFragment{
 				return null;
 
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.marketing_list_item, null);
+				convertView = mInflater.inflate(R.layout.contactus_list_item, null);
 			}
 
 			ViewHolder holder = (ViewHolder) convertView.getTag();
@@ -207,10 +206,26 @@ public class MarketingListFragment extends PullToRefreshListFragment{
 			final ContentModel am = contents.get(position);
 
 			// set triangle for the add
-			holder.icon.setImageUrl(((BaseActivity)getActivity()).getService().getURL() + "/showImage/" + am.getSmallPic(), ApplicationController
-                    .getInstance().getmImageLoader());
 			holder.name.setText(am.getName());
-			holder.description.setText(String.valueOf(am.getDescription()));
+//			holder.description.setText(String.valueOf(am.getDescription()));
+			holder.phone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO:call am.getPhoneNumber()
+                	Intent callIntent = new Intent(Intent.ACTION_CALL);
+                	callIntent.setData(Uri.parse("tel:" + am.getPhoneNumber()));
+                	startActivity(callIntent);
+                }
+            });
+            holder.sms.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO:text am.getPhoneNumber()
+                	Intent callIntent = new Intent(Intent.ACTION_CALL);
+                	callIntent.setData(Uri.parse("sms:" + am.getPhoneNumber()));
+                	startActivity(callIntent);
+                }
+            });
 
 			return (convertView);
 		}
@@ -218,14 +233,16 @@ public class MarketingListFragment extends PullToRefreshListFragment{
 	}
 
 	class ViewHolder {
-		NetworkImageView icon = null;
 		TextView name = null;
-		TextView description = null;
+//		TextView description = null;
+		ImageView phone = null;
+		ImageView sms = null;
 
 		ViewHolder(View base) {
-			this.icon = (NetworkImageView) base.findViewById(R.id.service_row_iconImg);
-			this.name = (TextView) base.findViewById(R.id.service_row_name);
-			this.description = (TextView) base.findViewById(R.id.service_row_description);
+			this.name = (TextView) base.findViewById(R.id.contact_row_name);
+//			this.description = (TextView) base.findViewById(R.id.service_row_description);
+			this.phone = (ImageView) base.findViewById(R.id.contact_row_phone);
+			this.sms = (ImageView) base.findViewById(R.id.contact_row_sms);
 		}
 	}
 }

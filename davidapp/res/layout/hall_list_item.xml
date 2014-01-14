@@ -40,7 +40,6 @@
                 android:id="@+id/service_row_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:background="@drawable/button_call"
                 android:clickable="true"
                 android:focusable="false" />
@@ -55,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:background="#1A0065CC"
+            android:background="#1A31AAE1"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:padding="10dp" >
@@ -64,7 +63,6 @@
                 android:id="@+id/service_row_sms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:background="@drawable/button_sms"
                 android:clickable="true"
                 android:focusable="false" />

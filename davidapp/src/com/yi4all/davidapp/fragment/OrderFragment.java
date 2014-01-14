@@ -59,6 +59,7 @@ public class OrderFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_order, container, false);
 
         btnPanel = (LinearLayout) v.findViewById(R.id.orderBtnPanel);
+        btnPanel.removeAllViews();
         
         nameTxt = (TextView) v.findViewById(R.id.nameTxt);
         phoneTxt = (TextView) v.findViewById(R.id.phoneTxt);
@@ -66,30 +67,37 @@ public class OrderFragment extends Fragment {
         
         String[] orderItems = ((BaseActivity)getActivity()).getService().getOrderItems();
         if(orderItems != null){
+        	int pos = orderItems.length / 2 + (orderItems.length % 2);
+        	
         	for(int i=0 ; i < orderItems.length ; i++){
         		final String title = orderItems[i];
         		final TextView txt = new TextView(getActivity());
 				txt.setTextColor(Color.WHITE);
-				txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_text_dimen));
-				txt.setGravity(Gravity.BOTTOM);
-				txt.setPadding(15, 0, 15, 10);
+				if(i == (pos - 1)){
+					txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_selected_text_dimen));
+					txt.setCompoundDrawablesWithIntrinsicBounds(null, null, null, getActivity().getResources().getDrawable(R.drawable.buttons_selected_indicator));
+				}else{
+					txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_text_dimen));
+				}
+				txt.setGravity(Gravity.CENTER);
+				txt.setPadding(5, 0, 5, 0);
 				txt.setText(title);
 				txt.setOnClickListener(new OnClickListener() {
 					
 					@Override
-					public void onClick(View arg0) {
+					public void onClick(View view) {
 						// TODO Auto-generated method stub
 						currentOrderItem = title;
-						
+
 						for(int j=0; j < btnPanel.getChildCount() ; j++){
 							TextView tv = (TextView) btnPanel.getChildAt(j);
 							tv.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_text_dimen));
-							tv.setCompoundDrawables(null, null, null, null);
+							tv.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 						}
 						
 						txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_selected_text_dimen));
-						txt.setCompoundDrawables(null, null, null, getActivity().getResources().getDrawable(R.drawable.buttons_selected_indicator));
-						btnPanel.invalidate();
+						txt.setCompoundDrawablesWithIntrinsicBounds(null, null, null, getActivity().getResources().getDrawable(R.drawable.buttons_selected_indicator));
+						txt.invalidate();
 					}
 				});
 				btnPanel.addView(txt);

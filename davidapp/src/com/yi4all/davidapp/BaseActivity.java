@@ -47,6 +47,46 @@ public class BaseActivity extends FragmentActivity{
 //		}
 //	}
 	
+	public void addFragment(Fragment f, String tag, boolean back){
+		synchronized (mClickLock) {
+            final FragmentTransaction ft = getSupportFragmentManager().
+            		beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            if(back){
+            	ft.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_right_exit);
+            }else{
+            	ft.setCustomAnimations(R.anim.fragment_slide_right_enter, R.anim.fragment_slide_left_exit);
+            }
+            ft.replace(R.id.pager, f, tag).addToBackStack(tag);
+            ft.commit();
+            mClickLock.notifyAll();
+		}            
+	}
+	
+	public void clearFragment(){
+		synchronized (mClickLock) {
+		final FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+//		ft.setCustomAnimations(R.anim.push_left_in, R.anim.push_right_out);
+		for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {    
+		    fm.popBackStack();
+		}
+		ft.commit();
+		mClickLock.notifyAll();
+	}
+	}
+	
+	public void backFragment(Fragment f){
+		synchronized (mClickLock) {
+		final FragmentTransaction ft = getSupportFragmentManager().
+        		beginTransaction();
+//		ft.setCustomAnimations(R.anim.push_left_in, R.anim.push_right_out);
+		ft.remove(f);
+		ft.commit();
+		mClickLock.notifyAll();
+	}
+	}
+	
 	public void downloadApk(String url){
 		checker.downloadAndInstall(url);
 	}

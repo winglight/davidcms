@@ -9,16 +9,23 @@
     android:orientation="vertical" android:background="@android:color/transparent">
 
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/market_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="0dp"
-            android:src="@drawable/background_intro"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             />
+    <FrameLayout 
+        android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+        >
     <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            >
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
@@ -28,14 +35,24 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/tab_text_color"
-                    android:id="@+id/groupName"
+                    android:id="@+id/market_name"
                     android:layout_marginBottom="20dp"/>
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/content_text_color"
-                    android:id="@+id/groupDesc"/>
+                    android:id="@+id/market_desc"/>
         </LinearLayout>
     </ScrollView>
+    <ImageView 
+        android:id="@+id/market_back"
+        android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|bottom"
+                    android:padding="30dp"
+                    android:background="#CD07483B"
+                    android:src="@drawable/button_back"
+        />
+    </FrameLayout>
 </LinearLayout>

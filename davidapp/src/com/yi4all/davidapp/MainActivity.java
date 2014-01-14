@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.fragment.ContactusListFragment;
 import com.yi4all.davidapp.fragment.HallListFragment;
 import com.yi4all.davidapp.fragment.IntroFragment;
 import com.yi4all.davidapp.fragment.MarketingListFragment;
@@ -54,40 +55,40 @@ public class MainActivity extends BaseActivity {
 
         carouselTxt = (TextView) findViewById(R.id.carouselTxt);
 
-		FragmentPagerAdapter adapter = new CMSTabAdapter(
-				getSupportFragmentManager());
+//		FragmentPagerAdapter adapter = new CMSTabAdapter(
+//				getSupportFragmentManager());
 
 		final InfiniteGallery indicator = (InfiniteGallery) findViewById(R.id.indicator);
 		
-		final ViewPager pager = (ViewPager) findViewById(R.id.pager);
-		pager.setAdapter(adapter);
-		pager.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				return true;
-			}
-		});
-		pager.setOnPageChangeListener(new OnPageChangeListener() {
-
-			@Override
-			public void onPageSelected(int position) {
-//				currentTab = AppsTab.values()[position];
-				int pos = currentTabPos - (currentTabPos%Integer.MAX_VALUE) + position;
-				indicator.setSelection(pos);
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int state) {
-
-			}
-		});
+//		final ViewPager pager = (ViewPager) findViewById(R.id.pager);
+//		pager.setAdapter(adapter);
+//		pager.setOnTouchListener(new OnTouchListener() {
+//			
+//			@Override
+//			public boolean onTouch(View arg0, MotionEvent arg1) {
+//				return true;
+//			}
+//		});
+//		pager.setOnPageChangeListener(new OnPageChangeListener() {
+//
+//			@Override
+//			public void onPageSelected(int position) {
+////				currentTab = AppsTab.values()[position];
+//				int pos = currentTabPos - (currentTabPos%Integer.MAX_VALUE) + position;
+//				indicator.setSelection(pos);
+//			}
+//
+//			@Override
+//			public void onPageScrolled(int arg0, float arg1, int arg2) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void onPageScrollStateChanged(int state) {
+//
+//			}
+//		});
 
 		
 		indicator.setTabs(pageTitle);
@@ -102,6 +103,11 @@ public class MainActivity extends BaseActivity {
 				oldTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_text_dimen));
 				oldTab.invalidate();
 				}
+				
+				Fragment f = getItem(position%pageTitle.length);
+				
+				addFragment(f, pageTitle[position%pageTitle.length], currentTabPos > position);
+				
 				//set new tab text appearance
 				currentTabPos = position;
 				TextView newTab = (TextView) view; 
@@ -113,7 +119,7 @@ public class MainActivity extends BaseActivity {
 				
 				oldTab = newTab;
 				
-				pager.setCurrentItem(position%pageTitle.length);
+//				pager.setCurrentItem(position%pageTitle.length);
 				
 			}
 
@@ -126,7 +132,7 @@ public class MainActivity extends BaseActivity {
 		
 		indicator.setSelection(getMiddlePos());
 		
-		pager.setCurrentItem(3);
+//		pager.setCurrentItem(3);
 		
 	}
 	
@@ -140,6 +146,24 @@ public class MainActivity extends BaseActivity {
 		return res;
 	}
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        CompanyModel company = getService().getDefaultCompany();
+
+        if(company != null){
+        carouselTxt.setText(company.getMarquee());
+        }
+    }
+
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
 	@Override
 	public boolean onKeyDown(int keyCoder, KeyEvent event) {
 		int keyCode = event.getKeyCode();
@@ -165,6 +189,44 @@ public class MainActivity extends BaseActivity {
 		default:
 			return false;
 		}
+	}
+	
+	public Fragment getItem(int position) {
+        Fragment f = new IntroFragment();
+        switch (position){
+            case 0:
+                //資料查詢
+                break;
+            case 1:
+                //推廣諮訊
+            	f= new MarketingListFragment();
+                break;
+            case 2:
+                //聽會介紹
+            	f = new HallListFragment();
+                break;
+            case 3:
+                //大衛集團
+                f = new IntroFragment();
+                break;
+            case 4:
+                //線上預訂
+            	f = new OrderFragment();
+                break;
+            case 5:
+                //服務項目
+                f = new ServiceListFragment();
+                break;
+            case 6:
+                //聯繫我們
+            	f = new ContactusListFragment();
+                break;
+            case 7:
+                //意見箱
+                break;
+
+        }
+		return  f;
 	}
 
 	class CMSTabAdapter extends FragmentPagerAdapter {

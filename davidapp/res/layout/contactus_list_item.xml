@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is at /res/layout/list_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#33110704"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="2dp" >
+
+
+            <TextView
+                android:id="@+id/contact_row_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#E089D7FF" 
+                android:background="#33110704"/>
+
+
+
+            <ImageView
+                android:id="@+id/contact_row_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/button_call"
+                android:clickable="true"
+                android:focusable="false"
+                android:background="#1A31AAE1"
+                android:padding="10dp" />
+
+            <ImageView
+                android:id="@+id/contact_row_sms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/button_sms"
+                android:clickable="true"
+                android:focusable="false" 
+                android:background="#1A31AAE1"
+                android:padding="10dp"/>
+
+</LinearLayout>
