@@ -41,4 +41,11 @@
         
 
 </LinearLayout>
+<ImageView 
+    android:id="@+id/splash_img"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:src="@drawable/splash"
+    android:scaleType="centerCrop"
+    />
 </FrameLayout>

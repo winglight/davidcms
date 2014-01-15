@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="0dp"
-    android:orientation="vertical" android:background="@android:color/transparent">
+    android:orientation="vertical" 
+    android:background="@android:color/transparent">
 
 
     <ImageView
@@ -15,14 +16,28 @@
             android:padding="0dp"
             android:src="@drawable/background_intro"
             />
+    <FrameLayout 
+         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:padding="0dp"
+        android:src="@drawable/background_member_main" />
     <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:background="@android:color/transparent">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                >
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -38,4 +53,5 @@
                     android:id="@+id/groupDesc"/>
         </LinearLayout>
     </ScrollView>
+    </FrameLayout>
 </LinearLayout>

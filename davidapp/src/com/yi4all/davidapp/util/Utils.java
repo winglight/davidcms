@@ -22,8 +22,10 @@ public class Utils {
 
     public static void toastMsg(final Activity context, final int resId,
                                 final Object... args) {
-        final String msg = context.getString(resId, args);
-        toastMsg(context, msg,args);
+    	if(context != null){
+	        final String msg = context.getString(resId, args);
+	        toastMsg(context, msg,args);
+    	}
     }
 	
 	public static void toastMsg(final Activity context, final String msg,

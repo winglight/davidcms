@@ -1,6 +1,7 @@
 package com.yi4all.davidapp.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,10 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshListFragment;
@@ -24,27 +31,32 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.yi4all.davidapp.ApplicationController;
 import com.yi4all.davidapp.BaseActivity;
+import com.yi4all.davidapp.MemberActivity;
 import com.yi4all.davidapp.R;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
 import com.yi4all.davidapp.util.Utils;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class LoginFragment extends Fragment {
 	
 	private final static String LOGTAG = "LoginFragment";
 
-    private String currentOrderItem;
+    private EditText pwdTxt;
+    private EditText nameTxt;
+    private EditText verifyTxt;
+    private TextView verifyShowTxt;
     
-    private LinearLayout btnPanel;
+    private int lineType = 1; //上线=1;下线=0
     
-    private TextView memoTxt;
-    private TextView nameTxt;
-    private TextView phoneTxt;
+    private SecureRandom random = new SecureRandom();
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -56,62 +68,74 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View v = inflater.inflate(R.layout.fragment_order, container, false);
+        final View v = inflater.inflate(R.layout.fragment_login, container, false);
 
-        btnPanel = (LinearLayout) v.findViewById(R.id.orderBtnPanel);
-        btnPanel.removeAllViews();
+        nameTxt = (EditText) v.findViewById(R.id.login_user_txt);
+        verifyTxt = (EditText) v.findViewById(R.id.login_verify_txt);
+        pwdTxt = (EditText) v.findViewById(R.id.login_pwd_txt);
+        verifyShowTxt = (TextView) v.findViewById(R.id.login_verify_show_txt);
         
-        nameTxt = (TextView) v.findViewById(R.id.nameTxt);
-        phoneTxt = (TextView) v.findViewById(R.id.phoneTxt);
-        memoTxt = (TextView) v.findViewById(R.id.memoTxt);
+        TextView changeVerifyTxt = (TextView) v.findViewById(R.id.login_change_btn);
+        changeVerifyTxt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				loadVerifyTxt();
+			}
+		});
         
-        String[] orderItems = ((BaseActivity)getActivity()).getService().getOrderItems();
-        if(orderItems != null){
-        	int pos = orderItems.length / 2 + (orderItems.length % 2);
-        	
-        	for(int i=0 ; i < orderItems.length ; i++){
-        		final String title = orderItems[i];
-        		final TextView txt = new TextView(getActivity());
-				txt.setTextColor(Color.WHITE);
-				if(i == (pos - 1)){
-					txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_selected_text_dimen));
-					txt.setCompoundDrawablesWithIntrinsicBounds(null, null, null, getActivity().getResources().getDrawable(R.drawable.buttons_selected_indicator));
-				}else{
-					txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_text_dimen));
-				}
-				txt.setGravity(Gravity.CENTER);
-				txt.setPadding(5, 0, 5, 0);
-				txt.setText(title);
-				txt.setOnClickListener(new OnClickListener() {
+        Button loginBtn = (Button) v.findViewById(R.id.loginBtn);
+        loginBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(!verifyShowTxt.getText().toString().toLowerCase().equals(verifyTxt.getText().toString())){
+					Utils.toastMsg(getActivity(), R.string.login_verify_error);
 					
-					@Override
-					public void onClick(View view) {
-						// TODO Auto-generated method stub
-						currentOrderItem = title;
-
-						for(int j=0; j < btnPanel.getChildCount() ; j++){
-							TextView tv = (TextView) btnPanel.getChildAt(j);
-							tv.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_text_dimen));
-							tv.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-						}
-						
-						txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_selected_text_dimen));
-						txt.setCompoundDrawablesWithIntrinsicBounds(null, null, null, getActivity().getResources().getDrawable(R.drawable.buttons_selected_indicator));
-						txt.invalidate();
-					}
-				});
-				btnPanel.addView(txt);
-        	}
-        	btnPanel.invalidate();
-        }
-
+					return;
+				}
+				Intent intent = new Intent();
+                intent.setClass(getActivity(), MemberActivity.class);
+				getActivity().startActivity(intent);
+				
+			}
+		});
+        
+        RadioButton upRadio = (RadioButton) v.findViewById(R.id.upRadio);
+        upRadio.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean checked) {
+				if(checked){
+					lineType = 1;
+				}else{
+					lineType = 0;
+				}
+				
+			}
+		});
+        
         return v;
+    }
+    
+    private void loadVerifyTxt(){
+    	new Handler().post(new Runnable() {
+			
+			@Override
+			public void run() {
+				String str = new BigInteger(130, random).toString(32).substring(0,4);
+		    	verifyShowTxt.setText(str);
+			}
+		});
+    	
     }
 	
 	@Override
 	public void onResume() {
 		super.onResume();
 
+		loadVerifyTxt();
 	}
 	
 }

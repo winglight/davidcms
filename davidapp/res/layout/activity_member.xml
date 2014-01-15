@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MemberActivity">
+
+	<FrameLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_tabs">
+        <ImageView
+                android:id="@+id/back_btn"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:gravity="bottom"
+                android:src="@drawable/button_back"
+                
+                />
+        <TextView
+                android:id="@+id/member_title_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:padding="0dp"
+                android:text="@string/member_title_main"
+                android:textSize="@dimen/tab_selected_text_dimen"
+                android:textColor="@android:color/white"
+                android:singleLine="true"
+                android:background="@android:color/transparent" />
+        
+        
+
+</FrameLayout>
+<FrameLayout 
+            android:id="@+id/memberzone"
+            android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+            
+            />
+</LinearLayout>

@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -42,9 +44,9 @@ public class OrderFragment extends Fragment {
     
     private LinearLayout btnPanel;
     
-    private TextView memoTxt;
-    private TextView nameTxt;
-    private TextView phoneTxt;
+    private EditText memoTxt;
+    private EditText nameTxt;
+    private EditText phoneTxt;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -61,9 +63,9 @@ public class OrderFragment extends Fragment {
         btnPanel = (LinearLayout) v.findViewById(R.id.orderBtnPanel);
         btnPanel.removeAllViews();
         
-        nameTxt = (TextView) v.findViewById(R.id.nameTxt);
-        phoneTxt = (TextView) v.findViewById(R.id.phoneTxt);
-        memoTxt = (TextView) v.findViewById(R.id.memoTxt);
+        nameTxt = (EditText) v.findViewById(R.id.nameTxt);
+        phoneTxt = (EditText) v.findViewById(R.id.phoneTxt);
+        memoTxt = (EditText) v.findViewById(R.id.memoTxt);
         
         String[] orderItems = ((BaseActivity)getActivity()).getService().getOrderItems();
         if(orderItems != null){
@@ -104,6 +106,16 @@ public class OrderFragment extends Fragment {
         	}
         	btnPanel.invalidate();
         }
+        
+        Button submit = (Button) v.findViewById(R.id.okBtn);
+        submit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
         return v;
     }
