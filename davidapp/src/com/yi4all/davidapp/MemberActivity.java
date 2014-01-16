@@ -124,6 +124,7 @@ public class MemberActivity extends BaseActivity {
 	}
 
 	public void goinFragment(Fragment f){
+		if(f == null) return;
 		synchronized (mClickLock) {
             final FragmentTransaction ft = getSupportFragmentManager().
             		beginTransaction();

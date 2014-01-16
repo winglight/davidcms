@@ -96,7 +96,7 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="10dp"
             android:background="#005A55"
-            android:text="@string/quit"
+            android:text="@string/change_pwd"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     <Button
@@ -106,7 +106,7 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="10dp"
             android:background="#C0C71B1B"
-            android:text="@string/change_pwd"
+            android:text="@string/quit"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </LinearLayout>

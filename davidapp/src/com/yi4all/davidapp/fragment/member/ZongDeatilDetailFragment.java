@@ -20,6 +20,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -53,24 +54,33 @@ public class ZongDeatilDetailFragment extends Fragment {
 	private AppAdapter mAdapter;
 
 	private LinePerson person;
+	
+	private ZongData zong;
 
 	private int currentMode = 0; // 0 - M; 1 - CunDan ; 2 - CunJi ; 3 - ZhuanMa
 
-	private ArrayList<ZongDetailData> zongs = new ArrayList<ZongDetailData>();
+	private ArrayList<ZongDetailData> zongDetails = new ArrayList<ZongDetailData>();
 
 	private Date lastUpdateTime;
 
 	// UI elements
-	private TextView personNameTxt;
-	private TextView personAmountTxt;
-	private TextView listTitleTxt;
+	private TextView downlineNameTxt;
+	private TextView hallNametTxt;
+	private TextView title1Txt;
+	private TextView title2Txt;
+	private TextView title3Txt;
 	private TextView totalTxt;
-	private TextView groupAmountShowTxt;
-	private TextView groupAmountTxt;
+	private TextView maBlueTxt;
+	private TextView maWhiteTxt;
+	private TextView maTotalTxt;
+	private LinearLayout totalPanel;
+	private LinearLayout maPanel;
 
-	public static ZongDeatilDetailFragment getInstance(LinePerson person) {
+	public static ZongDeatilDetailFragment getInstance(LinePerson person, ZongData zong, int mode) {
 		ZongDeatilDetailFragment f = new ZongDeatilDetailFragment();
 		f.person = person;
+		f.zong = zong;
+		f.currentMode = mode;
 
 		return f;
 	}
@@ -85,17 +95,24 @@ public class ZongDeatilDetailFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View v = inflater.inflate(R.layout.fragment_member_zong_detail,
+		final View v = inflater.inflate(R.layout.fragment_member_zong_detail_detail,
 				container, false);
 
-		personNameTxt = (TextView) v.findViewById(R.id.zong_person_name_txt);
-		personAmountTxt = (TextView) v
-				.findViewById(R.id.zong_person_amount_txt);
-		listTitleTxt = (TextView) v.findViewById(R.id.zong_list_title_txt);
-		totalTxt = (TextView) v.findViewById(R.id.zong_total_txt);
-		groupAmountShowTxt = (TextView) v
-				.findViewById(R.id.zong_group_amount_show_txt);
-		groupAmountTxt = (TextView) v.findViewById(R.id.zong_group_amount_txt);
+		downlineNameTxt = (TextView) v.findViewById(R.id.zong_downline_name_txt);
+		hallNametTxt = (TextView) v
+				.findViewById(R.id.zong_detail_hall_txt);
+		title1Txt = (TextView) v.findViewById(R.id.zong_detail_title1_txt);
+		title2Txt = (TextView) v.findViewById(R.id.zong_detail_title2_txt);
+		title3Txt = (TextView) v.findViewById(R.id.zong_detail_title3_txt);
+		totalTxt = (TextView) v.findViewById(R.id.zong_detail_total_txt);
+		maBlueTxt = (TextView) v
+				.findViewById(R.id.zong_zhuanma_blue_txt);
+		maWhiteTxt = (TextView) v
+				.findViewById(R.id.zong_zhuanma_white_txt);
+		maTotalTxt = (TextView) v
+				.findViewById(R.id.zong_zhuanma_total_txt);
+		totalPanel = (LinearLayout) v.findViewById(R.id.zong_total_panel);
+		maPanel = (LinearLayout) v.findViewById(R.id.zong_zhuanma_total_panel);
 		
 		list = (ListView) v.findViewById(R.id.zong_detail_list);
 
@@ -104,18 +121,6 @@ public class ZongDeatilDetailFragment extends Fragment {
 		// You can also just use setListAdapter(mAdapter) or
 		// mPullRefreshListView.setAdapter(mAdapter)
 		list.setAdapter(mAdapter);
-
-		list.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO download and install apk
-				((MemberActivity) getActivity()).goinFragment(null);
-			}
-		});
-
-		initRadio(v);
 
 		return v;
 	}
@@ -127,70 +132,14 @@ public class ZongDeatilDetailFragment extends Fragment {
 		((MemberActivity) getActivity())
 				.setTitleTxt(R.string.member_title_zong);
 
-		personNameTxt.setText(person.getLineName());
+		downlineNameTxt.setText(person.getLineName());
 		
-		loadPersonAmount();
+		hallNametTxt.setText(zong.getHallName());
+		
+		loadUIByMode();
 
 		loadListByPage();
 
-	}
-
-	private void initRadio(View v) {
-		RadioButton mRadio = (RadioButton) v.findViewById(R.id.mRadio);
-		mRadio.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton arg0, boolean checked) {
-				if (checked) {
-					currentMode = 0;
-					loadUIByMode();
-					loadListByPage();
-				}
-
-			}
-		});
-
-		RadioButton danRadio = (RadioButton) v.findViewById(R.id.danRadio);
-		danRadio.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton arg0, boolean checked) {
-				if (checked) {
-					currentMode = 1;
-					loadUIByMode();
-					loadListByPage();
-				}
-
-			}
-		});
-
-		RadioButton jiRadio = (RadioButton) v.findViewById(R.id.jiRadio);
-		jiRadio.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton arg0, boolean checked) {
-				if (checked) {
-					currentMode = 2;
-					loadUIByMode();
-					loadListByPage();
-				}
-
-			}
-		});
-
-		RadioButton maRadio = (RadioButton) v.findViewById(R.id.maRadio);
-		maRadio.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton arg0, boolean checked) {
-				if (checked) {
-					currentMode = 3;
-					loadUIByMode();
-					loadListByPage();
-				}
-
-			}
-		});
 	}
 
 	private void loadUIByMode() {
@@ -198,28 +147,43 @@ public class ZongDeatilDetailFragment extends Fragment {
 
 			@Override
 			public void run() {
+				title1Txt.setVisibility(View.VISIBLE);
+				title2Txt.setVisibility(View.VISIBLE);
+				
 				switch (currentMode) {
 				case 0: {
-					listTitleTxt.setText(R.string.member_tab_m);
-					groupAmountShowTxt.setText(R.string.member_group_total_m);
+					title1Txt.setText(R.string.member_client_name);
+					title2Txt.setText(R.string.member_detail_qianm);
+//					title3Txt.setText(R.string.member_detail_memo);
+					title3Txt.setVisibility(View.GONE);
+					totalPanel.setVisibility(View.VISIBLE);
+					maPanel.setVisibility(View.GONE);
 					break;
 				}
 				case 1: {
-					listTitleTxt.setText(R.string.member_tab_cundan);
-					groupAmountShowTxt
-							.setText(R.string.member_group_total_cundan);
+					title1Txt.setText(R.string.member_client_name);
+					title2Txt.setText(R.string.member_tab_cundan);
+//					title3Txt.setText(R.string.member_detail_memo);
+					title3Txt.setVisibility(View.GONE);
+					totalPanel.setVisibility(View.VISIBLE);
+					maPanel.setVisibility(View.GONE);
 					break;
 				}
 				case 2: {
-					listTitleTxt.setText(R.string.member_tab_cunji);
-					groupAmountShowTxt
-							.setText(R.string.member_group_total_cunji);
+					title1Txt.setText(R.string.member_detail_time);
+					title2Txt.setText(R.string.member_detail_money);
+					title3Txt.setText(R.string.member_detail_memo);
+					title3Txt.setVisibility(View.VISIBLE);
+					totalPanel.setVisibility(View.VISIBLE);
+					maPanel.setVisibility(View.GONE);
 					break;
 				}
 				case 3: {
-					listTitleTxt.setText(R.string.member_tab_zhuanma);
-					groupAmountShowTxt
-							.setText(R.string.member_group_total_zhuanma);
+					title1Txt.setVisibility(View.GONE);
+					title2Txt.setVisibility(View.GONE);
+					title3Txt.setVisibility(View.GONE);
+					totalPanel.setVisibility(View.GONE);
+					maPanel.setVisibility(View.VISIBLE);
 					break;
 				}
 				}
@@ -228,48 +192,6 @@ public class ZongDeatilDetailFragment extends Fragment {
 
 	}
 	
-	private int calculateTotal(List<ZongData> list){
-		int total = 0;
-		for(ZongData zong : list){
-			total += zong.getAmount();
-		}
-		return total;
-	}
-
-	private void loadPersonAmount() {
-		// 2. 查询下线长期额
-		((BaseActivity) getActivity()).getService().getMemberLineAmount(
-				new Handler() {
-					@Override
-					public void handleMessage(Message msg) {
-
-						// msg construction:
-						// arg1: success flag(0 - success, 1 -
-						// fail),  obj: data of person
-						if (msg.arg1 == 0) {
-							
-							// load updated app into list
-							LinePerson remoteMoreIssues = (LinePerson) msg.obj;
-							if (remoteMoreIssues != null) {
-								person.setLineName(remoteMoreIssues.getLineName());
-								person.setLongTerm(remoteMoreIssues.getLongTerm());
-								
-								personNameTxt.setText(person.getLineName());
-								personAmountTxt.setText(person.getLongTerm());
-								
-							} else {
-								// TODO:notify no updated data
-								Utils.toastMsg(getActivity(),
-										R.string.refresh_no_data);
-							}
-							
-						} else {
-							Utils.toastMsg(getActivity(), (String) msg.obj);
-						}
-
-					}
-				}, person.getLineCode());
-	}
 
 	/**
 	 * 统一刷新列表数据及加载更多数据两种模式： 1.根据页数查询本地数据 2.如果有本地数据则刷新列表（加载数据到最后并跳转至新数据的第一条记录）
@@ -281,47 +203,71 @@ public class ZongDeatilDetailFragment extends Fragment {
 		lastUpdateTime = new Date();
 
 		// 根据当前模式：currentMode,查询列表数据
-		((BaseActivity) getActivity()).getService().getMemberZongs(
+		((BaseActivity) getActivity()).getService().getMemberZongDetails(
 				new Handler() {
 					@Override
 					public void handleMessage(Message msg) {
 
-						// msg construction:
+						if(msg.what != currentMode) return;
+						
+						// msg construction: what: current mode
 						// arg1: success flag(0 - success, 1 -
 						// fail), arg2: total amount, obj: data of list
 						if (msg.arg1 == 0) {
-							
-							int groupTotal = msg.arg2;
-							int total = 0;
-							
-							groupAmountTxt.setText(String.valueOf(groupTotal));
 							
 							// load updated app into list
 							List<ZongDetailData> remoteMoreIssues = (List<ZongDetailData>) msg.obj;
 							if (remoteMoreIssues != null
 									&& remoteMoreIssues.size() > 0) {
 								
-								zongs.clear();
+								zongDetails.clear();
 
-								zongs.addAll(remoteMoreIssues);
+								if(msg.what != 3){
+									
+									list.setVisibility(View.VISIBLE);
+									
+									zongDetails.addAll(remoteMoreIssues);
+									
+									int total = 0;
+									for(ZongDetailData detail : remoteMoreIssues){
+										total += detail.getAmount();
+									}
+									
+									totalTxt.setText(String.valueOf(total));
+								}else{
+									list.setVisibility(View.GONE);
+									
+									//calculate totals
+									int blueTotal = 0;
+									int whiteTotal = 0;
+									int total = 0;
+									for(ZongDetailData detail : remoteMoreIssues){
+										blueTotal += detail.getBTotal();
+										whiteTotal += detail.getWTotal();
+										total += detail.getTotal();
+									}
+									//show zhuanma totals
+									maBlueTxt.setText(String.valueOf(blueTotal));
+									maWhiteTxt.setText(String.valueOf(whiteTotal));
+									maTotalTxt.setText(String.valueOf(total));
+								}
 
 								mAdapter.notifyDataSetChanged();
 							} else {
 								// TODO:notify no updated data
-								zongs.clear();
+								zongDetails.clear();
 								mAdapter.notifyDataSetChanged();
 								
 								Utils.toastMsg(getActivity(),
 										R.string.refresh_no_data);
 							}
 							
-							totalTxt.setText(String.valueOf(total));
 						} else {
 							Utils.toastMsg(getActivity(), (String) msg.obj);
 						}
 
 					}
-				}, person.getLineCode(), currentMode + 1);
+				}, person.getLineCode(), zong.getHallName(), currentMode + 1);
 
 		mAdapter.notifyDataSetChanged();
 
@@ -336,11 +282,11 @@ public class ZongDeatilDetailFragment extends Fragment {
 
 		@Override
 		public int getCount() {
-			return zongs.size();
+			return zongDetails.size();
 		}
 
 		public ZongDetailData getItem(int i) {
-			return zongs.get(i);
+			return zongDetails.get(i);
 		}
 
 		public long getItemId(int i) {
@@ -348,11 +294,11 @@ public class ZongDeatilDetailFragment extends Fragment {
 		}
 
 		public View getView(final int position, View convertView, ViewGroup vg) {
-			if (zongs == null || position < 0 || position > zongs.size())
+			if (zongDetails == null || position < 0 || position > zongDetails.size())
 				return null;
 
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.zong_list_item, null);
+				convertView = mInflater.inflate(R.layout.zong_detail_list_item, null);
 			}
 
 			ViewHolder holder = (ViewHolder) convertView.getTag();
@@ -362,11 +308,19 @@ public class ZongDeatilDetailFragment extends Fragment {
 			}
 
 			// other normal row
-			final ZongDetailData am = zongs.get(position);
+			final ZongDetailData am = zongDetails.get(position);
 
 			// set triangle for the add
-			holder.name.setText(am.getClientName());
 			holder.amount.setText(String.valueOf(am.getAmount()));
+			if(currentMode == 2){
+				holder.memo.setVisibility(View.VISIBLE);
+				holder.memo.setText(am.getRemark());
+				
+				holder.name.setText(am.getPostTime());
+			}else{
+				holder.name.setText(am.getClientName());
+				holder.memo.setVisibility(View.GONE);
+			}
 
 			return (convertView);
 		}
@@ -376,10 +330,12 @@ public class ZongDeatilDetailFragment extends Fragment {
 	class ViewHolder {
 		TextView name = null;
 		TextView amount = null;
+		TextView memo = null;
 
 		ViewHolder(View base) {
-			this.name = (TextView) base.findViewById(R.id.zong_row_name);
-			this.amount = (TextView) base.findViewById(R.id.zong_row_amount);
+			this.name = (TextView) base.findViewById(R.id.zong_detail_row_name);
+			this.amount = (TextView) base.findViewById(R.id.zong_detail_row_amount);
+			this.memo = (TextView) base.findViewById(R.id.zong_detail_row_memo);
 		}
 	}
 }

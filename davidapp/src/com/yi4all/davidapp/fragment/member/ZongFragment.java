@@ -98,7 +98,7 @@ public class ZongFragment extends Fragment{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				((MemberActivity)getActivity()).goinFragment(ZongDeatilFragment.getInstance(persons.get(position)));
+				((MemberActivity)getActivity()).goinFragment(ZongDeatilFragment.getInstance(persons.get(position-1)));
 			}
 		});
 

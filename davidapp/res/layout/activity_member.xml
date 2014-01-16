@@ -28,7 +28,7 @@
                 android:gravity="center_vertical"
                 android:padding="0dp"
                 android:text="@string/member_title_main"
-                android:textSize="@dimen/tab_selected_text_dimen"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@android:color/white"
                 android:singleLine="true"
                 android:background="@android:color/transparent" />

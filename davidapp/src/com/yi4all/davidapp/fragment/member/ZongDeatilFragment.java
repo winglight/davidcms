@@ -110,7 +110,7 @@ public class ZongDeatilFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO download and install apk
-				((MemberActivity) getActivity()).goinFragment(null);
+				((MemberActivity) getActivity()).goinFragment(ZongDeatilDetailFragment.getInstance(person, zongs.get(position), currentMode));
 			}
 		});
 
@@ -126,7 +126,7 @@ public class ZongDeatilFragment extends Fragment {
 		((MemberActivity) getActivity())
 				.setTitleTxt(R.string.member_title_zong);
 
-		personNameTxt.setText(person.getLineName());
+		personNameTxt.setText(person.getLineCode() + "." + person.getLineName());
 		
 		loadPersonAmount();
 

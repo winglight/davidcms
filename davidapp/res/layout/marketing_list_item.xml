@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This file is at /res/layout/list_item.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
@@ -20,6 +20,8 @@
         android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_gravity="left|bottom"
+            android:background="#80000000"
         android:orientation="horizontal"
         android:padding="5dp">
     <LinearLayout
@@ -27,16 +29,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="left"
-            android:background="#1A110704"
-            android:orientation="vertical" >
+            android:orientation="vertical" 
+            android:background="@android:color/transparent">
 
             <TextView
                 android:id="@+id/service_row_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#89D7FF" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/service_row_description"
@@ -46,13 +48,14 @@
                 android:scrollHorizontally="false"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#89D7FF" />
+                android:textColor="@android:color/white" />
         </LinearLayout>
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:src="@drawable/button_gointo" />
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

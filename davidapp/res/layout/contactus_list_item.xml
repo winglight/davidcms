@@ -17,7 +17,8 @@
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#E089D7FF" 
-                android:background="#33110704"/>
+                android:background="#33110704"
+                android:paddingLeft="20dp"/>
 
 
 

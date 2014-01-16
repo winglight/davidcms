@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:background="@drawable/background_main"
     android:orientation="vertical"
+    android:clickable="true"
     android:paddingBottom="@dimen/content_margin_dimen"
     android:paddingLeft="@dimen/content_margin_dimen"
     android:paddingRight="@dimen/content_margin_dimen"
@@ -17,14 +18,14 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/zong_person_name_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/member_detail_downline"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#00B9FD" />
         
         <TextView
-            android:id="@+id/zong_person_amount_txt"
+            android:id="@+id/zong_downline_name_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -43,18 +44,53 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:text="@string/member_client_name"
+            android:text="@string/member_detail_hall"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/zong_detail_list_title_txt"
+            android:id="@+id/zong_detail_hall_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
             android:text="@string/member_tab_m"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/zong_detail_title1_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/zong_detail_title2_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white" />
+        
+        <TextView
+            android:id="@+id/zong_detail_title3_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
     </LinearLayout>
     

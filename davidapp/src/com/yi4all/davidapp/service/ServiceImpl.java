@@ -22,6 +22,7 @@ import com.yi4all.davidapp.db.ContentType;
 import com.yi4all.davidapp.db.dto.Hall;
 import com.yi4all.davidapp.db.dto.LinePerson;
 import com.yi4all.davidapp.db.dto.ZongData;
+import com.yi4all.davidapp.db.dto.ZongDetailData;
 import com.yi4all.davidapp.util.JsonDateDeserializer;
 import org.json.JSONObject;
 
@@ -450,6 +451,55 @@ public class ServiceImpl {
 							message.obj = gson.fromJson(
 									result.get(0).toString(),
 									new TypeToken<LinePerson>() {
+									}.getType());
+						}catch(RuntimeException re){
+							message.arg1 = 1;
+							message.obj = re.getLocalizedMessage();
+						}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void getMemberZongDetails(final Handler handler,
+			final String userId, final String hallid, final int type) {
+		String url = remoteService.getMemberUrl();
+		url += "/Query/ComplexDataInfo/?LineCode=" + userId + "&HallID=" + hallid + "&TypeID=" + type;
+		
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+						try{
+							JsonObject jobj = gson.fromJson(res, JsonObject.class);
+
+							JsonArray result = jobj.get("ComplexDataInfoTB").getAsJsonArray();
+							
+							message.what = type-1;
+							message.arg1 = 0;// success flag
+							message.obj = gson.fromJson(
+									result.toString(),
+									new TypeToken<List<ZongDetailData>>() {
 									}.getType());
 						}catch(RuntimeException re){
 							message.arg1 = 1;
