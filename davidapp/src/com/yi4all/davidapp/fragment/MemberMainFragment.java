@@ -26,6 +26,11 @@ import com.yi4all.davidapp.R;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.db.dto.LinePerson;
+import com.yi4all.davidapp.fragment.member.KuanFragment;
+import com.yi4all.davidapp.fragment.member.ShangFragment;
+import com.yi4all.davidapp.fragment.member.ZongDeatilFragment;
+import com.yi4all.davidapp.fragment.member.ZongFragment;
 import com.yi4all.davidapp.util.Utils;
 
 import java.util.ArrayList;
@@ -34,7 +39,7 @@ import java.util.List;
 
 public class MemberMainFragment extends Fragment {
 	
-	private final static String LOGTAG = "IntroFragment";
+	public final static String LOGTAG = "IntroFragment";
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -54,7 +59,12 @@ public class MemberMainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				((MemberActivity)getActivity()).setRoot(false);
-				((MemberActivity)getActivity()).goinFragment(null);
+				LinePerson person = ((MemberActivity)getActivity()).getCurrentUser();
+		        if(person != null && person.isUp()){
+		        	((MemberActivity)getActivity()).goinFragment(new ZongFragment());
+		        }else{
+		        	((MemberActivity)getActivity()).goinFragment(ZongDeatilFragment.getInstance(person));
+		        }
 			}
 		});
         
@@ -64,7 +74,13 @@ public class MemberMainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				((MemberActivity)getActivity()).setRoot(false);
-				((MemberActivity)getActivity()).goinFragment(null);
+				LinePerson person = ((MemberActivity)getActivity()).getCurrentUser();
+		        if(person != null && person.isUp()){
+		        	((MemberActivity)getActivity()).goinFragment(new KuanFragment());
+		        }else{
+		        	//TODO kuan detail
+		        	((MemberActivity)getActivity()).goinFragment(new KuanFragment());
+		        }
 			}
 		});
         
@@ -74,9 +90,13 @@ public class MemberMainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				((MemberActivity)getActivity()).setRoot(false);
-				((MemberActivity)getActivity()).goinFragment(null);
+				((MemberActivity)getActivity()).goinFragment(new ShangFragment());
 			}
 		});
+        LinePerson person = ((MemberActivity)getActivity()).getCurrentUser();
+        if(person != null && !(person.isUp())){
+        	shangTxt.setVisibility(View.GONE);
+        }
         
         Button changePwdBtn = (Button) v.findViewById(R.id.changePwdBtn);
         changePwdBtn.setOnClickListener(new OnClickListener() {

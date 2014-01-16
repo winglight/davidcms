@@ -4,4 +4,5 @@
     <color name="tab_selected_text_color">@android:color/white</color>
     <color name="content_text_color">#969798</color>
     <color name="member_menu_text_color">#73788F</color>
+    <color name="member_line_data_text_color">#E50000</color>
 </resources>

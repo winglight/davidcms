@@ -12,11 +12,16 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.yi4all.davidapp.ApplicationController;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.db.dto.Hall;
+import com.yi4all.davidapp.db.dto.LinePerson;
+import com.yi4all.davidapp.db.dto.ZongData;
 import com.yi4all.davidapp.util.JsonDateDeserializer;
 import org.json.JSONObject;
 
@@ -257,6 +262,201 @@ public class ServiceImpl {
 						}
 
 						handler.sendMessage(messsage);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void getMemberLinePersons(final Handler handler,
+			final String userId) {
+		String url = remoteService.getMemberUrl();
+		url += "/Query/UserLineCode/?UserID=" + userId;
+		
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+						try{
+							JsonObject jobj = gson.fromJson(res, JsonObject.class);
+
+							JsonArray result = jobj.get("UserLineCodeTB").getAsJsonArray();
+							
+							message.arg1 = 0;// success flag
+							message.obj = gson.fromJson(
+									result.toString(),
+									new TypeToken<List<LinePerson>>() {
+									}.getType());
+						}catch(RuntimeException re){
+							message.arg1 = 1;
+							message.obj = re.getLocalizedMessage();
+						}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void getMemberHalls(final Handler handler,
+			final String userId) {
+		String url = remoteService.getMemberUrl();
+		url += "/Query/UserHalls/?UserID=" + userId;
+		
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+						try{
+							JsonObject jobj = gson.fromJson(res, JsonObject.class);
+
+							JsonArray result = jobj.get("UserHallsTB").getAsJsonArray();
+							
+							message.arg1 = 0;// success flag
+							message.obj = gson.fromJson(
+									result.toString(),
+									new TypeToken<List<Hall>>() {
+									}.getType());
+						}catch(RuntimeException re){
+							message.arg1 = 1;
+							message.obj = re.getLocalizedMessage();
+						}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void getMemberZongs(final Handler handler,
+			final String userId, final int type) {
+		String url = remoteService.getMemberUrl();
+		url += "/Query/DataComplex/?LineCode=" + userId + "&TypeID=" + type;
+		
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+						try{
+							JsonObject jobj = gson.fromJson(res, JsonObject.class);
+
+							JsonArray result = jobj.get("ComplexDataTB").getAsJsonArray();
+							
+							JsonArray total = jobj.get("ComplexDataTotalTB").getAsJsonArray();
+							
+							message.arg1 = 0;// success flag
+							message.arg2 = total.get(0).getAsJsonObject().get("Total").getAsInt();
+							message.obj = gson.fromJson(
+									result.toString(),
+									new TypeToken<List<ZongData>>() {
+									}.getType());
+						}catch(RuntimeException re){
+							message.arg1 = 1;
+							message.obj = re.getLocalizedMessage();
+						}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void getMemberLineAmount(final Handler handler,
+			final String userId) {
+		String url = remoteService.getMemberUrl();
+		url += "/Query/UserInfo/?LineCode=" + userId;
+		
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+						try{
+							JsonObject jobj = gson.fromJson(res, JsonObject.class);
+
+							JsonArray result = jobj.get("UserInfoTB").getAsJsonArray();
+							
+							message.arg1 = 0;// success flag
+							message.obj = gson.fromJson(
+									result.get(0).toString(),
+									new TypeToken<LinePerson>() {
+									}.getType());
+						}catch(RuntimeException re){
+							message.arg1 = 1;
+							message.obj = re.getLocalizedMessage();
+						}
+
+						handler.sendMessage(message);
 					}
 				}, new Response.ErrorListener() {
 					@Override

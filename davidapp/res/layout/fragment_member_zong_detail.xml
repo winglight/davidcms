@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_main"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/content_margin_dimen"
+    android:paddingLeft="@dimen/content_margin_dimen"
+    android:paddingRight="@dimen/content_margin_dimen"
+    android:paddingTop="0dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2B2937"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="0dp" >
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/mRadio"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/login_radio_btn_bg"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:paddingRight="2dp"
+                android:text="@string/member_tab_m"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/login_radio_btn_txt" />
+
+            <RadioButton
+                android:id="@+id/danRadio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/login_radio_btn_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingRight="2dp"
+                android:text="@string/member_tab_cundan"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/login_radio_btn_txt" />
+
+            <RadioButton
+                android:id="@+id/jiRadio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/login_radio_btn_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingRight="2dp"
+                android:text="@string/member_tab_cunji"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/login_radio_btn_txt" />
+
+            <RadioButton
+                android:id="@+id/maRadio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/login_radio_btn_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingRight="2dp"
+                android:text="@string/member_tab_zhuanma"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/login_radio_btn_txt" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/zong_person_name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#00B9FD" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#006B93"
+            android:text="@string/member_zong_splitor" />
+
+        <TextView
+            android:id="@+id/zong_person_amount_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:text="@string/member_hall_name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/zong_list_title_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:text="@string/member_tab_m"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+    
+    <ListView
+        android:id="@+id/zong_detail_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="2dp"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:smoothScrollbar="true" />
+	<ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/zong_splitor"
+            />
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="left|center_vertical"
+        android:orientation="vertical" >
+
+	    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:text="@string/member_total"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/zong_total_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#888888" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/zong_group_amount_show_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:text="@string/member_group_total_m"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#888888" />
+
+        <TextView
+            android:id="@+id/zong_group_amount_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#888888" />
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

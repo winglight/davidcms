@@ -36,6 +36,7 @@ import com.yi4all.davidapp.R;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.db.dto.LinePerson;
 import com.yi4all.davidapp.util.Utils;
 
 import java.math.BigInteger;
@@ -97,6 +98,12 @@ public class LoginFragment extends Fragment {
 				}
 				Intent intent = new Intent();
                 intent.setClass(getActivity(), MemberActivity.class);
+                LinePerson person = new LinePerson();
+                person.setLineName("a001");
+                person.setLineCode("a001");
+                person.setIsData("Y");
+                person.setUp(lineType == 1);
+                intent.putExtra(MemberActivity.EXTRA_DATA, person);
 				getActivity().startActivity(intent);
 				
 			}

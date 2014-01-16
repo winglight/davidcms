@@ -3,6 +3,7 @@ package com.yi4all.davidapp;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.db.dto.LinePerson;
 import com.yi4all.davidapp.fragment.ContactusListFragment;
 import com.yi4all.davidapp.fragment.FeedbackFragment;
 import com.yi4all.davidapp.fragment.HallListFragment;
@@ -37,6 +39,8 @@ import com.yi4all.davidapp.view.InfiniteGallery;
 public class MemberActivity extends BaseActivity {
 
 	private final static String LOGTAG = "MemberActivity";
+	
+	public final static String EXTRA_DATA = "user";
 
 	private final Object mClickLock = new Object();
 	
@@ -44,7 +48,7 @@ public class MemberActivity extends BaseActivity {
 
 	private TextView titleTxt;
 
-	private Fragment currentFragment;
+	private LinePerson currentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +69,18 @@ public class MemberActivity extends BaseActivity {
 				
 			}
 		});
+		
+		currentUser = (LinePerson) getIntent().getSerializableExtra(EXTRA_DATA); 
 
 		goinFragment(new MemberMainFragment());
 	}
 
-	public void setTitleTxt(final String title) {
+	public LinePerson getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setTitleTxt(int resId) {
+		final String title = getString(resId);
 		new Handler().post(new Runnable() {
 
 			@Override
@@ -118,11 +129,9 @@ public class MemberActivity extends BaseActivity {
             		beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             	ft.setCustomAnimations(R.anim.fragment_slide_right_enter, R.anim.fragment_slide_left_exit);
-            ft.replace(R.id.memberzone, f);
-            ft.addToBackStack(null);
+            ft.add(R.id.memberzone, f);
+            ft.addToBackStack(f.getClass().getName());
             ft.commit();
-            
-            currentFragment = f;
             
             mClickLock.notifyAll();
 		}            
@@ -133,10 +142,13 @@ public class MemberActivity extends BaseActivity {
 		synchronized (mClickLock) {
 			final FragmentManager fm = getSupportFragmentManager();
 		final FragmentTransaction ft = fm.beginTransaction();
+		
+		Fragment f = fm.findFragmentById(R.id.memberzone);
 		ft.setCustomAnimations(R.anim.fragment_slide_left_enter, R.anim.fragment_slide_right_exit);
-		ft.remove(currentFragment);
+		ft.remove(f);
 		ft.commit();
-		if(fm.getBackStackEntryCount() <= 1){
+		
+		if(fm.getBackStackEntryCount() <= 2){
 			isRoot = true;
 		}
 		

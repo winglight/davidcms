@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file is at /res/layout/list_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#33110704"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="2dp" >
+
+
+            <TextView
+                android:id="@+id/line_row_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:background="#E01D192F"
+            android:text="@string/member_title_zong"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/member_menu_text_color"
+            android:drawableRight="@drawable/button_gointo"/>
+
+
+
+</LinearLayout>
