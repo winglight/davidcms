@@ -6,6 +6,7 @@ public class ZongData implements Serializable{
 
 	private int Amount;
 	private String HallName;
+	private String HallID;
 	
 	public int getAmount() {
 		return Amount;
@@ -18,6 +19,12 @@ public class ZongData implements Serializable{
 	}
 	public void setHallName(String hallName) {
 		HallName = hallName;
+	}
+	public String getHallID() {
+		return HallID;
+	}
+	public void setHallID(String hallID) {
+		HallID = hallID;
 	}
 	
 	

@@ -87,6 +87,7 @@
             android:hint="@string/login_pwd_hint"
             android:padding="10dp"
             android:singleLine="true"
+            android:inputType="textPassword"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#989AA1" >
 

@@ -49,7 +49,7 @@ public class ZongFragment extends Fragment{
 
 	private ArrayList<LinePerson> persons = new ArrayList<LinePerson>();
 	
-	private Date lastUpdateTime;
+	private Date lastUpdateTime = new Date();
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -110,9 +110,9 @@ public class ZongFragment extends Fragment{
 		super.onResume();
 		
 		((MemberActivity)getActivity()).setTitleTxt(R.string.member_title_zong);
-		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage();
-				
+
+		list.setRefreshing(true);
+		
 	}
 	
 	/**

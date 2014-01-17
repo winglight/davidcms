@@ -50,7 +50,7 @@ public class KuanFragment extends Fragment{
 
 	private ArrayList<LinePerson> persons = new ArrayList<LinePerson>();
 	
-	private Date lastUpdateTime;
+	private Date lastUpdateTime = new Date();
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class KuanFragment extends Fragment{
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO download and install apk
-				((MemberActivity)getActivity()).goinFragment(null);
+				((MemberActivity)getActivity()).goinFragment(KuanDetailFragment.getInstance(persons.get(position-1)));
 			}
 		});
 
@@ -110,8 +110,8 @@ public class KuanFragment extends Fragment{
 		super.onResume();
 		
 		((MemberActivity)getActivity()).setTitleTxt(R.string.member_title_daikuan);
-		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage();
+
+		list.setRefreshing();
 				
 	}
 	
@@ -207,6 +207,11 @@ public class KuanFragment extends Fragment{
 
 			// set triangle for the add
 			holder.name.setText(am.getLineName());
+			if(am.isHasData()){
+				holder.name.setTextColor(getResources().getColor(R.color.member_line_data_text_color));
+			}else{
+				holder.name.setTextColor(getResources().getColor(R.color.member_menu_text_color));
+			}
 			return (convertView);
 		}
 

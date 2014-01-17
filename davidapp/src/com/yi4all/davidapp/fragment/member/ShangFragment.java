@@ -49,7 +49,7 @@ public class ShangFragment extends Fragment{
 
 	private ArrayList<Hall> persons = new ArrayList<Hall>();
 	
-	private Date lastUpdateTime;
+	private Date lastUpdateTime = new Date();
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -96,8 +96,7 @@ public class ShangFragment extends Fragment{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO download and install apk
-				((MemberActivity)getActivity()).goinFragment(null);
+				((MemberActivity)getActivity()).goinFragment(ShangDetailFragment.getInstance(((MemberActivity)getActivity()).getCurrentUser(),persons.get(position-1)));
 			}
 		});
 
@@ -109,8 +108,7 @@ public class ShangFragment extends Fragment{
 		super.onResume();
 		
 		((MemberActivity)getActivity()).setTitleTxt(R.string.member_title_shangxia);
-		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage();
+		list.setRefreshing(true);
 				
 	}
 	

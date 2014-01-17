@@ -45,6 +45,8 @@ public class MainActivity extends BaseActivity {
     private TextView oldTab;
     
     private int currentTabPos;
+    
+    private int newTabPos;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,29 +68,37 @@ public class MainActivity extends BaseActivity {
 		indicator.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> adapter, View view,
-					int position, long arg3) {
-				//set older tab text appearance
-				if(oldTab != null){
-				oldTab.setTextColor(getResources().getColor(R.color.tab_text_color));
-				oldTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_text_dimen));
-				oldTab.invalidate();
-				}
+			public void onItemSelected(AdapterView<?> adapter, final View view,
+					final int position, long arg3) {
+				newTabPos = position;
 				
-				Fragment f = getItem(position%pageTitle.length);
-				
-				addFragment(f, pageTitle[position%pageTitle.length], currentTabPos > position);
-				
-				//set new tab text appearance
-				currentTabPos = position;
-				TextView newTab = (TextView) view; 
-				newTab.setTextColor(getResources().getColor(R.color.tab_selected_text_color));
-				newTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_selected_text_dimen));
-				newTab.invalidate();
-				
-				indicator.invalidate();
-				
-				oldTab = newTab;
+				new Handler().postDelayed(new Runnable() {
+					
+					@Override
+					public void run() {
+						if(newTabPos != position) return;
+						
+						//set older tab text appearance
+						if(oldTab != null){
+						oldTab.setTextColor(getResources().getColor(R.color.tab_text_color));
+						oldTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_text_dimen));
+						}
+						
+						Fragment f = getItem(position%pageTitle.length);
+						
+						addFragment(f, pageTitle[position%pageTitle.length], currentTabPos > position);
+						
+						//set new tab text appearance
+						currentTabPos = position;
+						TextView newTab = (TextView) view; 
+						newTab.setTextColor(getResources().getColor(R.color.tab_selected_text_color));
+						newTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_selected_text_dimen));
+						
+//						indicator.invalidate();
+						
+						oldTab = newTab;
+					}
+				}, 500);
 				
 			}
 

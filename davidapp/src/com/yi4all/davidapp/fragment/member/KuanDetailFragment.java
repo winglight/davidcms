@@ -46,41 +46,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ZongDeatilDetailFragment extends Fragment {
+public class KuanDetailFragment extends Fragment {
 
-	private final static String LOGTAG = "ZongDeatilDetailFragment";
+	private final static String LOGTAG = "KuanDetailFragment";
 
 	private ListView list;
 	private AppAdapter mAdapter;
 
 	private LinePerson person;
 	
-	private ZongData zong;
-
-	private int currentMode = 0; // 0 - M; 1 - CunDan ; 2 - CunJi ; 3 - ZhuanMa
-
 	private ArrayList<ZongDetailData> zongDetails = new ArrayList<ZongDetailData>();
 
 	private Date lastUpdateTime;
 
 	// UI elements
 	private TextView downlineNameTxt;
-	private TextView hallNametTxt;
-	private TextView title1Txt;
-	private TextView title2Txt;
-	private TextView title3Txt;
 	private TextView totalTxt;
-	private TextView maBlueTxt;
-	private TextView maWhiteTxt;
-	private TextView maTotalTxt;
-	private LinearLayout totalPanel;
-	private LinearLayout maPanel;
 
-	public static ZongDeatilDetailFragment getInstance(LinePerson person, ZongData zong, int mode) {
-		ZongDeatilDetailFragment f = new ZongDeatilDetailFragment();
+	public static KuanDetailFragment getInstance(LinePerson person) {
+		KuanDetailFragment f = new KuanDetailFragment();
 		f.person = person;
-		f.zong = zong;
-		f.currentMode = mode;
 
 		return f;
 	}
@@ -95,26 +80,13 @@ public class ZongDeatilDetailFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		final View v = inflater.inflate(R.layout.fragment_member_zong_detail_detail,
+		final View v = inflater.inflate(R.layout.fragment_member_kuan_detail,
 				container, false);
 
-		downlineNameTxt = (TextView) v.findViewById(R.id.zong_downline_name_txt);
-		hallNametTxt = (TextView) v
-				.findViewById(R.id.zong_detail_hall_txt);
-		title1Txt = (TextView) v.findViewById(R.id.zong_detail_title1_txt);
-		title2Txt = (TextView) v.findViewById(R.id.zong_detail_title2_txt);
-		title3Txt = (TextView) v.findViewById(R.id.zong_detail_title3_txt);
-		totalTxt = (TextView) v.findViewById(R.id.zong_detail_total_txt);
-		maBlueTxt = (TextView) v
-				.findViewById(R.id.zong_zhuanma_blue_txt);
-		maWhiteTxt = (TextView) v
-				.findViewById(R.id.zong_zhuanma_white_txt);
-		maTotalTxt = (TextView) v
-				.findViewById(R.id.zong_zhuanma_total_txt);
-		totalPanel = (LinearLayout) v.findViewById(R.id.zong_total_panel);
-		maPanel = (LinearLayout) v.findViewById(R.id.zong_zhuanma_total_panel);
+		downlineNameTxt = (TextView) v.findViewById(R.id.kuan_downline_name_txt);
+		totalTxt = (TextView) v.findViewById(R.id.kuan_detail_total_txt);
 		
-		list = (ListView) v.findViewById(R.id.zong_detail_list);
+		list = (ListView) v.findViewById(R.id.kuan_detail_list);
 
 		mAdapter = new AppAdapter(getActivity());
 
@@ -131,78 +103,9 @@ public class ZongDeatilDetailFragment extends Fragment {
 
 		downlineNameTxt.setText(person.getLineName());
 		
-		hallNametTxt.setText(zong.getHallName());
-		
-		loadUIByMode();
-
 		loadListByPage();
 
 	}
-
-	private void loadUIByMode() {
-		getActivity().runOnUiThread(new Runnable() {
-
-			@Override
-			public void run() {
-				title1Txt.setVisibility(View.VISIBLE);
-				title2Txt.setVisibility(View.VISIBLE);
-				list.setVisibility(View.VISIBLE);
-				
-				switch (currentMode) {
-				case 0: {
-					title1Txt.setText(R.string.member_client_name);
-					title2Txt.setText(R.string.member_detail_qianm);
-//					title3Txt.setText(R.string.member_detail_memo);
-					title3Txt.setVisibility(View.GONE);
-					totalPanel.setVisibility(View.VISIBLE);
-					maPanel.setVisibility(View.GONE);
-					
-					((MemberActivity) getActivity())
-					.setTitleTxt(R.string.member_title_m);
-					break;
-				}
-				case 1: {
-					title1Txt.setText(R.string.member_client_name);
-					title2Txt.setText(R.string.member_tab_cundan);
-//					title3Txt.setText(R.string.member_detail_memo);
-					title3Txt.setVisibility(View.GONE);
-					totalPanel.setVisibility(View.VISIBLE);
-					maPanel.setVisibility(View.GONE);
-					
-					((MemberActivity) getActivity())
-					.setTitleTxt(R.string.member_title_cundan);
-					break;
-				}
-				case 2: {
-					title1Txt.setText(R.string.member_detail_time);
-					title2Txt.setText(R.string.member_detail_money);
-					title3Txt.setText(R.string.member_detail_memo);
-					title3Txt.setVisibility(View.VISIBLE);
-					totalPanel.setVisibility(View.VISIBLE);
-					maPanel.setVisibility(View.GONE);
-					
-					((MemberActivity) getActivity())
-					.setTitleTxt(R.string.member_title_cunji);
-					break;
-				}
-				case 3: {
-					title1Txt.setVisibility(View.GONE);
-					title2Txt.setVisibility(View.GONE);
-					title3Txt.setVisibility(View.GONE);
-					totalPanel.setVisibility(View.GONE);
-					maPanel.setVisibility(View.VISIBLE);
-					list.setVisibility(View.GONE);
-					
-					((MemberActivity) getActivity())
-					.setTitleTxt(R.string.member_title_zhuanma);
-					break;
-				}
-				}
-			}
-		});
-
-	}
-	
 
 	/**
 	 * 统一刷新列表数据及加载更多数据两种模式： 1.根据页数查询本地数据 2.如果有本地数据则刷新列表（加载数据到最后并跳转至新数据的第一条记录）
@@ -214,16 +117,14 @@ public class ZongDeatilDetailFragment extends Fragment {
 		lastUpdateTime = new Date();
 
 		// 根据当前模式：currentMode,查询列表数据
-		((BaseActivity) getActivity()).getService().getMemberZongDetails(
+		((BaseActivity) getActivity()).getService().getMemberKuanDetails(
 				new Handler() {
 					@Override
 					public void handleMessage(Message msg) {
 
-						if(msg.what != currentMode) return;
-						
-						// msg construction: what: current mode
+						// msg construction: 
 						// arg1: success flag(0 - success, 1 -
-						// fail), arg2: total amount, obj: data of list
+						// fail), obj: data of list
 						if (msg.arg1 == 0) {
 							
 							// load updated app into list
@@ -233,8 +134,6 @@ public class ZongDeatilDetailFragment extends Fragment {
 								
 								zongDetails.clear();
 
-								if(msg.what != 3){
-									
 									zongDetails.addAll(remoteMoreIssues);
 									
 									int total = 0;
@@ -243,23 +142,6 @@ public class ZongDeatilDetailFragment extends Fragment {
 									}
 									
 									totalTxt.setText(String.valueOf(total));
-								}else{
-									list.setVisibility(View.GONE);
-									
-									//calculate totals
-									int blueTotal = 0;
-									int whiteTotal = 0;
-									int total = 0;
-									for(ZongDetailData detail : remoteMoreIssues){
-										blueTotal += detail.getBTotal();
-										whiteTotal += detail.getWTotal();
-										total += detail.getTotal();
-									}
-									//show zhuanma totals
-									maBlueTxt.setText(String.valueOf(blueTotal));
-									maWhiteTxt.setText(String.valueOf(whiteTotal));
-									maTotalTxt.setText(String.valueOf(total));
-								}
 
 								mAdapter.notifyDataSetChanged();
 							} else {
@@ -276,7 +158,7 @@ public class ZongDeatilDetailFragment extends Fragment {
 						}
 
 					}
-				}, person.getLineCode(), zong.getHallID(), currentMode + 1);
+				}, person.getLineCode());
 
 		mAdapter.notifyDataSetChanged();
 
@@ -321,15 +203,8 @@ public class ZongDeatilDetailFragment extends Fragment {
 
 			// set triangle for the add
 			holder.amount.setText(String.valueOf(am.getAmount()));
-			if(currentMode == 2){
-				holder.memo.setVisibility(View.VISIBLE);
-				holder.memo.setText(am.getRemark());
-				
-				holder.name.setText(am.getPostTime());
-			}else{
 				holder.name.setText(am.getClientName());
 				holder.memo.setVisibility(View.GONE);
-			}
 
 			return (convertView);
 		}

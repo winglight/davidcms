@@ -3,6 +3,8 @@ package com.yi4all.davidapp;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,7 +46,7 @@ public class MemberActivity extends BaseActivity {
 
 	private final Object mClickLock = new Object();
 	
-	private boolean isRoot = true;
+	private int level = 0;
 
 	private TextView titleTxt;
 
@@ -81,6 +83,10 @@ public class MemberActivity extends BaseActivity {
 
 	public void setTitleTxt(int resId) {
 		final String title = getString(resId);
+		setTitleTxt(title);
+	}
+	
+	public void setTitleTxt(final String title) {
 		new Handler().post(new Runnable() {
 
 			@Override
@@ -97,14 +103,25 @@ public class MemberActivity extends BaseActivity {
 
 	}
 	
-	public void setRoot(boolean isRoot) {
-		this.isRoot = isRoot;
-	}
-
 	public void back(){
-		if (isRoot) {
+		if (level <= 1) {
 
-			this.finish();
+			new AlertDialog.Builder(this)
+	        .setIcon(android.R.drawable.ic_dialog_alert)
+	        .setTitle(R.string.quit)
+	        .setMessage(R.string.really_quit)
+	        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+
+	                //Stop the activity
+	                finish();    
+	            }
+
+	        })
+	        .setNegativeButton(android.R.string.no, null)
+	        .show();
 		} else {
 			gobackFragment();
 		}
@@ -134,6 +151,8 @@ public class MemberActivity extends BaseActivity {
             ft.addToBackStack(f.getClass().getName());
             ft.commit();
             
+            level++;
+            
             mClickLock.notifyAll();
 		}            
 	}
@@ -149,9 +168,7 @@ public class MemberActivity extends BaseActivity {
 		ft.remove(f);
 		ft.commit();
 		
-		if(fm.getBackStackEntryCount() <= 2){
-			isRoot = true;
-		}
+		level--;
 		
 		mClickLock.notifyAll();
 	}

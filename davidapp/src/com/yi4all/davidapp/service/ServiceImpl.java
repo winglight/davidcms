@@ -21,6 +21,7 @@ import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
 import com.yi4all.davidapp.db.dto.Hall;
 import com.yi4all.davidapp.db.dto.LinePerson;
+import com.yi4all.davidapp.db.dto.ShangDetailData;
 import com.yi4all.davidapp.db.dto.ZongData;
 import com.yi4all.davidapp.db.dto.ZongDetailData;
 import com.yi4all.davidapp.util.JsonDateDeserializer;
@@ -505,6 +506,149 @@ public class ServiceImpl {
 							message.arg1 = 1;
 							message.obj = re.getLocalizedMessage();
 						}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void getMemberKuanDetails(final Handler handler,
+			final String userId) {
+		String url = remoteService.getMemberUrl();
+		url += "/Query/LoanInfo/?LineCode=" + userId;
+		
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+						try{
+							JsonObject jobj = gson.fromJson(res, JsonObject.class);
+
+							JsonArray result = jobj.get("LoanInfoTB").getAsJsonArray();
+							
+							message.arg1 = 0;// success flag
+							message.obj = gson.fromJson(
+									result.toString(),
+									new TypeToken<List<ZongDetailData>>() {
+									}.getType());
+						}catch(RuntimeException re){
+							message.arg1 = 1;
+							message.obj = re.getLocalizedMessage();
+						}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void getMemberShangDetails(final Handler handler,
+			final String userId, final String hallid, final String date) {
+		String url = remoteService.getMemberUrl();
+		url += "/Query/UserUpDown/?UserID=" + userId + "&HallID=" + hallid + "&SearchDate=" + date;
+		
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+						try{
+							JsonObject jobj = gson.fromJson(res, JsonObject.class);
+
+							JsonArray result = jobj.get("UserUpDownTB").getAsJsonArray();
+							
+							message.arg1 = 0;// success flag
+							message.obj = gson.fromJson(
+									result.toString(),
+									new TypeToken<List<ShangDetailData>>() {
+									}.getType());
+						}catch(RuntimeException re){
+							message.arg1 = 1;
+							message.obj = re.getLocalizedMessage();
+						}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				});
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void changePwd(final Handler handler,
+			final String userId, final String old, final String newp, final boolean isUp) {
+		String url = remoteService.getMemberUrl();
+		url += "/Member/ChangePasswd";
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("UserID", userId);
+		params.put("OldPasswd", old);
+		params.put("NewPasswd", newp);
+		params.put("UserType", (isUp?"1":"0"));
+		
+		JsonObjectRequest req = new JsonObjectRequest(Method.POST, url, new JSONObject(params),
+				new Response.Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+							if ("false".equals(res)) {
+
+								message.arg1 = 1;// fail flag
+							} else {
+								message.arg1 = 0;// success flag
+
+							}
 
 						handler.sendMessage(message);
 					}

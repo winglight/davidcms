@@ -3,7 +3,7 @@ target
 tmp
 upload
 bin
-/.target
+/.*
 dist
 /.idea
 /*.iml

@@ -1,4 +1,4 @@
-package com.yi4all.davidapp.fragment;
+package com.yi4all.davidapp.fragment.member;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -47,16 +47,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public class LoginFragment extends Fragment {
+public class ChangePwdFragment extends Fragment {
 	
-	private final static String LOGTAG = "LoginFragment";
+	private final static String LOGTAG = "ChangePwdFragment";
 
-    private EditText pwdTxt;
-    private EditText nameTxt;
+    private EditText oldPwdTxt;
+    private EditText newPwdTxt;
     private EditText verifyTxt;
-    private TextView verifyShowTxt;
-    
-    private int lineType = 1; //上线=1;下线=0
     
     private SecureRandom random = new SecureRandom();
 
@@ -70,98 +67,63 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View v = inflater.inflate(R.layout.fragment_login, container, false);
+        final View v = inflater.inflate(R.layout.fragment_change_pwd, container, false);
 
-        nameTxt = (EditText) v.findViewById(R.id.login_user_txt);
-        verifyTxt = (EditText) v.findViewById(R.id.login_verify_txt);
-        pwdTxt = (EditText) v.findViewById(R.id.login_pwd_txt);
-        verifyShowTxt = (TextView) v.findViewById(R.id.login_verify_show_txt);
+        newPwdTxt = (EditText) v.findViewById(R.id.pwd_new_txt);
+        verifyTxt = (EditText) v.findViewById(R.id.pwd_verify_txt);
+        oldPwdTxt = (EditText) v.findViewById(R.id.pwd_old_txt);
         
-        TextView changeVerifyTxt = (TextView) v.findViewById(R.id.login_change_btn);
-        changeVerifyTxt.setOnClickListener(new OnClickListener() {
+        Button submitBtn = (Button) v.findViewById(R.id.changePwdBtn);
+        submitBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				loadVerifyTxt();
-			}
-		});
-        
-        Button loginBtn = (Button) v.findViewById(R.id.loginBtn);
-        loginBtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				String name = nameTxt.getText().toString();
-				String pwd = pwdTxt.getText().toString();
+				String old = oldPwdTxt.getText().toString();
+				String newp = newPwdTxt.getText().toString();
 				String verp = verifyTxt.getText().toString();
-				String verpShow = verifyShowTxt.getText().toString();
 				
-				if(name == null || name.length() == 0 || pwd == null || pwd.length() == 0 || verp == null  || verp.length() == 0){
+				if(old == null || old.length() == 0 || newp == null || newp.length() == 0 || verp == null  || verp.length() == 0){
 					Utils.toastMsg(getActivity(), R.string.changepwd_null_error);
 					
 					return;
 				}
 				
-				if(!verp.toLowerCase().equals(verpShow)){
-					Utils.toastMsg(getActivity(), R.string.login_verify_error);
+				if(!verp.equals(newp)){
+					Utils.toastMsg(getActivity(), R.string.changepwd_verify_error);
 					
 					return;
 				}
 				
-				changePwd(name, pwd);
-				
-				
-			}
-		});
-        
-        RadioButton upRadio = (RadioButton) v.findViewById(R.id.upRadio);
-        upRadio.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton arg0, boolean checked) {
-				if(checked){
-					lineType = 1;
-				}else{
-					lineType = 0;
-				}
-				
+				changePwd(old, newp);
 			}
 		});
         
         return v;
     }
     
-    private void changePwd(final String name, String pwd) {
+    private void changePwd(String old, String newp) {
     	final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, null, true, false); 
 		
 			// TODO:notify updating local db
-			((BaseActivity)getActivity()).getService().memberLogin(
+			((BaseActivity)getActivity()).getService().changePwd(
                     new Handler() {
 				@Override
 				public void handleMessage(Message msg) {
-					
+
 					progressDialog.dismiss();
 					
 					// msg construction:
 					// what: tab value, arg1: success flag(0 - success, 1 -
 					// fail), arg2: page, obj: data of list
 					if (msg.arg1 == 0) {
-						
-						Intent intent = new Intent();
-		                intent.setClass(getActivity(), MemberActivity.class);
-		                LinePerson person = new LinePerson();
-		                person.setLineName(name);
-		                person.setLineCode(name);
-		                person.setIsData("N");
-		                person.setUp(lineType == 1);
-		                intent.putExtra(MemberActivity.EXTRA_DATA, person);
-						getActivity().startActivity(intent);
+						// load updated app into list
+						Utils.toastMsg(getActivity(), R.string.changepwd_success);
 					}else{
-						Utils.toastMsg(getActivity(), R.string.login_userpwd_error);
+						Utils.toastMsg(getActivity(), R.string.changepwd_fail);
 					}
 
                 }
-			}, name, pwd, lineType);
+			}, ((MemberActivity)getActivity()).getCurrentUser().getLineCode(), old, newp, ((MemberActivity)getActivity()).getCurrentUser().isUp());
 
 
 
@@ -172,11 +134,9 @@ public class LoginFragment extends Fragment {
 			
 			@Override
 			public void run() {
-				String str = new BigInteger(130, random).toString(32).substring(0,4);
-		    	verifyShowTxt.setText(str);
-		    	nameTxt.setText("");
+		    	newPwdTxt.setText("");
 		        verifyTxt.setText("");
-		        pwdTxt.setText("");
+		        oldPwdTxt.setText("");
 			}
 		});
     	

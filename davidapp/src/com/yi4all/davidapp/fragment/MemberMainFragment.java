@@ -27,6 +27,7 @@ import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
 import com.yi4all.davidapp.db.dto.LinePerson;
+import com.yi4all.davidapp.fragment.member.KuanDetailFragment;
 import com.yi4all.davidapp.fragment.member.KuanFragment;
 import com.yi4all.davidapp.fragment.member.ShangFragment;
 import com.yi4all.davidapp.fragment.member.ZongDeatilFragment;
@@ -58,7 +59,6 @@ public class MemberMainFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				((MemberActivity)getActivity()).setRoot(false);
 				LinePerson person = ((MemberActivity)getActivity()).getCurrentUser();
 		        if(person != null && person.isUp()){
 		        	((MemberActivity)getActivity()).goinFragment(new ZongFragment());
@@ -73,13 +73,12 @@ public class MemberMainFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				((MemberActivity)getActivity()).setRoot(false);
 				LinePerson person = ((MemberActivity)getActivity()).getCurrentUser();
 		        if(person != null && person.isUp()){
 		        	((MemberActivity)getActivity()).goinFragment(new KuanFragment());
 		        }else{
 		        	//TODO kuan detail
-		        	((MemberActivity)getActivity()).goinFragment(new KuanFragment());
+		        	((MemberActivity)getActivity()).goinFragment(KuanDetailFragment.getInstance(person));
 		        }
 			}
 		});
@@ -89,7 +88,6 @@ public class MemberMainFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				((MemberActivity)getActivity()).setRoot(false);
 				((MemberActivity)getActivity()).goinFragment(new ShangFragment());
 			}
 		});
@@ -104,7 +102,6 @@ public class MemberMainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				((MemberActivity)getActivity()).setRoot(false);
 				((MemberActivity)getActivity()).goinFragment(null);
 				
 			}
@@ -127,7 +124,6 @@ public class MemberMainFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 
-		((MemberActivity)getActivity()).setRoot(true);
 	}
 	
 }
