@@ -117,7 +117,7 @@ public class ShangDetailFragment extends Fragment {
 		final Date now = new Date();
 		final Date yes = DateUtils.addDateDays(now, -1);
 		currentDate = DateUtils.defaultFormat(yes);
-		currentDate = "2013/04/30";
+//		currentDate = "2013/04/30";
 		dateTxt.setText(currentDate);
 			
 		RadioButton yeRadio = (RadioButton) v.findViewById(R.id.yesterdayRadio);

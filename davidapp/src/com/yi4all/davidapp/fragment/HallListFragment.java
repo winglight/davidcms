@@ -222,7 +222,7 @@ public class HallListFragment extends PullToRefreshListFragment{
                 @Override
                 public void onClick(View view) {
                     //TODO:text am.getPhoneNumber()
-                	Intent callIntent = new Intent(Intent.ACTION_CALL);
+                	Intent callIntent = new Intent(Intent.ACTION_VIEW);
                 	callIntent.setData(Uri.parse("sms:" + am.getPhoneNumber()));
                 	startActivity(callIntent);
                 }

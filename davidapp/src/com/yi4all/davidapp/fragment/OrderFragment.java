@@ -1,11 +1,13 @@
 package com.yi4all.davidapp.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,10 +28,12 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.yi4all.davidapp.ApplicationController;
 import com.yi4all.davidapp.BaseActivity;
+import com.yi4all.davidapp.MemberActivity;
 import com.yi4all.davidapp.R;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.db.OrderModel;
 import com.yi4all.davidapp.util.Utils;
 
 import java.util.ArrayList;
@@ -45,7 +49,7 @@ public class OrderFragment extends Fragment {
     private LinearLayout btnPanel;
     
     private EditText memoTxt;
-    private EditText nameTxt;
+//    private EditText nameTxt;
     private EditText phoneTxt;
 
 	@Override
@@ -63,7 +67,7 @@ public class OrderFragment extends Fragment {
         btnPanel = (LinearLayout) v.findViewById(R.id.orderBtnPanel);
         btnPanel.removeAllViews();
         
-        nameTxt = (EditText) v.findViewById(R.id.nameTxt);
+//        nameTxt = (EditText) v.findViewById(R.id.nameTxt);
         phoneTxt = (EditText) v.findViewById(R.id.phoneTxt);
         memoTxt = (EditText) v.findViewById(R.id.memoTxt);
         
@@ -78,6 +82,8 @@ public class OrderFragment extends Fragment {
 				if(i == (pos - 1)){
 					txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_selected_text_dimen));
 					txt.setCompoundDrawablesWithIntrinsicBounds(null, null, null, getActivity().getResources().getDrawable(R.drawable.buttons_selected_indicator));
+					
+					currentOrderItem = title;
 				}else{
 					txt.setTextSize(getActivity().getResources().getDimensionPixelSize(R.dimen.buttons_text_dimen));
 				}
@@ -112,13 +118,67 @@ public class OrderFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+//				String name = nameTxt.getText().toString();
+				String phone = phoneTxt.getText().toString();
+				String memo = memoTxt.getText().toString();
 				
+				if( phone == null || phone.length() == 0 || memo == null  || memo.length() == 0){
+					Utils.toastMsg(getActivity(), R.string.changepwd_null_error);
+					
+					return;
+				}
+				
+				submit("", phone, memo);
+			}
+		});
+        
+        Button hitory = (Button) v.findViewById(R.id.historyBtn);
+        hitory.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				OrderHistoryFragment newFragment = new OrderHistoryFragment();
+				((BaseActivity)getActivity()).popupFragment(newFragment);
 			}
 		});
 
         return v;
     }
+    
+    private void submit(String name, String phone, final String memo) {
+    	final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, getString(R.string.waiting), true, false); 
+		
+			((BaseActivity)getActivity()).getService().saveOrder(
+                    new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+
+					progressDialog.dismiss();
+					
+					// msg construction:
+					// what: tab value, arg1: success flag(0 - success, 1 -
+					// fail), arg2: page, obj: data of list
+					if (msg.arg1 == 0) {
+						// load updated app into list
+						Utils.toastMsg(getActivity(), R.string.save_order_success);
+						
+						OrderModel om = new OrderModel();
+				    	om.setCreatedAt(new Date());
+				    	om.setContent(memo);
+				    	om.setService(currentOrderItem);
+				    	
+				    	((BaseActivity)getActivity()).getService().getDbService().createOrder(om);
+					}else{
+						Utils.toastMsg(getActivity(), R.string.save_order_fail);
+					}
+
+                }
+			}, "", name, phone, memo, currentOrderItem);
+
+
+
+	}
 	
 	@Override
 	public void onResume() {

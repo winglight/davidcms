@@ -132,7 +132,7 @@ public class LoginFragment extends Fragment {
     }
     
     private void changePwd(final String name, String pwd) {
-    	final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, null, true, false); 
+    	final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, getString(R.string.waiting), true, false); 
 		
 			// TODO:notify updating local db
 			((BaseActivity)getActivity()).getService().memberLogin(

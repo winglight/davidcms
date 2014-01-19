@@ -57,7 +57,7 @@
         android:paddingBottom="@dimen/content_margin_dimen"
         android:paddingLeft="@dimen/content_margin_dimen"
         android:paddingRight="@dimen/content_margin_dimen"
-        android:paddingTop="0dp" >
+        android:paddingTop="@dimen/content_margin_dimen" >
 
         <EditText
             android:id="@+id/login_user_txt"
@@ -138,6 +138,13 @@
                 android:textSize="20sp" />
         </LinearLayout>
 
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            />
+        
         <Button
             android:id="@+id/loginBtn"
             android:layout_width="match_parent"

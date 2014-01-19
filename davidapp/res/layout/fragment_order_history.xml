@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C0394264"
+    android:orientation="vertical"
+    android:padding="0dp" >
+
+    <ListView
+        android:id="@+id/order_detail_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="2dp"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:smoothScrollbar="true" />
+    <TextView 
+        android:id="@+id/order_detail_nodata_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="#7FEBFF"
+        />
+
+            <Button
+                android:id="@+id/historyBackBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="#C0394264"
+                android:text="@string/back"
+                android:textColor="#7FEBFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+	
+</LinearLayout>

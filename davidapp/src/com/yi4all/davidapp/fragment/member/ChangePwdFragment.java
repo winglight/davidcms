@@ -102,7 +102,7 @@ public class ChangePwdFragment extends Fragment {
     }
     
     private void changePwd(String old, String newp) {
-    	final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, null, true, false); 
+    	final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), null, getString(R.string.waiting), true, false); 
 		
 			// TODO:notify updating local db
 			((BaseActivity)getActivity()).getService().changePwd(

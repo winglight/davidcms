@@ -15,7 +15,7 @@
     <string name="changepwd_null_error">所有文本框必須輸入,不可為空 </string>
     <string name="changepwd_verify_error">新密碼兩次輸入必須相同</string>
     <string name="changepwd_success">密碼修改成功</string>
-    <string name="changepwd_fail">密碼修改失敗</string>
+    <string name="changepwd_fail">密碼修改失敗,請稍候再試</string>
     <string name="changepwd_title">修改密碼</string>
     <string name="login_up">上線 </string>
     <string name="login_down">下線 </string>
@@ -75,6 +75,13 @@
     <string name="pwd_old">舊密碼</string>
     <string name="pwd_new">新密碼</string>
     <string name="pwd_verify">確認新密碼</string>
+    <string name="waiting">連接網絡中,請稍候</string>
+    <string name="save_feedback_error">您的意見已發送成功,客服人員將與您聯繫</string>
+    <string name="save_feedback_success">意見保存失敗,請稍候再試</string>
+    <string name="save_order_success">訂單提交成功</string>
+    <string name="save_order_fail">訂單提交失敗,請稍候再試</string>
+    <string name="back">返回</string>
+    <string name="no_data">暫無數據</string>
 
     <string-array name="main_tab_label">
         <item >資料查詢</item>

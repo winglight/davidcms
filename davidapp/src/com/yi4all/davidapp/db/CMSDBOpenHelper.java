@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class CMSDBOpenHelper extends OrmLiteSqliteOpenHelper {
 
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 
 	public static final String DATABASE_NAME = "cms.db";
 
@@ -23,6 +23,7 @@ public class CMSDBOpenHelper extends OrmLiteSqliteOpenHelper {
 
 	private Dao<ContentModel, Long> contentDao;
 	private Dao<CompanyModel, Long> companyDao;
+	private Dao<OrderModel, Long> orderDao;
 
 	public CMSDBOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,6 +43,7 @@ public class CMSDBOpenHelper extends OrmLiteSqliteOpenHelper {
 			Log.i(CMSDBOpenHelper.class.getName(), "onCreate");
 			TableUtils.createTable(connectionSource, ContentModel.class);
 			TableUtils.createTable(connectionSource, CompanyModel.class);
+			TableUtils.createTable(connectionSource, OrderModel.class);
 		} catch (SQLException e) {
 			Log.e(CMSDBOpenHelper.class.getName(), "Can't create database", e);
 			throw new RuntimeException(e);
@@ -56,6 +58,7 @@ public class CMSDBOpenHelper extends OrmLiteSqliteOpenHelper {
 			Log.i(CMSDBOpenHelper.class.getName(), "onUpgrade");
 			TableUtils.dropTable(connectionSource, ContentModel.class, true);
 			TableUtils.dropTable(connectionSource, CompanyModel.class, true);
+			TableUtils.dropTable(connectionSource, OrderModel.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -77,6 +80,13 @@ public class CMSDBOpenHelper extends OrmLiteSqliteOpenHelper {
 			companyDao = getDao(CompanyModel.class);
 		}
 		return companyDao;
+	}
+	
+	public Dao<OrderModel, Long> getOrderDAO() throws SQLException {
+		if (orderDao == null) {
+			orderDao = getDao(OrderModel.class);
+		}
+		return orderDao;
 	}
 
 	@Override

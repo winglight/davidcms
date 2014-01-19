@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -30,6 +31,7 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServiceImpl {
 
@@ -242,20 +244,18 @@ public class ServiceImpl {
 		String url = remoteService.getMemberUrl();
 		url += "/Member/LoginValidate";
 		
-		HashMap<String, Object> params = new HashMap<String, Object>();
+		final HashMap<String, String> params = new HashMap<String, String>();
 		params.put("UserID", name);
 		params.put("Passwd", password);
-		params.put("UserType", type);
+		params.put("UserType", String.valueOf(type));
 
-		JsonObjectRequest req = new JsonObjectRequest(Method.POST, url, new JSONObject(params),
-				new Response.Listener<JSONObject>() {
+		StringRequest req = new StringRequest(Method.POST, url,
+				new Response.Listener<String>() {
 					@Override
-					public void onResponse(JSONObject response) {
+					public void onResponse(String response) {
 						Message messsage = handler.obtainMessage();
 
-						String res = response.toString();
-
-						if ("false".equals(res)) {
+						if ("false".equals(response)) {
 
 							messsage.arg1 = 1;// fail flag
 						} else {
@@ -277,7 +277,13 @@ public class ServiceImpl {
 
 						handler.sendMessage(messsage);
 					}
-				});
+				}){
+			@Override
+		    protected Map<String, String> getParams() 
+		    {  
+		            return params;  
+		    }
+		};
 
 		ApplicationController.getInstance().addToRequestQueue(req);
 
@@ -483,13 +489,11 @@ public class ServiceImpl {
 		String url = remoteService.getMemberUrl();
 		url += "/Query/ComplexDataInfo/?LineCode=" + userId + "&HallID=" + hallid + "&TypeID=" + type;
 		
-		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
-				new Response.Listener<JSONObject>() {
+		StringRequest req = new StringRequest(Method.GET, url,
+				new Response.Listener<String>() {
 					@Override
-					public void onResponse(JSONObject response) {
+					public void onResponse(String res) {
 						Message message = handler.obtainMessage();
-
-						String res = response.toString();
 
 						try{
 							JsonObject jobj = gson.fromJson(res, JsonObject.class);
@@ -580,13 +584,11 @@ public class ServiceImpl {
 		String url = remoteService.getMemberUrl();
 		url += "/Query/UserUpDown/?UserID=" + userId + "&HallID=" + hallid + "&SearchDate=" + date;
 		
-		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
-				new Response.Listener<JSONObject>() {
+		StringRequest req = new StringRequest(Method.GET, url,
+				new Response.Listener<String>() {
 					@Override
-					public void onResponse(JSONObject response) {
+					public void onResponse(String res) {
 						Message message = handler.obtainMessage();
-
-						String res = response.toString();
 
 						try{
 							JsonObject jobj = gson.fromJson(res, JsonObject.class);
@@ -628,16 +630,16 @@ public class ServiceImpl {
 		String url = remoteService.getMemberUrl();
 		url += "/Member/ChangePasswd";
 		
-		HashMap<String, Object> params = new HashMap<String, Object>();
+		final HashMap<String, String> params = new HashMap<String, String>();
 		params.put("UserID", userId);
 		params.put("OldPasswd", old);
 		params.put("NewPasswd", newp);
 		params.put("UserType", (isUp?"1":"0"));
 		
-		JsonObjectRequest req = new JsonObjectRequest(Method.POST, url, new JSONObject(params),
-				new Response.Listener<JSONObject>() {
+		StringRequest req = new StringRequest(Method.POST, url, 
+				new Response.Listener<String>() {
 					@Override
-					public void onResponse(JSONObject response) {
+					public void onResponse(String response) {
 						Message message = handler.obtainMessage();
 
 						String res = response.toString();
@@ -664,7 +666,119 @@ public class ServiceImpl {
 
 						handler.sendMessage(messsage);
 					}
-				});
+				}){
+			@Override
+		    protected Map<String, String> getParams() 
+		    {  
+		            return params;  
+		    }
+		};
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void saveFeedback(final Handler handler,
+			final String userId, final String content, final String phone, final String type) {
+		String url = remoteService.getMemberUrl();
+		url += "/Save/Msg";
+		
+		final HashMap<String, String> params = new HashMap<String, String>();
+		params.put("UserID", userId);
+		params.put("Content", content);
+		params.put("Tel", phone);
+		params.put("TypeID", type);
+		
+		StringRequest req = new StringRequest(Method.POST, url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+							if ("false".equals(res)) {
+
+								message.arg1 = 1;// fail flag
+							} else {
+								message.arg1 = 0;// success flag
+
+							}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				}){
+			@Override
+		    protected Map<String, String> getParams() 
+		    {  
+		            return params;  
+		    }
+		};
+
+		ApplicationController.getInstance().addToRequestQueue(req);
+
+	}
+	
+	public void saveOrder(final Handler handler,
+			final String userId, final String name, final String phone, final String memo, final String type) {
+		String url = remoteService.getMemberUrl();
+		url += "/Save/Order";
+		
+		final HashMap<String, String> params = new HashMap<String, String>();
+		params.put("UserID", userId);
+		params.put("OrderContent", memo);
+		params.put("Tel", phone);
+		params.put("OrderType", type);
+		
+		StringRequest req = new StringRequest(Method.POST, url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						Message message = handler.obtainMessage();
+
+						String res = response.toString();
+
+							if ("false".equals(res)) {
+
+								message.arg1 = 1;// fail flag
+							} else {
+								message.arg1 = 0;// success flag
+
+							}
+
+						handler.sendMessage(message);
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						VolleyLog.e("Error: ", error.getMessage());
+
+						Message messsage = handler.obtainMessage();
+						messsage.arg1 = 1;// fail flag
+						messsage.obj = VolleyErrorHelper.getMessage(error,
+								context);
+
+						handler.sendMessage(messsage);
+					}
+				}){
+			@Override
+		    protected Map<String, String> getParams() 
+		    {  
+		            return params;  
+		    }
+		};
 
 		ApplicationController.getInstance().addToRequestQueue(req);
 

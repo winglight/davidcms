@@ -10,6 +10,7 @@ import com.yi4all.davidapp.db.CMSDBOpenHelper;
 import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
+import com.yi4all.davidapp.db.OrderModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -141,4 +142,31 @@ public class DBServiceImpl implements IDBService {
             Log.e(LOG_TAG, e.getMessage());
         }
     }
+
+	@Override
+	public List<OrderModel> getOrders() {
+		try {
+			Dao<OrderModel, Long> dba = cmsHelper.getOrderDAO();
+
+			return dba.queryForAll();
+
+		} catch (SQLException e) {
+
+			Log.e(LOG_TAG, e.getMessage());
+		}
+		return new ArrayList<OrderModel>();
+	}
+
+	@Override
+	public void createOrder(OrderModel cm) {
+		try {
+            Dao<OrderModel, Long> dba = cmsHelper.getOrderDAO();
+
+                dba.create(cm);
+
+        } catch (SQLException e) {
+
+            Log.e(LOG_TAG, e.getMessage());
+        }
+	}
 }

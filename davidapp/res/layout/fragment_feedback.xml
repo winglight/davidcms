@@ -42,6 +42,7 @@
             android:gravity="top"
             android:hint="@string/order_phone_hint"
             android:singleLine="true"
+            android:inputType="phone"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#989AA1" >
 

@@ -27,6 +27,7 @@ import com.yi4all.davidapp.db.CompanyModel;
 import com.yi4all.davidapp.db.ContentModel;
 import com.yi4all.davidapp.db.ContentType;
 import com.yi4all.davidapp.db.dto.LinePerson;
+import com.yi4all.davidapp.fragment.member.ChangePwdFragment;
 import com.yi4all.davidapp.fragment.member.KuanDetailFragment;
 import com.yi4all.davidapp.fragment.member.KuanFragment;
 import com.yi4all.davidapp.fragment.member.ShangFragment;
@@ -77,7 +78,6 @@ public class MemberMainFragment extends Fragment {
 		        if(person != null && person.isUp()){
 		        	((MemberActivity)getActivity()).goinFragment(new KuanFragment());
 		        }else{
-		        	//TODO kuan detail
 		        	((MemberActivity)getActivity()).goinFragment(KuanDetailFragment.getInstance(person));
 		        }
 			}
@@ -102,7 +102,7 @@ public class MemberMainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				((MemberActivity)getActivity()).goinFragment(null);
+				((MemberActivity)getActivity()).goinFragment(new ChangePwdFragment());
 				
 			}
 		});
