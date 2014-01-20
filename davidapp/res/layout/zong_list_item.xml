@@ -13,7 +13,7 @@
                 android:id="@+id/zong_row_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 android:singleLine="true"
             android:text="@string/member_title_zong"
             android:textAppearance="?android:attr/textAppearanceMedium"

@@ -1,44 +1,20 @@
 package com.yi4all.davidapp.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Gallery;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import com.android.volley.toolbox.NetworkImageView;
-import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshListFragment;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.yi4all.davidapp.ApplicationController;
-import com.yi4all.davidapp.BaseActivity;
-import com.yi4all.davidapp.MemberActivity;
-import com.yi4all.davidapp.R;
-import com.yi4all.davidapp.db.CompanyModel;
-import com.yi4all.davidapp.db.ContentModel;
-import com.yi4all.davidapp.db.ContentType;
-import com.yi4all.davidapp.db.dto.LinePerson;
-import com.yi4all.davidapp.util.Utils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.yi4all.davidapp.BaseActivity;
+import com.yi4all.davidapp.R;
+import com.yi4all.davidapp.util.Utils;
 
 public class FeedbackFragment extends Fragment {
 	

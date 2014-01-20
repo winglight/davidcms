@@ -93,7 +93,8 @@
                 android:scrollHorizontally="false"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#89D7FF" />
+                android:textColor="#89D7FF"
+                android:visibility="gone" />
         </LinearLayout>
         
     

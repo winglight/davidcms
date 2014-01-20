@@ -293,7 +293,7 @@ public class ZongDeatilFragment extends Fragment {
 							int groupTotal = msg.arg2;
 							int total = 0;
 							
-							groupAmountTxt.setText(String.valueOf(groupTotal));
+							groupAmountTxt.setText(Utils.formatNumber(groupTotal));
 							
 							// load updated app into list
 							List<ZongData> remoteMoreIssues = (List<ZongData>) msg.obj;
@@ -316,7 +316,7 @@ public class ZongDeatilFragment extends Fragment {
 										R.string.refresh_no_data);
 							}
 							
-							totalTxt.setText(String.valueOf(total));
+							totalTxt.setText(Utils.formatNumber(total));
 						} else {
 							Utils.toastMsg(getActivity(), (String) msg.obj);
 						}
@@ -367,7 +367,7 @@ public class ZongDeatilFragment extends Fragment {
 
 			// set triangle for the add
 			holder.name.setText(am.getHallName());
-			holder.amount.setText(String.valueOf(am.getAmount()));
+			holder.amount.setText(Utils.formatNumber(am.getAmount()));
 
 			return (convertView);
 		}

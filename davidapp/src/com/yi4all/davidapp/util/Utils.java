@@ -12,8 +12,12 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class Utils {
 
@@ -41,6 +45,33 @@ public class Utils {
 			});
 		}
 
+	}
+	
+	public static String encodeUrl(final String param){
+		String res = param;
+		try {
+			res = URLEncoder.encode(param, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+		}
+		return res;
+	}
+	
+	public static String formatNumber(String number){
+		NumberFormat formatter = new DecimalFormat("###,###,###");
+		return formatter.format(Long.valueOf(number));
+		
+	}
+	
+	public static String formatNumber(int number){
+		NumberFormat formatter = new DecimalFormat("###,###,###");
+		return formatter.format(Long.valueOf(number));
+		
+	}
+	
+	public static String formatNumber(long number){
+		NumberFormat formatter = new DecimalFormat("###,###,###");
+		return formatter.format(Long.valueOf(number));
+		
 	}
 
 	public static void savePref(Context context, String key, String value) {

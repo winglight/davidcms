@@ -256,7 +256,7 @@ public class ShangDetailFragment extends Fragment {
 			final ShangDetailData am = shangDetails.get(position);
 
 			// set triangle for the add
-			holder.principle.setText(am.getPrincipal());
+			holder.principle.setText(Utils.formatNumber(am.getPrincipal()));
 			holder.name.setText(am.getLineName());
 			holder.client.setText(am.getClientName());
 			holder.memo.setText(am.getRemark());

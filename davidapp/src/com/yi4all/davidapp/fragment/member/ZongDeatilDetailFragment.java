@@ -242,7 +242,7 @@ public class ZongDeatilDetailFragment extends Fragment {
 										total += detail.getAmount();
 									}
 									
-									totalTxt.setText(String.valueOf(total));
+									totalTxt.setText(Utils.formatNumber(total));
 								}else{
 									list.setVisibility(View.GONE);
 									
@@ -256,9 +256,9 @@ public class ZongDeatilDetailFragment extends Fragment {
 										total += detail.getTotal();
 									}
 									//show zhuanma totals
-									maBlueTxt.setText(String.valueOf(blueTotal));
-									maWhiteTxt.setText(String.valueOf(whiteTotal));
-									maTotalTxt.setText(String.valueOf(total));
+									maBlueTxt.setText(Utils.formatNumber(String.valueOf(blueTotal)));
+									maWhiteTxt.setText(Utils.formatNumber(String.valueOf(whiteTotal)));
+									maTotalTxt.setText(Utils.formatNumber(String.valueOf(total)));
 								}
 
 								mAdapter.notifyDataSetChanged();
@@ -320,7 +320,7 @@ public class ZongDeatilDetailFragment extends Fragment {
 			final ZongDetailData am = zongDetails.get(position);
 
 			// set triangle for the add
-			holder.amount.setText(String.valueOf(am.getAmount()));
+			holder.amount.setText(Utils.formatNumber(am.getAmount()));
 			if(currentMode == 2){
 				holder.memo.setVisibility(View.VISIBLE);
 				holder.memo.setText(am.getRemark());

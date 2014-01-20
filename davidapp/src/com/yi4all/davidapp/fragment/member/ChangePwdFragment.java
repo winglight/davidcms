@@ -118,6 +118,8 @@ public class ChangePwdFragment extends Fragment {
 					if (msg.arg1 == 0) {
 						// load updated app into list
 						Utils.toastMsg(getActivity(), R.string.changepwd_success);
+						
+						((MemberActivity)getActivity()).backFragment(ChangePwdFragment.this);
 					}else{
 						Utils.toastMsg(getActivity(), R.string.changepwd_fail);
 					}

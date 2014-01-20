@@ -26,6 +26,8 @@ import com.yi4all.davidapp.db.dto.ShangDetailData;
 import com.yi4all.davidapp.db.dto.ZongData;
 import com.yi4all.davidapp.db.dto.ZongDetailData;
 import com.yi4all.davidapp.util.JsonDateDeserializer;
+import com.yi4all.davidapp.util.Utils;
+
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -486,8 +488,9 @@ public class ServiceImpl {
 	
 	public void getMemberZongDetails(final Handler handler,
 			final String userId, final String hallid, final int type) {
+		
 		String url = remoteService.getMemberUrl();
-		url += "/Query/ComplexDataInfo/?LineCode=" + userId + "&HallID=" + hallid + "&TypeID=" + type;
+		url += "/Query/ComplexDataInfo/?LineCode=" + userId + "&HallID=" + Utils.encodeUrl(hallid) + "&TypeID=" + type;
 		
 		StringRequest req = new StringRequest(Method.GET, url,
 				new Response.Listener<String>() {
@@ -525,7 +528,15 @@ public class ServiceImpl {
 
 						handler.sendMessage(messsage);
 					}
-				});
+				}){
+			@Override
+		    public HashMap<String, String> getParams() {
+		        HashMap<String, String> params = new HashMap<String, String>();
+		        params.put("Content-Type", "application/json;charset=UTF-8");
+
+		        return params;
+		    }
+		};
 
 		ApplicationController.getInstance().addToRequestQueue(req);
 
@@ -582,7 +593,7 @@ public class ServiceImpl {
 	public void getMemberShangDetails(final Handler handler,
 			final String userId, final String hallid, final String date) {
 		String url = remoteService.getMemberUrl();
-		url += "/Query/UserUpDown/?UserID=" + userId + "&HallID=" + hallid + "&SearchDate=" + date;
+		url += "/Query/UserUpDown/?UserID=" + userId + "&HallID=" + Utils.encodeUrl(hallid) + "&SearchDate=" + date;
 		
 		StringRequest req = new StringRequest(Method.GET, url,
 				new Response.Listener<String>() {
@@ -684,8 +695,8 @@ public class ServiceImpl {
 		url += "/Save/Msg";
 		
 		final HashMap<String, String> params = new HashMap<String, String>();
-		params.put("UserID", userId);
-		params.put("Content", content);
+			params.put("UserID", userId);
+		params.put("Content", Utils.encodeUrl(content));
 		params.put("Tel", phone);
 		params.put("TypeID", type);
 		
@@ -737,10 +748,10 @@ public class ServiceImpl {
 		url += "/Save/Order";
 		
 		final HashMap<String, String> params = new HashMap<String, String>();
-		params.put("UserID", userId);
-		params.put("OrderContent", memo);
+			params.put("UserID", userId);
+		params.put("OrderContent", Utils.encodeUrl(memo));
 		params.put("Tel", phone);
-		params.put("OrderType", type);
+		params.put("OrderType", Utils.encodeUrl(type));
 		
 		StringRequest req = new StringRequest(Method.POST, url,
 				new Response.Listener<String>() {

@@ -141,7 +141,7 @@ public class KuanDetailFragment extends Fragment {
 										total += detail.getAmount();
 									}
 									
-									totalTxt.setText(String.valueOf(total));
+									totalTxt.setText(Utils.formatNumber(total));
 
 								mAdapter.notifyDataSetChanged();
 							} else {
@@ -202,7 +202,7 @@ public class KuanDetailFragment extends Fragment {
 			final ZongDetailData am = zongDetails.get(position);
 
 			// set triangle for the add
-			holder.amount.setText(String.valueOf(am.getAmount()));
+			holder.amount.setText(Utils.formatNumber(am.getAmount()));
 				holder.name.setText(am.getClientName());
 				holder.memo.setVisibility(View.GONE);
 

@@ -207,7 +207,7 @@ public class KuanFragment extends Fragment{
 
 			// set triangle for the add
 			holder.name.setText(am.getLineName());
-			if(am.isHasData()){
+			if(!am.isHasData()){
 				holder.name.setTextColor(getResources().getColor(R.color.member_line_data_text_color));
 			}else{
 				holder.name.setTextColor(getResources().getColor(R.color.member_menu_text_color));
