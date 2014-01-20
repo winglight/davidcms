@@ -76,8 +76,8 @@
     <string name="pwd_new">新密碼</string>
     <string name="pwd_verify">確認新密碼</string>
     <string name="waiting">連接網絡中,請稍候</string>
-    <string name="save_feedback_error">您的意見已發送成功,客服人員將與您聯繫</string>
-    <string name="save_feedback_success">意見保存失敗,請稍候再試</string>
+    <string name="save_feedback_success">您的意見已發送成功,客服人員將與您聯繫</string>
+    <string name="save_feedback_error">意見保存失敗,請稍候再試</string>
     <string name="save_order_success">訂單提交成功</string>
     <string name="save_order_fail">訂單提交失敗,請稍候再試</string>
     <string name="back">返回</string>

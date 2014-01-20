@@ -254,7 +254,7 @@ public class ZongDeatilFragment extends Fragment {
 								person.setLongTerm(remoteMoreIssues.getLongTerm());
 								
 								personNameTxt.setText(person.getLineName());
-								personAmountTxt.setText(person.getLongTerm());
+								personAmountTxt.setText(Utils.formatNumber(person.getLongTerm()));
 								
 							} else {
 								// TODO:notify no updated data

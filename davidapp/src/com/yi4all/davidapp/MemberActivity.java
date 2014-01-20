@@ -35,6 +35,8 @@ import com.yi4all.davidapp.fragment.MarketingListFragment;
 import com.yi4all.davidapp.fragment.MemberMainFragment;
 import com.yi4all.davidapp.fragment.OrderFragment;
 import com.yi4all.davidapp.fragment.ServiceListFragment;
+import com.yi4all.davidapp.fragment.member.ZongDeatilFragment;
+import com.yi4all.davidapp.fragment.member.ZongFragment;
 import com.yi4all.davidapp.util.Utils;
 import com.yi4all.davidapp.view.InfiniteGallery;
 
@@ -169,6 +171,11 @@ public class MemberActivity extends BaseActivity {
 		ft.commit();
 		
 		level--;
+		
+		Fragment f2 = fm.findFragmentById(R.id.memberzone);
+		if(f2 instanceof ZongFragment){
+			setTitleTxt(R.string.member_title_zong);
+		}
 		
 		mClickLock.notifyAll();
 	}
