@@ -1,48 +1,32 @@
 package com.yi4all.davidapp.fragment.member;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import com.android.volley.toolbox.NetworkImageView;
-import com.handmark.pulltorefresh.extras.listfragment.PullToRefreshListFragment;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.yi4all.davidapp.ApplicationController;
+
 import com.yi4all.davidapp.BaseActivity;
 import com.yi4all.davidapp.MemberActivity;
 import com.yi4all.davidapp.R;
-import com.yi4all.davidapp.db.ContentModel;
-import com.yi4all.davidapp.db.ContentType;
 import com.yi4all.davidapp.db.dto.LinePerson;
 import com.yi4all.davidapp.db.dto.ZongData;
-import com.yi4all.davidapp.fragment.MarketingDetailFragment;
 import com.yi4all.davidapp.util.Utils;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class ZongDeatilFragment extends Fragment {
 
