@@ -172,11 +172,6 @@ public class MemberActivity extends BaseActivity {
 		
 		level--;
 		
-		Fragment f2 = fm.findFragmentById(R.id.memberzone);
-		if(f2 instanceof ZongFragment){
-			setTitleTxt(R.string.member_title_zong);
-		}
-		
 		mClickLock.notifyAll();
 	}
 	}

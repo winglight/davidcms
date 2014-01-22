@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#E01D192F"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:text="@string/member_title_zong"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/member_menu_text_color" />

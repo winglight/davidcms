@@ -48,7 +48,6 @@
             android:textColor="#989AA1"
              >
 
-            <requestFocus />
         </EditText>
 
         <EditText
@@ -79,7 +78,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#989AA1" >
 
-            <requestFocus />
         </EditText>
 
         <LinearLayout

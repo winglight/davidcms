@@ -2,6 +2,7 @@ package com.yi4all.davidapp;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -135,7 +136,17 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        CompanyModel company = getService().getDefaultCompany();
+        CompanyModel company = getService().getDefaultCompany(new Handler(){
+        	@Override
+			public void handleMessage(Message msg) {
+        		if(msg.what == 1){
+        			CompanyModel com = (CompanyModel) msg.obj;
+        			if(com != null){
+        		        carouselTxt.setText(com.getMarquee());
+        		        }
+        		}
+        	}
+        });
 
         if(company != null){
         carouselTxt.setText(company.getMarquee());

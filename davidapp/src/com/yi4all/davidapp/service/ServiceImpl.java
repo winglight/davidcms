@@ -83,17 +83,11 @@ public class ServiceImpl {
 		return dbService;
 	}
 
-	public CompanyModel getDefaultCompany() {
+	public CompanyModel getDefaultCompany(final Handler handler) {
 		if (company == null) {
 			company = getDbService().getDefaultCompany();
-			if (company == null) {
-//				company = remoteService.getDefaultCompany();
-//				if (company != null) {
-//					getDbService().updateCompany(company);
-//				}
-			}
 			// TODO:async update company info
-			refreshDefaultCompany();
+			refreshDefaultCompany(handler);
 		}
 		return company;
 	}
@@ -117,7 +111,7 @@ public class ServiceImpl {
 		return orderitems;
 	}
 
-	public void refreshDefaultCompany() {
+	public void refreshDefaultCompany(final Handler handler) {
 		String url = remoteService.getBaseUrl() + "/company";
 
 		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, null,
@@ -135,6 +129,17 @@ public class ServiceImpl {
 						} else {
 							CompanyModel cm = msg.getData();
 							getDbService().updateCompany(cm);
+							
+							if(handler != null){
+								if(company == null || company.getMarquee() == null || !company.getMarquee().equals(cm.getMarquee())){
+									company = getDbService().getDefaultCompany();
+									Message messsage = handler.obtainMessage();
+									messsage.what = 1;
+									messsage.obj = company;
+	
+									handler.sendMessage(messsage);
+								}
+							}
 						}
 
 					}

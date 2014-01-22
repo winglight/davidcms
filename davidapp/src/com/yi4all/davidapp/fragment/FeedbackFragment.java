@@ -47,14 +47,25 @@ public class FeedbackFragment extends Fragment {
 				String content = contentTxt.getText().toString();
 				String phone = phoneTxt.getText().toString();
 				
-				if(content == null || content.length() == 0 || phone == null || phone.length() == 0 ){
-					Utils.toastMsg(getActivity(), R.string.changepwd_null_error);
+				if(content == null || content.length() == 0 ){
+					Utils.toastMsg(getActivity(), R.string.feed_memo_hint);
 					
 					return;
 				}
 				
 				saveFeedback(content, phone);
 				
+			}
+		});
+        
+        Button reset = (Button) v.findViewById(R.id.resetBtn);
+        reset.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				contentTxt.setText("");
+				phoneTxt.setText("");
 			}
 		});
         

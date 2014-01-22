@@ -138,6 +138,13 @@ public class ZongDeatilDetailFragment extends Fragment {
 		loadListByPage();
 
 	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		
+		((MemberActivity)getActivity()).setTitleTxt(R.string.member_title_zong);
+	}
 
 	private void loadUIByMode() {
 		getActivity().runOnUiThread(new Runnable() {
@@ -177,7 +184,7 @@ public class ZongDeatilDetailFragment extends Fragment {
 					title1Txt.setText(R.string.member_detail_time);
 					title2Txt.setText(R.string.member_detail_money);
 					title3Txt.setText(R.string.member_detail_memo);
-					title3Txt.setVisibility(View.VISIBLE);
+					title3Txt.setVisibility(View.GONE);
 					totalPanel.setVisibility(View.VISIBLE);
 					maPanel.setVisibility(View.GONE);
 					
@@ -322,8 +329,8 @@ public class ZongDeatilDetailFragment extends Fragment {
 			// set triangle for the add
 			holder.amount.setText(Utils.formatNumber(am.getAmount()));
 			if(currentMode == 2){
-				holder.memo.setVisibility(View.VISIBLE);
-				holder.memo.setText(am.getRemark());
+				holder.memo.setVisibility(View.GONE);
+//				holder.memo.setText(am.getRemark());
 				
 				holder.name.setText(am.getPostTime());
 			}else{

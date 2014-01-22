@@ -116,7 +116,7 @@ public class ShangDetailFragment extends Fragment {
 	private void initDateUI(View v){
 		final Date now = new Date();
 		final Date yes = DateUtils.addDateDays(now, -1);
-		currentDate = DateUtils.defaultFormat(yes);
+		currentDate = DateUtils.defaultFormat(now);
 //		currentDate = "2013/04/30";
 		dateTxt.setText(currentDate);
 			
@@ -256,16 +256,16 @@ public class ShangDetailFragment extends Fragment {
 			final ShangDetailData am = shangDetails.get(position);
 
 			// set triangle for the add
-			holder.principle.setText(Utils.formatNumber(am.getPrincipal()));
+			holder.principle.setText(am.getPrincipal());
 			holder.name.setText(am.getLineName());
 			holder.client.setText(am.getClientName());
 			holder.memo.setText(am.getRemark());
 			holder.updown.setText(am.getUpDown());
 
 			if ("Y".equals(am.getIsOnline())) {
-				holder.updown.setVisibility(View.VISIBLE);
+				holder.onlineImg.setVisibility(View.VISIBLE);
 			} else {
-				holder.updown.setVisibility(View.GONE);
+				holder.onlineImg.setVisibility(View.GONE);
 			}
 
 			return (convertView);

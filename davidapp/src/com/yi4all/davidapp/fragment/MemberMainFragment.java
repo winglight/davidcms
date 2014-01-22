@@ -111,8 +111,7 @@ public class MemberMainFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				getActivity().finish();
+				((MemberActivity)getActivity()).back();
 				
 			}
 		});

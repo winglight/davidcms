@@ -122,8 +122,14 @@ public class OrderFragment extends Fragment {
 				String phone = phoneTxt.getText().toString();
 				String memo = memoTxt.getText().toString();
 				
-				if( phone == null || phone.length() == 0 || memo == null  || memo.length() == 0){
-					Utils.toastMsg(getActivity(), R.string.changepwd_null_error);
+				if( phone == null || phone.length() == 0){
+					Utils.toastMsg(getActivity(), R.string.order_phone_hint);
+					
+					return;
+				}
+				
+				if(memo == null  || memo.length() == 0){
+					Utils.toastMsg(getActivity(), R.string.order_memo_hint);
 					
 					return;
 				}

@@ -58,7 +58,7 @@ public class IntroFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 
-        CompanyModel company = ((BaseActivity)getActivity()).getService().getDefaultCompany();
+        CompanyModel company = ((BaseActivity)getActivity()).getService().getDefaultCompany(null);
         if(company != null){
         nameTxt.setText(company.getName());
         descTxt.setText(company.getDescription());
