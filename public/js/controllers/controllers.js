@@ -42,11 +42,11 @@ function IntroController($scope, $http) {
 app.controller('CmsController', ['$scope', '$http', '$upload', 'createDialog', function($scope, $http, $upload, createDialogService){
     $scope.cmslist = [];
     $scope.cmstypes = [
-        {id:0, name:'Hall'},
-        {id:1, name:'Service'},
-        {id:2, name:'Activity'},
-        {id:3, name:'SubAddress'},
-        {id:4, name:'OrderItem'}
+        {id:0, name:'廳會'},
+        {id:1, name:'服務'},
+        {id:2, name:'推廣活動'},
+        {id:3, name:'聯繫我們'},
+        {id:4, name:'預訂內容'}
     ];
 
     $scope.cmstype = $scope.cmstypes[0].id;
@@ -61,12 +61,13 @@ app.controller('CmsController', ['$scope', '$http', '$upload', 'createDialog', f
         enableCellEdit: false,
         plugins:[new ngGridFlexibleHeightPlugin()],
         columnDefs: [
-            {field: 'name', displayName: 'Name', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
-            {field: 'description', displayName: 'description', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
-            {field: 'url', displayName: 'url', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
-            {field: 'phoneNumber', displayName: 'phoneNumber', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
-            {field: 'smallPic', displayName: 'smallPic', enableCellEdit: false, cellTemplate: uploadTemplate, width: '**'},
-            {field:'bigPic', displayName:'bigPic', enableCellEdit: false, cellTemplate: uploadTemplate, width: '**'}
+            {field: 'name', displayName: '名稱', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
+            {field: 'description', displayName: '描述', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
+            {field: 'url', displayName: 'URL', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
+            {field: 'phoneNumber', displayName: '電話號碼', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
+            {field: 'smsNumber', displayName: '短信號碼', enableCellEdit: true, editableCellTemplate: cellEditableTemplate},
+            {field: 'smallPic', displayName: '列表圖片', enableCellEdit: false, cellTemplate: uploadTemplate, width: '**'},
+            {field:'bigPic', displayName:'詳情圖片', enableCellEdit: false, cellTemplate: uploadTemplate, width: '**'}
         ] };
 
     $scope.isShowImg = function(url){

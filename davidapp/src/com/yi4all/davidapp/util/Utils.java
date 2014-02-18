@@ -3,8 +3,10 @@ package com.yi4all.davidapp.util;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -43,6 +45,28 @@ public class Utils {
 	
 				}
 			});
+		}
+
+	}
+
+    public static void sendSms(final Context context, final String number) {
+		if(context != null){
+            if(number != null && number.length() > 0){
+                Intent callIntent = new Intent(Intent.ACTION_VIEW);
+                callIntent.setData(Uri.parse("sms:" + number));
+                context.startActivity(callIntent);
+            }
+		}
+
+	}
+
+    public static void callPhone(final Context context, final String number) {
+		if(context != null){
+            if(number != null && number.length() > 0){
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + number));
+                context.startActivity(callIntent);
+            }
 		}
 
 	}

@@ -26,10 +26,13 @@ public class CompanyModel extends Model implements Serializable{
 	public Long id;
 
     public String name;
+    public String name_s;
 
     public String description;
+    public String description_s;
 
     public String marquee;
+    public String marquee_s;
 
 	@Formats.DateTime(pattern="yyyy-MM-dd")
 	public Date createdAt;

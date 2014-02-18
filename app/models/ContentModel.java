@@ -25,12 +25,16 @@ public class ContentModel extends Model implements Serializable{
 	public Long id;
 
     public String name;
+    public String name_s;
 
     public String description;
+    public String description_s;
 
     public String url;
 
     public String phoneNumber;
+
+    public String smsNumber;
 
     public String smallPic;
 

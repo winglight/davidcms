@@ -9,13 +9,16 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="0dp"
+        android:paddingLeft="@dimen/content_margin_dimen"
+        android:paddingRight="@dimen/content_margin_dimen"
         android:src="@drawable/background_member_main" />
 
     <FrameLayout 
          android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:paddingLeft="@dimen/content_margin_dimen"
+        android:paddingRight="@dimen/content_margin_dimen"
         >
         <ImageView
         android:layout_width="match_parent"
@@ -30,8 +33,6 @@
         android:background="@android:color/transparent"
         android:orientation="vertical"
         android:paddingBottom="@dimen/content_margin_dimen"
-        android:paddingLeft="@dimen/content_margin_dimen"
-        android:paddingRight="@dimen/content_margin_dimen"
         android:paddingTop="0dp" >
 
         <TextView

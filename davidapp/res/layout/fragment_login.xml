@@ -13,7 +13,8 @@
         android:background="#2B2937"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="0dp" >
+        android:layout_marginLeft="@dimen/content_margin_dimen"
+        android:layout_marginRight="@dimen/content_margin_dimen" >
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -66,7 +67,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/background_text"
             android:drawableLeft="@drawable/profile"
-            android:gravity="top"
+            android:gravity="center_vertical"
             android:hint="@string/login_name_hint"
             android:padding="10dp"
             android:singleLine="true"
@@ -74,6 +75,12 @@
             android:textColor="#989AA1" >
 
         </EditText>
+        
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@android:color/transparent"
+            />
 
         <EditText
             android:id="@+id/login_pwd_txt"
@@ -82,7 +89,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/background_text"
             android:drawableLeft="@drawable/lock"
-            android:gravity="top"
+            android:gravity="center_vertical"
             android:hint="@string/login_pwd_hint"
             android:padding="10dp"
             android:singleLine="true"
@@ -92,29 +99,32 @@
 
         </EditText>
 
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@android:color/transparent"
+            />
+        
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="center"
+            android:gravity="left|center_vertical"
             android:orientation="horizontal" >
 
-            <EditText
-                android:id="@+id/login_verify_txt"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/login_verify_show_txt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_text"
-                android:gravity="top"
-                android:hint="@string/login_verify_hint"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#989AA1" >
-
-            </EditText>
-
+                android:background="#2B2937"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            
             <TextView
                 android:id="@+id/login_change_btn"
                 android:layout_width="wrap_content"
@@ -123,17 +133,30 @@
                 android:padding="10dp"
                 android:text="@string/login_change"
                 android:textColor="@android:color/white"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/login_verify_show_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#2B2937"
-                android:padding="10dp"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
+        
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@android:color/transparent"
+            />
+        
+        <EditText
+                android:id="@+id/login_verify_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/background_text"
+                android:gravity="center_vertical"
+                android:hint="@string/login_verify_hint"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#989AA1"
+                android:drawableLeft="@drawable/lock" >
+
+            </EditText>
 
         <ImageView 
             android:layout_width="match_parent"

@@ -1,5 +1,8 @@
 package com.yi4all.davidapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,6 +51,8 @@ public class MainActivity extends BaseActivity {
     private int currentTabPos;
     
     private int newTabPos;
+    
+    private List<Fragment> frgs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,72 +61,92 @@ public class MainActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.activity_main);
-
-		pageTitle = getResources().getStringArray(R.array.main_tab_label);
-
-        carouselTxt = (TextView) findViewById(R.id.carouselTxt);
-        
-        final ImageView splashImg = (ImageView) findViewById(R.id.splash_img);
-
-		final InfiniteGallery indicator = (InfiniteGallery) findViewById(R.id.indicator);
-		
-		indicator.setTabs(pageTitle);
-		indicator.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> adapter, final View view,
-					final int position, long arg3) {
-				newTabPos = position;
-				
-				new Handler().postDelayed(new Runnable() {
-					
-					@Override
-					public void run() {
-						if(newTabPos != position) return;
-						
-						//set older tab text appearance
-						if(oldTab != null){
-						oldTab.setTextColor(getResources().getColor(R.color.tab_text_color));
-						oldTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_text_dimen));
-						}
-						
-						Fragment f = getItem(position%pageTitle.length);
-						
-						addFragment(f, pageTitle[position%pageTitle.length], currentTabPos > position);
-						
-						//set new tab text appearance
-						currentTabPos = position;
-						TextView newTab = (TextView) view; 
-						newTab.setTextColor(getResources().getColor(R.color.tab_selected_text_color));
-						newTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_selected_text_dimen));
-						
-//						indicator.invalidate();
-						
-						oldTab = newTab;
-					}
-				}, 500);
-				
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		indicator.setSelection(getMiddlePos());
 		
 		//show and hide splash screen
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
+				pageTitle = getResources().getStringArray(R.array.main_tab_label);
+
+		        final ImageView splashImg = (ImageView) findViewById(R.id.splash_img);
+
+				final InfiniteGallery indicator = (InfiniteGallery) findViewById(R.id.indicator);
+				
+				carouselTxt = (TextView) findViewById(R.id.carouselTxt);
+				
+				CompanyModel company = getService().getDefaultCompany(new Handler(){
+		        	@Override
+					public void handleMessage(Message msg) {
+		        		if(msg.what == 1){
+		        			CompanyModel com = (CompanyModel) msg.obj;
+		        			if(com != null){
+		        		        carouselTxt.setText(com.getMarquee());
+		        		        }
+		        		}
+		        	}
+		        });
+
+		        if(company != null){
+		        carouselTxt.setText(company.getMarquee());
+		        }
+				
+				indicator.setTabs(pageTitle);
+				indicator.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> adapter, final View view,
+							final int position, long arg3) {
+						newTabPos = position;
+						
+						new Handler().postDelayed(new Runnable() {
+							
+							@Override
+							public void run() {
+								if(newTabPos != position) return;
+								
+								//set older tab text appearance
+								if(oldTab != null){
+								oldTab.setTextColor(getResources().getColor(R.color.tab_text_color));
+//								oldTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_text_dimen));
+								}
+								
+								Fragment f = getItem(position%pageTitle.length);
+								
+								addFragment(f, pageTitle[position%pageTitle.length], currentTabPos > position);
+								
+								//set new tab text appearance
+								currentTabPos = position;
+								TextView newTab = (TextView) view; 
+								newTab.setTextColor(getResources().getColor(R.color.tab_selected_text_color));
+//								newTab.setTextSize(getResources().getDimensionPixelSize(R.dimen.tab_selected_text_dimen));
+								
+//								indicator.invalidate();
+								
+								oldTab = newTab;
+							}
+						}, 1000);
+						
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
 				indicator.setSelection(getMiddlePos());
 				
-				splashImg.setVisibility(View.GONE);
+				new Handler().postDelayed(new Runnable() {
+					
+					@Override
+					public void run() {
+						splashImg.setVisibility(View.GONE);
+					}
+				}, 1500);
 			}
-		}, 1500);
+		}, 0);
 	}
 	
 	private int getMiddlePos(){
@@ -136,21 +161,6 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        CompanyModel company = getService().getDefaultCompany(new Handler(){
-        	@Override
-			public void handleMessage(Message msg) {
-        		if(msg.what == 1){
-        			CompanyModel com = (CompanyModel) msg.obj;
-        			if(com != null){
-        		        carouselTxt.setText(com.getMarquee());
-        		        }
-        		}
-        	}
-        });
-
-        if(company != null){
-        carouselTxt.setText(company.getMarquee());
-        }
     }
 
 	@Override
@@ -181,43 +191,52 @@ public class MainActivity extends BaseActivity {
 	}
 	
 	public Fragment getItem(int position) {
-        Fragment f = new IntroFragment();
-        switch (position){
-            case 0:
-                //資料查詢
-            	f = new LoginFragment();
-                break;
-            case 1:
-                //推廣諮訊
-            	f= new MarketingListFragment();
-                break;
-            case 2:
-                //聽會介紹
-            	f = new HallListFragment();
-                break;
-            case 3:
-                //大衛集團
-                f = new IntroFragment();
-                break;
-            case 4:
-                //線上預訂
-            	f = new OrderFragment();
-                break;
-            case 5:
-                //服務項目
-                f = new ServiceListFragment();
-                break;
-            case 6:
-                //聯繫我們
-            	f = new ContactusListFragment();
-                break;
-            case 7:
-                //意見箱
-            	f= new FeedbackFragment();
-                break;
+		if(frgs == null){
+			frgs = new ArrayList<Fragment>();
+		}
+		if(frgs.size() == 0){
+			for(int i = 0; i < 8 ; i++){
+				Fragment f = null;
+		        switch (i){
+		            case 0:
+		                //資料查詢
+		            	f = new LoginFragment();
+		                break;
+		            case 1:
+		                //推廣諮訊
+		            	f= new MarketingListFragment();
+		                break;
+		            case 2:
+		                //聽會介紹
+		            	f = new HallListFragment();
+		                break;
+		            case 3:
+		                //大衛集團
+		                f = new IntroFragment();
+		                break;
+		            case 4:
+		                //線上預訂
+		            	f = new OrderFragment();
+		                break;
+		            case 5:
+		                //服務項目
+		                f = new ServiceListFragment();
+		                break;
+		            case 6:
+		                //聯繫我們
+		            	f = new ContactusListFragment();
+		                break;
+		            case 7:
+		                //意見箱
+		            	f= new FeedbackFragment();
+		                break;
 
-        }
-		return  f;
+		        }
+		        frgs.add(f);
+			}
+		}
+        
+		return  frgs.get(position);
 	}
 
 }

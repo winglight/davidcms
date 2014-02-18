@@ -1,6 +1,6 @@
 @(user: UserModel)
 
-@main(user, "CMS", "CmsController") {
+@main(user, "內容管理", "CmsController") {
 <style>
 .gridStyle {
 border: 1px solid rgb(212,212,212);
@@ -11,10 +11,10 @@ height: 800px
 					<div class="page-content">
 						<div class="page-header">
 							<h1>
-								Mobile Content
+								手機展示信息
 								<small>
 									<i class="icon-double-angle-right"></i>
-									CMS List
+									內容列表
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
@@ -27,17 +27,17 @@ height: 800px
 
                                     <button ng-click="addContent()" class="btn btn-primary">
                                         <i class="icon-beaker align-top bigger-125"></i>
-                                        Add Content
+                                        添加
                                     </button>
 
                                     <button ng-click="editContent()" class="btn btn-success">
                                         <i class="icon-beaker align-top bigger-125"></i>
-                                        Edit Content
+                                        編輯
                                     </button>
 
                                     <button ng-click="deleteContent()" class="btn btn-danger">
                                         <i class="icon-trash  align-top bigger-125 icon-on-left"></i>
-                                        Delete
+                                        刪除
                                     </button>
                                 </p>
 

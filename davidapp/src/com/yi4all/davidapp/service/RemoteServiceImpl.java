@@ -35,8 +35,8 @@ public class RemoteServiceImpl implements IRemoteService {
 		if (service == null) {
 
 //			 service = new RemoteServiceImpl("http://192.168.1.9:9000/service");
-//			 service = new RemoteServiceImpl("http://10.31.58.74:9000");
-			 service = new RemoteServiceImpl("http://market.yi4all.com");
+			 service = new RemoteServiceImpl("http://192.168.1.6:9000");
+//			 service = new RemoteServiceImpl("http://54.199.136.180:9000");
 			 service.setMemberUrl("http://202.175.112.76:7192/chapps");
 		}
 		return service;

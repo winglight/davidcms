@@ -18,6 +18,9 @@ public class CompanyModel implements Serializable{
     public static final String DESCRIPTION = "DESCRIPTION";
     public final static String NAME = "NAME";
     public final static String MARQUEE = "MARQUEE";
+    public static final String DESCRIPTION_S = "DESCRIPTION_S";
+    public final static String NAME_S = "NAME_S";
+    public final static String MARQUEE_S = "MARQUEE_S";
     public final static String CREATEDAT = "CREATEDAT";
 
     @DatabaseField(id = true)
@@ -31,6 +34,15 @@ public class CompanyModel implements Serializable{
 
     @DatabaseField(columnName = MARQUEE)
     private String marquee;
+
+    @DatabaseField(columnName = NAME_S)
+    private String name_s;
+
+    @DatabaseField(columnName = DESCRIPTION_S)
+    private String description_s;
+
+    @DatabaseField(columnName = MARQUEE_S)
+    private String marquee_s;
 
     @DatabaseField(columnName = CREATEDAT)
 	private Date createdAt;
@@ -77,5 +89,29 @@ public class CompanyModel implements Serializable{
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getName_s() {
+        return name_s;
+    }
+
+    public void setName_s(String name_s) {
+        this.name_s = name_s;
+    }
+
+    public String getDescription_s() {
+        return description_s;
+    }
+
+    public void setDescription_s(String description_s) {
+        this.description_s = description_s;
+    }
+
+    public String getMarquee_s() {
+        return marquee_s;
+    }
+
+    public void setMarquee_s(String marquee_s) {
+        this.marquee_s = marquee_s;
     }
 }

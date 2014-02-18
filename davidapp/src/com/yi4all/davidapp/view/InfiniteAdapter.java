@@ -77,7 +77,7 @@ public class InfiniteAdapter extends BaseAdapter {
 				String title = tabs[itemPos];
 				txt = new TextView(mContext);
 				txt.setTextColor(mContext.getResources().getColor(R.color.tab_text_color));
-				txt.setTextSize(mContext.getResources().getDimensionPixelSize(R.dimen.tab_text_dimen));
+				txt.setTextAppearance(mContext, android.R.attr.textAppearanceMedium);
 				txt.setGravity(Gravity.BOTTOM);
 				txt.setPadding(15, 0, 15, 10);
 				Gallery.LayoutParams params = new Gallery.LayoutParams(Gallery.LayoutParams.WRAP_CONTENT, Gallery.LayoutParams.MATCH_PARENT);

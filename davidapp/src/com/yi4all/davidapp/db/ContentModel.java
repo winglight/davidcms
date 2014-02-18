@@ -16,9 +16,12 @@ import java.util.Date;
 public class ContentModel implements Serializable{
 
     public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String DESCRIPTION_S = "DESCRIPTION_S";
+    public final static String NAME_S = "NAME_S";
     public final static String NAME = "NAME";
     public final static String URL = "URL";
     public final static String PHONENUMBER = "PHONENUMBER";
+    public final static String SMSNUMBER = "SMSNUMBER";
     public final static String SMALLPIC = "SMALLPIC";
     public final static String BIGPIC = "BIGPIC";
     public final static String CONTENTTYPE = "CONTENTTYPE";
@@ -35,11 +38,20 @@ public class ContentModel implements Serializable{
     @DatabaseField(columnName = DESCRIPTION)
     public String description;
 
+    @DatabaseField(columnName = NAME_S)
+    public String name_s;
+
+    @DatabaseField(columnName = DESCRIPTION_S)
+    public String description_s;
+
     @DatabaseField(columnName = URL)
     public String url;
 
     @DatabaseField(columnName = PHONENUMBER)
     public String phoneNumber;
+
+    @DatabaseField(columnName = SMSNUMBER)
+    public String smsNumber;
 
     @DatabaseField(columnName = SMALLPIC)
     public String smallPic;
@@ -149,5 +161,29 @@ public class ContentModel implements Serializable{
 
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public String getSmsNumber() {
+        return smsNumber;
+    }
+
+    public void setSmsNumber(String smsNumber) {
+        this.smsNumber = smsNumber;
+    }
+
+    public String getName_s() {
+        return name_s;
+    }
+
+    public void setName_s(String name_s) {
+        this.name_s = name_s;
+    }
+
+    public String getDescription_s() {
+        return description_s;
+    }
+
+    public void setDescription_s(String description_s) {
+        this.description_s = description_s;
     }
 }

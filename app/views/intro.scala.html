@@ -1,14 +1,14 @@
 @(user: UserModel)
 
-@main(user, "Intro", "IntroController") {
+@main(user, "集團介紹", "IntroController") {
 
 					<div class="page-content">
 						<div class="page-header">
 							<h1>
-								Group Introduction
+								集團介紹
 								<small>
 									<i class="icon-double-angle-right"></i>
-									Name and Description
+									名稱與描述
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
@@ -19,17 +19,17 @@
 
 								<form class="form-horizontal" role="form"  ng-submit="save()">
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Name: </label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 名稱: </label>
 
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" placeholder="Company Name" ng-model="company.name" class="col-xs-10 col-sm-5" />
+											<input type="text" id="form-field-1" placeholder="集團名稱" ng-model="company.name" class="col-xs-10 col-sm-5" />
 										</div>
 									</div>
 
 									<div class="space-4"></div>
 
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Description: </label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 描述: </label>
 
 										<div class="col-sm-9">
                                             <textarea class="form-control" id="form-field-8" placeholder="Short description"  ng-model="company.description"></textarea>
@@ -42,12 +42,12 @@
                                     <div class="space-4"></div>
 
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" for="form-field-3"> Marquee Info: </label>
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-3">走馬燈信息: </label>
 
 										<div class="col-sm-9">
                                             <textarea class="form-control" id="form-field-9" placeholder="Messages for user"  ng-model="company.marquee"></textarea>
 											<span class="help-inline col-xs-12 col-sm-7">
-												<span class="middle">* Not over 100 words</span>
+												<span class="middle">* Not over 200 words</span>
 											</span>
 										</div>
 									</div>

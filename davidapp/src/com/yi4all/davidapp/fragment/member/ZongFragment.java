@@ -124,8 +124,6 @@ public class ZongFragment extends Fragment{
 	private void loadListByPage() {
 		lastUpdateTime = new Date();
 		
-			Date lastUpdateDate = null;
-
 			// TODO:notify updating local db
 			((BaseActivity)getActivity()).getService().getMemberLinePersons(
                     new Handler() {

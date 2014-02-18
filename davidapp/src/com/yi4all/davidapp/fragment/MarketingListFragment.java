@@ -40,7 +40,7 @@ public class MarketingListFragment extends PullToRefreshListFragment{
 
 	private ArrayList<ContentModel> contents = new ArrayList<ContentModel>();
 	
-	private Date lastUpdateTime;
+	private Date lastUpdateTime = new Date();
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -93,8 +93,10 @@ public class MarketingListFragment extends PullToRefreshListFragment{
 		super.onResume();
 		
 		setListShown(true);
+		
+		getPullToRefreshListView().setRefreshing();
 		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage(ContentType.ACTIVITY);
+//				loadListByPage(ContentType.ACTIVITY);
 				
 	}
 	

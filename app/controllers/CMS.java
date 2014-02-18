@@ -54,6 +54,8 @@ public class CMS extends Controller {
 
         public String phoneNumber;
 
+        public String smsNumber;
+
         public ContentType contentType;
 
         public String validate() {
@@ -106,6 +108,7 @@ public class CMS extends Controller {
             cm.description = loginForm.get().description;
             cm.url = loginForm.get().url;
             cm.phoneNumber = loginForm.get().phoneNumber;
+            cm.smsNumber = loginForm.get().smsNumber;
             cm.contentType = loginForm.get().contentType;
 
             if(id == null){

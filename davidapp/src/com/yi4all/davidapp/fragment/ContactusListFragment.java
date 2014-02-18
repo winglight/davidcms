@@ -41,7 +41,7 @@ public class ContactusListFragment extends PullToRefreshListFragment{
 
 	private ArrayList<ContentModel> contents = new ArrayList<ContentModel>();
 	
-	private Date lastUpdateTime;
+	private Date lastUpdateTime = new Date();
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -92,8 +92,10 @@ public class ContactusListFragment extends PullToRefreshListFragment{
 		super.onResume();
 		
 		setListShown(true);
+		
+		getPullToRefreshListView().setRefreshing();
 		// TODO:async to fetch contents from service and complete refresh of PTR
-				loadListByPage(ContentType.SUBADDRESS);
+//				loadListByPage(ContentType.SUBADDRESS);
 				
 	}
 	
@@ -208,22 +210,16 @@ public class ContactusListFragment extends PullToRefreshListFragment{
 			// set triangle for the add
 			holder.name.setText(am.getName());
 //			holder.description.setText(String.valueOf(am.getDescription()));
-			holder.phone.setOnClickListener(new View.OnClickListener() {
+            holder.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO:call am.getPhoneNumber()
-                	Intent callIntent = new Intent(Intent.ACTION_CALL);
-                	callIntent.setData(Uri.parse("tel:" + am.getPhoneNumber()));
-                	startActivity(callIntent);
+                    Utils.callPhone(view.getContext(), am.getPhoneNumber());
                 }
             });
             holder.sms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO:text am.getPhoneNumber()
-                	Intent callIntent = new Intent(Intent.ACTION_VIEW);
-                	callIntent.setData(Uri.parse("sms:" + am.getPhoneNumber()));
-                	startActivity(callIntent);
+                    Utils.sendSms(view.getContext(), am.getSmsNumber());
                 }
             });
 
